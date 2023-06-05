@@ -17,7 +17,7 @@ namespace ChapeauDAL
         }
         public Order GetById(int id)
         {
-            string query = $"SELECT @id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] WHERE";
+            string query = $"SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
