@@ -4,6 +4,6 @@
     {
         public int employeeId;
         public string name;
-        private string password;
+        public string Password { get; set; }
     }
 }

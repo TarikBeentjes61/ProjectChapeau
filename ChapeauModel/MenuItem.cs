@@ -3,8 +3,9 @@
     public class MenuItem
     {
         public int menuItemId;
+        public int menuId;
         public string itemName;
-        public int amount;
+        public int stock;
         public double price;
         public ItemType itemType;
     }

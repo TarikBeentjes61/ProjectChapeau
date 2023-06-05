@@ -3,6 +3,6 @@
     public class Table
     {
         public int tableId;
-        public OrderStatus status;
+        public TableStatus status;
     }
 }

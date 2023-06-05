@@ -9,6 +9,6 @@ namespace ChapeauModel
         public int tableId;
         public int billId;
         public DateTime date;
-        public Status status;
+        public OrderStatus status;
     }
 }
