@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChapeauService
 {
-    internal class BillService
+    public class BillService
     {
     }
 }

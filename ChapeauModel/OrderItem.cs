@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace ChapeauModel
 {
-    internal class OrderItem
+    public class OrderItem
     {
+        private MenuItem menuItem;
+        private Order order;
+        private int amount;
+        private string comment;
+
+        public OrderItem(int amount)
+        {
+            this.amount = amount;
+        }
+
+        public void AddComment()
+        {
+
+        }
     }
 }
