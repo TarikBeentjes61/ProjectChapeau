@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace ChapeauUI
 {
-    public partial class StockForm : Form
+    public partial class ManagerForm : Form
     {
-        public StockForm()
+        public ManagerForm()
         {
             InitializeComponent();
+        }
+
+        private void buttonEmployeeManagement_Click(object sender, EventArgs e)
+        {
+            Form form = new EmployeeManagementForm();
+            form.ShowDialog();
         }
     }
 }
