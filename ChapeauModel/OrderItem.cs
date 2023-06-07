@@ -8,10 +8,20 @@ namespace ChapeauModel
 {
     public class OrderItem
     {
-        public int orderItemId;
-        public int orderId;
-        public int menuItemId;
-        public int amount;
-        public string comment;
+        private MenuItem menuItem;
+        private Order order;
+        private int amount;
+        private string comment;
+
+        public OrderItem(int amount)
+        {
+            this.amount = amount;
+        }
+
+        public void AddComment()
+        {
+
+        }
+
     }
 }

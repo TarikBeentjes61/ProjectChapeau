@@ -4,8 +4,23 @@ namespace ChapeauModel
 {
     public class Reservation
     {
-        public int reservationId;
-        public int tableId;
+        public Table table;
         public DateTime date;
+        public string name;
+
+        public void AddReservation()
+        {
+
+        }
+
+        public void EditReservation()
+        {
+
+        }
+
+        public void DeleteReservation() 
+        {
+            
+        }
     }
 }

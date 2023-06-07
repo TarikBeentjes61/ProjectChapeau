@@ -31,7 +31,6 @@ namespace ChapeauDAL
             {
                 Order order = new Order()
                 {
-                    orderId = (int)row["id"],
                     tableId = (int)row["Table_id"],
                     employeeId = (int)row["Employee_id"],
                     billId = (int)row["Bill_id"],
@@ -45,7 +44,6 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Order order = new Order()
             {
-                orderId = (int)row["id"],
                 tableId = (int)row["Table_id"],
                 employeeId = (int)row["Employee_id"],
                 billId = (int)row["Bill_id"],
