@@ -1,7 +1,7 @@
 ﻿namespace ChapeauModel
 {
-    public enum Status
+    public enum OrderStatus
     {
-        Wachtrij, ToDo, InBehandeling, Opnieuw
+        Waiting, ToDo, Doing, Again
     }
 }

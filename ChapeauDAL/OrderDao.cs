@@ -50,7 +50,7 @@ namespace ChapeauDAL
                 employeeId = (int)row["Employee_id"],
                 billId = (int)row["Bill_id"],
                 date = (DateTime)row["dateTime"],
-                status = (Status)row["status"]
+                status = (OrderStatus)row["status"]
             };
             return order;
         }
