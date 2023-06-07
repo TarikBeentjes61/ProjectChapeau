@@ -8,14 +8,14 @@ namespace ChapeauDAL
 {
     public class ReservationDao : BaseDao
     {
-        public List<Order> GetAll()
+        public List<Reservation> GetAll()
         {
             string query = "SELECT id, Table_id, dateTime FROM [Reservation]";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
-        public Order GetById(int id)
+        public Reservation GetById(int id)
         {
             string query = $"SELECT @id, Table_id, dateTime FROM [Reservation] WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
@@ -24,35 +24,30 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        private List<Order> ReadTables(DataTable dataTable)
+        private List<Reservation> ReadTables(DataTable dataTable)
         {
-            List<Order> orders = new List<Order>();
+            List<Reservation> reservations = new List<Reservation>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Order order = new Order()
+                Reservation reservation = new Reservation()
                 {
-                    orderId = (int)row["id"],
+                    reservationId = (int)row["id"],
                     tableId = (int)row["Table_id"],
-                    employeeId = (int)row["Employee_id"],
-                    billId = (int)row["Bill_id"],
-                    date = (DateTime)row["dateTime"],
+                    date = (DateTime)row["datetime"],
                 };
             }
-            return orders;
+            return reservations;
         }
-        private Order ReadSingle(DataTable dataTable)
+        private Reservation ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            Order order = new Order()
+            Reservation reservation = new Reservation()
             {
-                orderId = (int)row["id"],
+                reservationId = (int)row["id"],
                 tableId = (int)row["Table_id"],
-                employeeId = (int)row["Employee_id"],
-                billId = (int)row["Bill_id"],
-                date = (DateTime)row["dateTime"],
-                status = (Status)row["status"]
+                date = (DateTime)row["datetime"],
             };
-            return order;
+            return reservation;
         }
     }
 }

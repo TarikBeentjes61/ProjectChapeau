@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.KitchenLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // KitchenLabel
+            // 
+            this.KitchenLabel.AutoSize = true;
+            this.KitchenLabel.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.KitchenLabel.Location = new System.Drawing.Point(476, 9);
+            this.KitchenLabel.Name = "KitchenLabel";
+            this.KitchenLabel.Size = new System.Drawing.Size(191, 37);
+            this.KitchenLabel.TabIndex = 0;
+            this.KitchenLabel.Text = "Kitchen Orders";
             // 
             // CurrentOrdersForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1220, 1055);
+            this.Controls.Add(this.KitchenLabel);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "CurrentOrdersForm";
             this.Text = "Orders";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private Label KitchenLabel;
     }
 }

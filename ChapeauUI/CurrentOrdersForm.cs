@@ -15,6 +15,7 @@ namespace ChapeauUI
         public CurrentOrdersForm()
         {
             InitializeComponent();
+        
         }
     }
 }
