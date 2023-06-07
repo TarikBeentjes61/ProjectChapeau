@@ -34,7 +34,7 @@ namespace ChapeauDAL
                 {
                     employeeId = (int)row["id"],
                     name= (string)row["name"],
-                    Password = (string)row["password"]
+                    password = (string)row["password"]
                 };
                 employees.Add(employee);
             }
@@ -47,7 +47,7 @@ namespace ChapeauDAL
             {
                 employeeId = (int)row["id"],
                 name = (string)row["name"],
-                Password = (string)row["password"]
+                password = (string)row["password"]
             };
             return employee;
         }
