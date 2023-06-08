@@ -19,10 +19,27 @@ namespace ChapeauUI
         {
             foreach (Order order in orders)
             {
-                ListViewItem li = new ListViewItem(order.orderId.ToString()); //First item in the row
+                ListViewItem li = new ListViewItem(order.tableId.ToString()); //First item in the row
                 li.SubItems.Add(order.tableId.ToString()); //Second item in the row
-                listView1.Items.Add(li);    
+                orderListView.Items.Add(li);
             }
         }
+
+        private void dinnerButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShowDinnerMenu()
+        {
+
+        }
+
+        //private List<MenuItem> GetDinnerMenu()
+        //{
+        //    MenuService menuItemService = new MenuService();
+        //    //List<MenuItem> menu = menuItemService.GetAllDinner();
+        //    //return menu;
+        //}
     }
 }

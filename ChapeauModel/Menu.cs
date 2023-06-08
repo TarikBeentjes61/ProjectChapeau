@@ -6,5 +6,10 @@ namespace ChapeauModel
     {
         public int menuId;
         private List<MenuItem> menuItems;
+
+        public void SetMenu(List<MenuItem> menuItems)
+        {
+            this.menuItems = menuItems; 
+        } 
     }
 }
