@@ -73,6 +73,7 @@
             btnDrinks.TabIndex = 11;
             btnDrinks.Text = "DRINKS";
             btnDrinks.UseVisualStyleBackColor = false;
+            btnDrinks.Click += btnDrinks_Click;
             // 
             // btnDinner
             // 
@@ -83,6 +84,7 @@
             btnDinner.TabIndex = 10;
             btnDinner.Text = "DINNER";
             btnDinner.UseVisualStyleBackColor = false;
+            btnDinner.Click += btnDinner_Click;
             // 
             // btnLunch
             // 
@@ -93,6 +95,7 @@
             btnLunch.TabIndex = 9;
             btnLunch.Text = "LUNCH";
             btnLunch.UseVisualStyleBackColor = false;
+            btnLunch.Click += btnLunch_Click;
             // 
             // label2
             // 
@@ -135,7 +138,6 @@
             // 
             // lblTotal
             // 
-            lblTotal.AutoSize = true;
             lblTotal.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point);
             lblTotal.Location = new Point(171, 461);
             lblTotal.Name = "lblTotal";

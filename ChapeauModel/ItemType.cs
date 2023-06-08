@@ -2,6 +2,6 @@
 {
     public enum ItemType
     {
-        Lunch, Diner, Drink
+        Starters, Mains, Deserts, Entres, SoftFrinks, Beers, Wines
     }
 }
