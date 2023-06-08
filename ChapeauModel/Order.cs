@@ -19,7 +19,7 @@ namespace ChapeauModel
 
         public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
         
-        public TimeSpan WaitingTime { get { return DateTime.Now - date; } }
+        public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
 
         public void AddOrder()
         {

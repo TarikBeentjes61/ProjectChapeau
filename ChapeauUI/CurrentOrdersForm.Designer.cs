@@ -35,12 +35,14 @@
             this.WaitTime = new System.Windows.Forms.ColumnHeader();
             this.ItemHeader = new System.Windows.Forms.ColumnHeader();
             this.AmountHeader = new System.Windows.Forms.ColumnHeader();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewDoing = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.LogoutButton = new System.Windows.Forms.Button();
+            this.FinishedOrdersButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // KitchenLabel
@@ -82,6 +84,7 @@
             // TimeHeader
             // 
             this.TimeHeader.Text = "Time";
+            this.TimeHeader.Width = 65;
             // 
             // WaitTime
             // 
@@ -96,29 +99,29 @@
             // AmountHeader
             // 
             this.AmountHeader.Text = "Amount";
-            this.AmountHeader.Width = 104;
+            this.AmountHeader.Width = 99;
             // 
-            // listView1
+            // listViewDoing
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewDoing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
-            this.listView1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.listView1.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listView1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(548, 81);
-            this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(508, 379);
-            this.listView1.TabIndex = 3;
-            this.listView1.TileSize = new System.Drawing.Size(400, 45);
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewDoing.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.listViewDoing.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.listViewDoing.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.listViewDoing.FullRowSelect = true;
+            this.listViewDoing.GridLines = true;
+            this.listViewDoing.Location = new System.Drawing.Point(548, 81);
+            this.listViewDoing.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listViewDoing.Name = "listViewDoing";
+            this.listViewDoing.Size = new System.Drawing.Size(508, 379);
+            this.listViewDoing.TabIndex = 3;
+            this.listViewDoing.TileSize = new System.Drawing.Size(400, 45);
+            this.listViewDoing.UseCompatibleStateImageBehavior = false;
+            this.listViewDoing.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
@@ -127,6 +130,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Time";
+            this.columnHeader2.Width = 65;
             // 
             // columnHeader3
             // 
@@ -141,14 +145,37 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "Amount";
-            this.columnHeader5.Width = 104;
+            this.columnHeader5.Width = 99;
+            // 
+            // LogoutButton
+            // 
+            this.LogoutButton.Location = new System.Drawing.Point(915, 9);
+            this.LogoutButton.Name = "LogoutButton";
+            this.LogoutButton.Size = new System.Drawing.Size(141, 47);
+            this.LogoutButton.TabIndex = 4;
+            this.LogoutButton.Text = "Logout";
+            this.LogoutButton.UseVisualStyleBackColor = true;
+            // 
+            // FinishedOrdersButton
+            // 
+            this.FinishedOrdersButton.BackColor = System.Drawing.SystemColors.Control;
+            this.FinishedOrdersButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.FinishedOrdersButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.FinishedOrdersButton.Location = new System.Drawing.Point(737, 9);
+            this.FinishedOrdersButton.Name = "FinishedOrdersButton";
+            this.FinishedOrdersButton.Size = new System.Drawing.Size(141, 47);
+            this.FinishedOrdersButton.TabIndex = 5;
+            this.FinishedOrdersButton.Text = "Finished Orders";
+            this.FinishedOrdersButton.UseVisualStyleBackColor = false;
             // 
             // CurrentOrdersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 791);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.FinishedOrdersButton);
+            this.Controls.Add(this.LogoutButton);
+            this.Controls.Add(this.listViewDoing);
             this.Controls.Add(this.listViewToDo);
             this.Controls.Add(this.KitchenLabel);
             this.Name = "CurrentOrdersForm";
@@ -167,11 +194,13 @@
         private ColumnHeader WaitTime;
         private ColumnHeader ItemHeader;
         private ColumnHeader AmountHeader;
-        private ListView listView1;
+        private ListView listViewDoing;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
+        private Button LogoutButton;
+        private Button FinishedOrdersButton;
     }
 }
