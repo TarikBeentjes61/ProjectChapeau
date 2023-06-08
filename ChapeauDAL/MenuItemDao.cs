@@ -48,6 +48,7 @@ namespace ChapeauDAL
                     stock = (int)row["stock"],
                     price = (float)row["priceExc"],
                     itemName = (string)row["itemName"],
+                    tax = (double)row["tax"],
                 };
             }
             return menuItems;
@@ -62,6 +63,7 @@ namespace ChapeauDAL
                 stock = (int)row["stock"],
                 price = (float)row["priceExc"],
                 itemName = (string)row["itemName"],
+                tax = (double)row["tax"],
             };
             return menuItem;
         }
