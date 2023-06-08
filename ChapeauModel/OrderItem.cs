@@ -9,7 +9,7 @@ namespace ChapeauModel
     public class OrderItem
     {
         public int menuItemId;
-        public Order order;
+        public int orderId;
         public int amount;
         public string comment;
 

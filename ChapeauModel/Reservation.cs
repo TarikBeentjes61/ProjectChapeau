@@ -4,7 +4,7 @@ namespace ChapeauModel
 {
     public class Reservation
     {
-        public Table table;
+        public int tableId;
         public DateTime date;
         public string name;
 
