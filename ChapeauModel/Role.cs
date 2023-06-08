@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChapeauService
+namespace ChapeauModel
 {
-    public class BillService
+    public enum Role
     {
-
+        Manager, Barista, Chef
     }
 }

@@ -31,9 +31,8 @@ namespace ChapeauDAL
             {
                 Reservation reservation = new Reservation()
                 {
-                    reservationId = (int)row["id"],
-                    tableId = (int)row["Table_id"],
-                    date = (DateTime)row["datetime"],
+                    name = (string)row["name"],
+                    date = (DateTime)row["dateTime"],
                 };
             }
             return reservations;
@@ -43,9 +42,8 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Reservation reservation = new Reservation()
             {
-                reservationId = (int)row["id"],
-                tableId = (int)row["Table_id"],
-                date = (DateTime)row["datetime"],
+                name = (string)row["name"],
+                date = (DateTime)row["dateTime"],
             };
             return reservation;
         }

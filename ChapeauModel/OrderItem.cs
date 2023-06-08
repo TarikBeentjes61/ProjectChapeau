@@ -8,10 +8,14 @@ namespace ChapeauModel
 {
     public class OrderItem
     {
-        public int orderItemId;
-        public int orderId;
         public int menuItemId;
+        public Order order;
         public int amount;
         public string comment;
+
+        public void AddComment()
+        {
+
+        }
     }
 }

@@ -6,24 +6,45 @@ namespace ChapeauModel
     public class Order
     {
         private List<OrderItem> orderItems;
-        public int orderId;
         public int employeeId;
         public int tableId;
         public int billId;
         public DateTime date;
         public OrderStatus status;
 
-        public void PayOrder()
+        public Order()
+        {
+            orderItems = new List<OrderItem>();
+        }
+
+        public void AddOrder()
         {
 
         }
-        public void CancelOrder()
+
+        public void DeleteOrder()
         {
 
         }
-        public void AddOrderItem(OrderItem item)
+
+        public void AddOrderItem(OrderItem orderItem)
         {
-            orderItems.Add(item);
+            orderItems.Add(orderItem);
+        }
+
+        public void StartPreparing()
+        {
+
+        }
+
+        private void UpdateOrder()
+        {
+
+        }
+
+        public void MarkAsReady()
+        {
+
         }
     }
 }
