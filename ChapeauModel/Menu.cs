@@ -6,6 +6,7 @@ namespace ChapeauModel
     {
         public int menuId;
         private List<MenuItem> menuItems;
+        public string name;
 
         public void SetMenu(List<MenuItem> menuItems)
         {
