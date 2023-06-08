@@ -35,6 +35,7 @@ namespace ChapeauDAL
             {
                 OrderItem orderItem = new OrderItem()
                 {
+                    orderId = (int)row["Order_id"],
                     menuItemId = (int)row["MenuItem_id"],
                     amount = (int)row["amount"],
                     comment = (string)row["comment"]
@@ -47,6 +48,7 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             OrderItem orderItem = new OrderItem()
             {
+                orderId = (int)row["Order_id"],
                 menuItemId = (int)row["MenuItem_id"],
                 amount = (int)row["amount"],
                 comment = (string)row["comment"]
