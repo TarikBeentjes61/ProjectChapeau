@@ -8,7 +8,7 @@ namespace ChapeauModel
 {
     public class OrderItem
     {
-        public MenuItem menuItem;
+        public int menuItemId;
         public Order order;
         public int amount;
         public string comment;

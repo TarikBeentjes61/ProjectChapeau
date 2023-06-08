@@ -31,7 +31,7 @@ namespace ChapeauDAL
             {
                 Bill bill = new Bill()
                 {
-                    billId = (int)row["id"],
+                    tableId = (int)row["id"],
                     employeeId = (int)row["Employee_id"],
                     comment = (string)row["comment"],
                     paymentMethod = (PaymentMethod)row["paymentMethod"],
@@ -47,7 +47,7 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Bill bill = new Bill()
             {
-                billId = (int)row["id"],
+                tableId = (int)row["id"],
                 employeeId = (int)row["Employee_id"],
                 comment = (string)row["comment"],
                 paymentMethod = (PaymentMethod)row["paymentMethod"],
