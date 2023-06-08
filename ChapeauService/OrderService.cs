@@ -20,5 +20,9 @@ namespace ChapeauService
         {
             return orderDao.GetById(id);
         }
+        public List<Order> GetAllByStatus(OrderStatus status)
+        {
+            return orderDao.GetAllByState(status);
+        }
     }
 }

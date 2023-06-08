@@ -17,6 +17,10 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
+        public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
+        
+        public TimeSpan WaitingTime { get { return DateTime.Now - date; } }
+
         public void AddOrder()
         {
 

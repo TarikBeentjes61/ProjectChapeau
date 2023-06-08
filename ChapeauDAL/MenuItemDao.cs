@@ -55,17 +55,22 @@ namespace ChapeauDAL
         }
         private MenuItem ReadSingle(DataTable dataTable)
         {
-            DataRow row = dataTable.Rows[0];
-            MenuItem menuItem = new MenuItem()
+            if(dataTable.Rows.Count > 0)
             {
-                menuItemId = (int)row["id"],
-                menuId = (int)row["Menu_id"],
-                stock = (int)row["stock"],
-                price = (float)row["priceExc"],
-                itemName = (string)row["itemName"],
-                tax = (double)row["tax"],
-            };
-            return menuItem;
+                DataRow row = dataTable.Rows[0];
+                MenuItem menuItem = new MenuItem()
+                {
+                    menuItemId = (int)row["id"],
+                    menuId = (int)row["Menu_id"],
+                    stock = (int)row["stock"],
+                    price = (float)row["priceExc"],
+                    itemName = (string)row["itemName"],
+                    itemType = (ItemType)row["itemType"],
+                    tax = 21,
+                };
+                return menuItem;
+            }
+            return null;
         }
     }
 }
