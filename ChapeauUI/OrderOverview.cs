@@ -41,5 +41,81 @@ namespace ChapeauUI
                 listViewOrderOverview.Items.Add(item);
             }
         }
+
+        private void btnLunch_Click(object sender, EventArgs e)
+        {
+            //How to make it appear only once? And hide the CreateOrderForm
+            CreateOrderForm form = new CreateOrderForm();
+            form.Show();
+            form.btnLunch.BackColor = Color.FromArgb(189, 242, 217);
+
+            //STARTERS LISTVIEW
+
+            MenuItemService menuItemService = new MenuItemService();
+            List<MenuItem> menuItems = menuItemService.GetAll();
+
+            form.listViewStarters.Clear();
+            form.listViewStarters.View = View.Details;
+
+            form.listViewStarters.Columns.Add("Name");
+            form.listViewStarters.Columns.Add("Price");
+
+            foreach (MenuItem m in menuItems)
+            {
+                ListViewItem item = new ListViewItem();
+
+                item.SubItems.Add(m.itemName);
+                item.SubItems.Add(m.price.ToString());
+                listViewOrderOverview.Items.Add(item);
+            }
+
+            //MAINS LISTVIEW
+
+            form.listViewMains.Clear();
+            form.listViewMains.View = View.Details;
+
+            form.listViewMains.Columns.Add("Name");
+            form.listViewMains.Columns.Add("Price");
+
+            foreach (MenuItem m in menuItems)
+            {
+                ListViewItem item = new ListViewItem();
+
+                item.SubItems.Add(m.itemName);
+                item.SubItems.Add(m.price.ToString());
+                form.listViewMains.Items.Add(item);
+            }
+
+            //DESERTS LISTVIEW
+
+            form.listViewDeserts.Clear();
+            form.listViewDeserts.View = View.Details;
+
+            form.listViewDeserts.Columns.Add("Name");
+            form.listViewDeserts.Columns.Add("Price");
+
+            foreach (MenuItem m in menuItems)
+            {
+                ListViewItem item = new ListViewItem();
+
+                item.SubItems.Add(m.itemName);
+                item.SubItems.Add(m.price.ToString());
+                form.listViewDeserts.Items.Add(item);
+            }
+        }
+
+        private void btnDinner_Click(object sender, EventArgs e)
+        {
+            CreateOrderForm form = new CreateOrderForm();
+            form.Show();
+            form.btnDinner.BackColor = Color.FromArgb(189, 242, 217);
+        }
+
+        private void btnDrinks_Click(object sender, EventArgs e)
+        {
+            CreateOrderForm form = new CreateOrderForm();
+            form.Show();
+            form.btnDrinks.BackColor = Color.FromArgb(189, 242, 217);
+        }
     }
 }
