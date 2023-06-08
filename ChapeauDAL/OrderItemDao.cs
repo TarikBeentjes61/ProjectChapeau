@@ -18,6 +18,7 @@ namespace ChapeauDAL
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
+
         public OrderItem GetById(int id)
         {
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem] WHERE id = @id";
@@ -34,7 +35,7 @@ namespace ChapeauDAL
             {
                 OrderItem orderItem = new OrderItem()
                 {
-                    menuItem = (MenuItem)row["MenuItem_id"],
+                    menuItemId = (int)row["MenuItem_id"],
                     amount = (int)row["amount"],
                     comment = (string)row["comment"]
                 };
@@ -46,7 +47,7 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             OrderItem orderItem = new OrderItem()
             {
-                menuItem = (MenuItem)row["MenuItem_id"],
+                menuItemId = (int)row["MenuItem_id"],
                 amount = (int)row["amount"],
                 comment = (string)row["comment"]
             };
