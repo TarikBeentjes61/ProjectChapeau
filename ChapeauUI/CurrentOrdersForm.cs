@@ -15,7 +15,10 @@ namespace ChapeauUI
         public CurrentOrdersForm()
         {
             InitializeComponent();
-        
+            ListViewItem li = new ListViewItem("1");
+            li.SubItems.Add("Cherry Babes");
+            li.SubItems.Add("2");
+            listViewWaiting.Items.Add(li);
         }
     }
 }
