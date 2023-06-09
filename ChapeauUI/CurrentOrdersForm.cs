@@ -17,10 +17,14 @@ namespace ChapeauUI
         public CurrentOrdersForm()
         {
             InitializeComponent();
-            LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewToDo);
-            LoadOrders(GetOrdersByStatus(OrderStatus.ToDo), listViewDoing);
+            Start();
         }
-        
+        public void Start()
+        {
+            LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
+            LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
+            finishedPanel.Hide();
+        }
         private List<Order> GetOrdersByStatus(OrderStatus status)
         {
             OrderService orderService = new OrderService();
@@ -29,6 +33,7 @@ namespace ChapeauUI
 
         private void LoadOrders(List<Order> orders, ListView list)
         {
+            list.Items.Clear();
             //Looping through all the orders and orderitems to fill the rows
             bool colorState = false;
             foreach (Order order in orders)
@@ -36,12 +41,33 @@ namespace ChapeauUI
                 foreach (OrderItem item in order.OrderItems)
                 {
                     ListViewItem li = new ListViewItem(order.tableId.ToString());
+                    li.Tag = item;
                     li.SubItems.Add(order.date.ToString("HH:mm"));
                     li.SubItems.Add(order.WaitingTime.ToString("hh':'mm"));
                     li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
                     li.SubItems.Add(item.amount.ToString());
                     li.BackColor = GetRowColor(colorState);
                     list.Items.Add(li);
+                }
+                colorState = !colorState;
+            }
+        }
+        private void LoadFinishedOrders(List<Order> orders)
+        {
+            listViewFinished.Items.Clear();
+            //Looping through all the orders and orderitems to fill the rows
+            bool colorState = false;
+            foreach (Order order in orders)
+            {
+                foreach (OrderItem item in order.OrderItems)
+                {
+                    ListViewItem li = new ListViewItem(order.tableId.ToString());
+                    li.Tag = item;
+                    li.SubItems.Add(order.date.ToString("HH:mm"));
+                    li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
+                    li.SubItems.Add(item.amount.ToString());
+                    li.BackColor = GetRowColor(colorState);
+                    listViewFinished.Items.Add(li);
                 }
                 colorState = !colorState;
             }
@@ -57,6 +83,27 @@ namespace ChapeauUI
         {
             MenuItemService menuItemService = new MenuItemService();
             return menuItemService.GetById(id);
+        }
+
+        private void FinishedOrdersButton_Click(object sender, EventArgs e)
+        {
+            LoadFinishedOrders(GetOrdersByStatus(OrderStatus.Finished));
+            finishedPanel.BringToFront();
+            finishedPanel.Show();
+            listViewWaiting.Enabled = false;
+            listViewDoing.Enabled = false;
+        }
+
+        private void finishedBackButton_Click(object sender, EventArgs e)
+        {
+            finishedPanel.Hide();
+            listViewWaiting.Enabled = true;
+            listViewDoing.Enabled = true;
+        }
+
+        private void listViewWaiting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
