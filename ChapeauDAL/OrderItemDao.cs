@@ -18,7 +18,6 @@ namespace ChapeauDAL
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
-
         public OrderItem GetById(int id)
         {
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem] WHERE id = @id";
@@ -27,6 +26,16 @@ namespace ChapeauDAL
                 new SqlParameter("@id", id ),
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public void UpdateStatusById (int id, OrderStatus status)
+        {
+            string query = $"UPDATE OrderItem SET status = @status WHERE id = @id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@id", id ),
+                new SqlParameter("@status", (int)status ),
+             };
+            ExecuteEditQuery(query, sqlParameters);
         }
         private List<OrderItem> ReadTables(DataTable dataTable)
         {
@@ -40,6 +49,7 @@ namespace ChapeauDAL
                     amount = (int)row["amount"],
                     comment = (string)row["comment"]
                 };
+                orderItems.Add(orderItem);
             }
             return orderItems;
         }

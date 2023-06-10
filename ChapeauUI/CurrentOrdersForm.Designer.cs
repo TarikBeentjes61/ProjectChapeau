@@ -54,8 +54,13 @@
             this.FinishedTimeHeader = new System.Windows.Forms.ColumnHeader();
             this.FinishedItemHeader = new System.Windows.Forms.ColumnHeader();
             this.FinishedAmountHeader = new System.Windows.Forms.ColumnHeader();
+            this.changeStatusPanel = new System.Windows.Forms.Panel();
+            this.changeStatusButton = new System.Windows.Forms.Button();
+            this.cancelButton = new System.Windows.Forms.Button();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.finishedPanel.SuspendLayout();
+            this.changeStatusPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // KitchenLabel
@@ -89,7 +94,7 @@
             this.listViewWaiting.TileSize = new System.Drawing.Size(400, 45);
             this.listViewWaiting.UseCompatibleStateImageBehavior = false;
             this.listViewWaiting.View = System.Windows.Forms.View.Details;
-            this.listViewWaiting.SelectedIndexChanged += new System.EventHandler(this.listViewWaiting_SelectedIndexChanged);
+            this.listViewWaiting.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewWaiting_ItemSelectionChanged);
             // 
             // WaitingTableHeader
             // 
@@ -135,6 +140,7 @@
             this.listViewDoing.TileSize = new System.Drawing.Size(400, 45);
             this.listViewDoing.UseCompatibleStateImageBehavior = false;
             this.listViewDoing.View = System.Windows.Forms.View.Details;
+            this.listViewDoing.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewDoing_ItemSelectionChanged);
             // 
             // DoingTableHeader
             // 
@@ -221,10 +227,11 @@
             this.finishedPanel.Controls.Add(this.finishedLabel);
             this.finishedPanel.Controls.Add(this.finishedBackButton);
             this.finishedPanel.Controls.Add(this.listViewFinished);
-            this.finishedPanel.Location = new System.Drawing.Point(279, 510);
+            this.finishedPanel.Location = new System.Drawing.Point(13, 520);
             this.finishedPanel.Name = "finishedPanel";
             this.finishedPanel.Size = new System.Drawing.Size(507, 425);
             this.finishedPanel.TabIndex = 9;
+            this.finishedPanel.Visible = false;
             // 
             // finishedLabel
             // 
@@ -288,11 +295,60 @@
             this.FinishedAmountHeader.Text = "Amount";
             this.FinishedAmountHeader.Width = 99;
             // 
+            // changeStatusPanel
+            // 
+            this.changeStatusPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.changeStatusPanel.Controls.Add(this.changeStatusButton);
+            this.changeStatusPanel.Controls.Add(this.cancelButton);
+            this.changeStatusPanel.Controls.Add(this.statusLabel);
+            this.changeStatusPanel.Location = new System.Drawing.Point(548, 520);
+            this.changeStatusPanel.Name = "changeStatusPanel";
+            this.changeStatusPanel.Size = new System.Drawing.Size(430, 125);
+            this.changeStatusPanel.TabIndex = 10;
+            this.changeStatusPanel.Visible = false;
+            // 
+            // changeStatusButton
+            // 
+            this.changeStatusButton.BackColor = System.Drawing.Color.White;
+            this.changeStatusButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.changeStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeStatusButton.Location = new System.Drawing.Point(215, 63);
+            this.changeStatusButton.Name = "changeStatusButton";
+            this.changeStatusButton.Size = new System.Drawing.Size(215, 62);
+            this.changeStatusButton.TabIndex = 12;
+            this.changeStatusButton.Text = "Change to #####";
+            this.changeStatusButton.UseVisualStyleBackColor = false;
+            this.changeStatusButton.Click += new System.EventHandler(this.changeStatusButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.BackColor = System.Drawing.Color.Silver;
+            this.cancelButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelButton.Location = new System.Drawing.Point(0, 63);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(215, 62);
+            this.cancelButton.TabIndex = 6;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = false;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.statusLabel.Location = new System.Drawing.Point(147, 9);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(132, 25);
+            this.statusLabel.TabIndex = 11;
+            this.statusLabel.Text = "Change Status";
+            // 
             // CurrentOrdersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 1067);
+            this.Controls.Add(this.changeStatusPanel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.doingLabel);
             this.Controls.Add(this.WaitingLabel);
@@ -305,6 +361,8 @@
             this.panel1.PerformLayout();
             this.finishedPanel.ResumeLayout(false);
             this.finishedPanel.PerformLayout();
+            this.changeStatusPanel.ResumeLayout(false);
+            this.changeStatusPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,5 +396,9 @@
         private ColumnHeader FinishedItemHeader;
         private ColumnHeader FinishedAmountHeader;
         private Label finishedLabel;
+        private Panel changeStatusPanel;
+        private Button changeStatusButton;
+        private Button cancelButton;
+        private Label statusLabel;
     }
 }

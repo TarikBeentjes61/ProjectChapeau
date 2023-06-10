@@ -22,7 +22,6 @@ namespace ChapeauDAL
                 new SqlParameter("@status", (int)status),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
         }
         public Order GetById(int id)
         {

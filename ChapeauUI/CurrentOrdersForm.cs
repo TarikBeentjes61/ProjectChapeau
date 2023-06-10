@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
+        private readonly Color Green = Color.FromArgb(128, 255, 128);
+        private readonly Color Orange = Color.FromArgb(255, 179, 71);
+        private readonly ItemType[] BarItems = { ItemType.SoftFrinks, ItemType.Wines, ItemType.Beers };
+        private OrderItem LastSelectedItem; //Keep track of the last selected item from the list
+        private Employee LoggedInEmployee;
         public CurrentOrdersForm()
         {
             InitializeComponent();
@@ -21,20 +27,23 @@ namespace ChapeauUI
         }
         public void Start()
         {
+            EmployeeService employeeService = new EmployeeService();
+
+            LoggedInEmployee = employeeService.GetById(1);
             LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
             LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
-            finishedPanel.Hide();
         }
         private List<Order> GetOrdersByStatus(OrderStatus status)
         {
+            //SELECT * FROM OrderItem JOIN MenuItem ON OrderItem.MenuItem_id = MenuItem.id WHERE MenuItem.itemType < 4 AND [status] = @status
             OrderService orderService = new OrderService();
             return orderService.GetAllByStatus(status);
         }
 
         private void LoadOrders(List<Order> orders, ListView list)
         {
+            //Loads the orders for the given list, both lists have the same columns so it works in a single method.
             list.Items.Clear();
-            //Looping through all the orders and orderitems to fill the rows
             bool colorState = false;
             foreach (Order order in orders)
             {
@@ -84,26 +93,76 @@ namespace ChapeauUI
             MenuItemService menuItemService = new MenuItemService();
             return menuItemService.GetById(id);
         }
+        private void ClearSelectedMainLists()
+        {
+            listViewWaiting.SelectedItems.Clear();
+            listViewDoing.SelectedItems.Clear();
+        }
+        private void ChangeMainListState()
+        {
+            listViewWaiting.Enabled = !listViewWaiting.Enabled;
+            listViewDoing.Enabled = !listViewDoing.Enabled;
+        }
+        private void ShowChangeStatusPanel(OrderStatus status)
+        {
+            //Change the color and text of the change status button depending on the status of the last selected item
+            ChangeMainListState();
+            if(status == OrderStatus.Waiting)
+            {
+                changeStatusButton.BackColor = Green;
+                changeStatusButton.Text = "Change to Doing";
+            }
+            else
+            {
+                changeStatusButton.BackColor = Orange;
+                changeStatusButton.Text = "Change to Finished";
+            }
+            changeStatusPanel.Show();
+        }
+        private void listViewWaiting_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                LastSelectedItem = (OrderItem)e.Item.Tag;
+                ShowChangeStatusPanel(OrderStatus.Waiting);
+            }
+        }
+        private void listViewDoing_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if(e.IsSelected)
+            {
+                LastSelectedItem = (OrderItem)e.Item.Tag;
+                ShowChangeStatusPanel(OrderStatus.Doing);
+            }
+        }
 
         private void FinishedOrdersButton_Click(object sender, EventArgs e)
         {
             LoadFinishedOrders(GetOrdersByStatus(OrderStatus.Finished));
+            ChangeMainListState();
             finishedPanel.BringToFront();
             finishedPanel.Show();
-            listViewWaiting.Enabled = false;
-            listViewDoing.Enabled = false;
         }
-
         private void finishedBackButton_Click(object sender, EventArgs e)
         {
+            ClearSelectedMainLists();
+            ChangeMainListState();
             finishedPanel.Hide();
-            listViewWaiting.Enabled = true;
-            listViewDoing.Enabled = true;
         }
-
-        private void listViewWaiting_SelectedIndexChanged(object sender, EventArgs e)
+        private void cancelButton_Click(object sender, EventArgs e)
         {
-
+            ClearSelectedMainLists();
+            ChangeMainListState();
+            changeStatusPanel.Hide();
+        }
+        private void changeStatusButton_Click(object sender, EventArgs e)
+        {
+            OrderItemService orderItemService = new OrderItemService();
+            orderItemService.UpdateStatusById(LastSelectedItem.menuItemId, OrderStatus.Waiting);
+            LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
+            LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
+            changeStatusPanel.Hide();
+            ChangeMainListState();
         }
     }
 }
