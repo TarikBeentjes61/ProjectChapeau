@@ -21,7 +21,7 @@ namespace ChapeauUI
             {
                 ListViewItem li = new ListViewItem(order.tableId.ToString()); //First item in the row
                 li.SubItems.Add(order.tableId.ToString()); //Second item in the row
-                orderListView.Items.Add(li);
+                listViewOrder.Items.Add(li);
             }
         }
 

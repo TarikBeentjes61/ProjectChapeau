@@ -8,5 +8,6 @@ namespace ChapeauService
 {
     public class BillService
     {
+
     }
 }
