@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerForm));
             pictureBox1 = new PictureBox();
-            label1 = new Label();
+            labelEmployee = new Label();
             buttonTableView = new Button();
             buttonEmployeeManagement = new Button();
             buttonMenu = new Button();
@@ -46,16 +46,16 @@
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
             // 
-            // label1
+            // labelEmployee
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.FromArgb(255, 179, 71);
-            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(315, 12);
-            label1.Name = "label1";
-            label1.Size = new Size(71, 30);
-            label1.TabIndex = 10;
-            label1.Text = "Naam";
+            labelEmployee.AutoSize = true;
+            labelEmployee.BackColor = Color.FromArgb(255, 179, 71);
+            labelEmployee.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            labelEmployee.Location = new Point(315, 12);
+            labelEmployee.Name = "labelEmployee";
+            labelEmployee.Size = new Size(71, 30);
+            labelEmployee.TabIndex = 10;
+            labelEmployee.Text = "Naam";
             // 
             // buttonTableView
             // 
@@ -99,7 +99,7 @@
             Controls.Add(buttonMenu);
             Controls.Add(buttonEmployeeManagement);
             Controls.Add(buttonTableView);
-            Controls.Add(label1);
+            Controls.Add(labelEmployee);
             Controls.Add(pictureBox1);
             Name = "ManagerForm";
             Text = "ManagerForm";
@@ -111,7 +111,7 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private Label label1;
+        private Label labelEmployee;
         private Button buttonTableView;
         private Button buttonEmployeeManagement;
         private Button buttonMenu;

@@ -19,8 +19,9 @@ namespace ChapeauUI
 
         private void buttonEmployeeManagement_Click(object sender, EventArgs e)
         {
-            Form form = new EmployeeManagementForm();
-            form.ShowDialog();
+            EmployeeManagementForm form = new EmployeeManagementForm();
+            form.Show();
+            this.Hide();
         }
     }
 }

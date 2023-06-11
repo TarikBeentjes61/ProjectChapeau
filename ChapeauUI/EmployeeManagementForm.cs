@@ -15,12 +15,19 @@ namespace ChapeauUI
         public EmployeeManagementForm()
         {
             InitializeComponent();
+
         }
 
         private void buttonAddNew_Click(object sender, EventArgs e)
         {
-            panelNewEmployee.Show();
-            panelEmployees.Hide();
+            pnlNewEmployee.Show();
+            pnlEmployees.Hide();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            //Main form stays open
         }
     }
 }

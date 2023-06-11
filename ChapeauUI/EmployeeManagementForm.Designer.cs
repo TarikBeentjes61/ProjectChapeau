@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeManagementForm));
-            panelEmployees = new Panel();
+            pnlEmployees = new Panel();
             buttonRemove = new Button();
             buttonAdjust = new Button();
             listViewEmployees = new ListView();
             buttonAddNew = new Button();
             label1 = new Label();
-            panelNewEmployee = new Panel();
-            buttonAdd = new Button();
+            pnlNewEmployee = new Panel();
+            btnAdd = new Button();
             richTextBoxPassword = new RichTextBox();
             richTextBoxRole = new RichTextBox();
             label6 = new Label();
@@ -46,22 +46,23 @@
             listView1 = new ListView();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            panelEmployees.SuspendLayout();
-            panelNewEmployee.SuspendLayout();
+            btnBack = new Button();
+            pnlEmployees.SuspendLayout();
+            pnlNewEmployee.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // panelEmployees
+            // pnlEmployees
             // 
-            panelEmployees.Controls.Add(buttonRemove);
-            panelEmployees.Controls.Add(buttonAdjust);
-            panelEmployees.Controls.Add(listViewEmployees);
-            panelEmployees.Controls.Add(buttonAddNew);
-            panelEmployees.Controls.Add(label1);
-            panelEmployees.Location = new Point(12, 80);
-            panelEmployees.Name = "panelEmployees";
-            panelEmployees.Size = new Size(374, 605);
-            panelEmployees.TabIndex = 6;
+            pnlEmployees.Controls.Add(buttonRemove);
+            pnlEmployees.Controls.Add(buttonAdjust);
+            pnlEmployees.Controls.Add(listViewEmployees);
+            pnlEmployees.Controls.Add(buttonAddNew);
+            pnlEmployees.Controls.Add(label1);
+            pnlEmployees.Location = new Point(12, 80);
+            pnlEmployees.Name = "pnlEmployees";
+            pnlEmployees.Size = new Size(374, 605);
+            pnlEmployees.TabIndex = 6;
             // 
             // buttonRemove
             // 
@@ -115,32 +116,33 @@
             label1.TabIndex = 0;
             label1.Text = "EMPLOYEES";
             // 
-            // panelNewEmployee
+            // pnlNewEmployee
             // 
-            panelNewEmployee.Controls.Add(buttonAdd);
-            panelNewEmployee.Controls.Add(richTextBoxPassword);
-            panelNewEmployee.Controls.Add(richTextBoxRole);
-            panelNewEmployee.Controls.Add(label6);
-            panelNewEmployee.Controls.Add(label5);
-            panelNewEmployee.Controls.Add(richTextBoxName);
-            panelNewEmployee.Controls.Add(label4);
-            panelNewEmployee.Controls.Add(listView1);
-            panelNewEmployee.Controls.Add(label3);
-            panelNewEmployee.Location = new Point(12, 80);
-            panelNewEmployee.Name = "panelNewEmployee";
-            panelNewEmployee.Size = new Size(374, 605);
-            panelNewEmployee.TabIndex = 7;
+            pnlNewEmployee.Controls.Add(btnBack);
+            pnlNewEmployee.Controls.Add(btnAdd);
+            pnlNewEmployee.Controls.Add(richTextBoxPassword);
+            pnlNewEmployee.Controls.Add(richTextBoxRole);
+            pnlNewEmployee.Controls.Add(label6);
+            pnlNewEmployee.Controls.Add(label5);
+            pnlNewEmployee.Controls.Add(richTextBoxName);
+            pnlNewEmployee.Controls.Add(label4);
+            pnlNewEmployee.Controls.Add(listView1);
+            pnlNewEmployee.Controls.Add(label3);
+            pnlNewEmployee.Location = new Point(12, 80);
+            pnlNewEmployee.Name = "pnlNewEmployee";
+            pnlNewEmployee.Size = new Size(374, 605);
+            pnlNewEmployee.TabIndex = 7;
             // 
-            // buttonAdd
+            // btnAdd
             // 
-            buttonAdd.BackColor = Color.FromArgb(138, 210, 176);
-            buttonAdd.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonAdd.Location = new Point(16, 530);
-            buttonAdd.Name = "buttonAdd";
-            buttonAdd.Size = new Size(121, 48);
-            buttonAdd.TabIndex = 12;
-            buttonAdd.Text = "ADD";
-            buttonAdd.UseVisualStyleBackColor = false;
+            btnAdd.BackColor = Color.FromArgb(138, 210, 176);
+            btnAdd.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAdd.Location = new Point(236, 536);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(121, 48);
+            btnAdd.TabIndex = 12;
+            btnAdd.Text = "ADD";
+            btnAdd.UseVisualStyleBackColor = false;
             // 
             // richTextBoxPassword
             // 
@@ -229,35 +231,47 @@
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
             // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.FromArgb(255, 179, 71);
+            btnBack.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnBack.Location = new Point(16, 536);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(121, 48);
+            btnBack.TabIndex = 13;
+            btnBack.Text = "BACK";
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
+            // 
             // EmployeeManagementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(398, 697);
             Controls.Add(pictureBox1);
-            Controls.Add(panelEmployees);
-            Controls.Add(panelNewEmployee);
+            Controls.Add(pnlNewEmployee);
+            Controls.Add(pnlEmployees);
             Name = "EmployeeManagementForm";
             Text = "EmployeeManagementForm";
-            panelEmployees.ResumeLayout(false);
-            panelEmployees.PerformLayout();
-            panelNewEmployee.ResumeLayout(false);
-            panelNewEmployee.PerformLayout();
+            pnlEmployees.ResumeLayout(false);
+            pnlEmployees.PerformLayout();
+            pnlNewEmployee.ResumeLayout(false);
+            pnlNewEmployee.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panelEmployees;
+        private Panel pnlEmployees;
         private Button buttonRemove;
         private Button buttonAdjust;
         private ListView listViewEmployees;
         private Button buttonAddNew;
         private Label label1;
-        private Panel panelNewEmployee;
+        private Panel pnlNewEmployee;
         private Label label3;
-        private Button buttonAdd;
+        private Button btnAdd;
         private RichTextBox richTextBoxPassword;
         private RichTextBox richTextBoxRole;
         private Label label6;
@@ -266,5 +280,6 @@
         private Label label4;
         private ListView listView1;
         private PictureBox pictureBox1;
+        private Button btnBack;
     }
 }
