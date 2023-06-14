@@ -19,17 +19,15 @@ namespace ChapeauUI
         private readonly Color Orange = Color.FromArgb(255, 179, 71);
         private readonly ItemType[] BarItems = { ItemType.SoftFrinks, ItemType.Wines, ItemType.Beers };
         private OrderItem LastSelectedItem; //Keep track of the last selected item from the list
-        private Employee LoggedInEmployee;
-        public CurrentOrdersForm()
+        private Role currentRole;
+        public CurrentOrdersForm(Role role)
         {
+            currentRole = role;
             InitializeComponent();
             Start();
         }
         public void Start()
         {
-            EmployeeService employeeService = new EmployeeService();
-
-            LoggedInEmployee = employeeService.GetById(1);
             LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
             LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
         }
