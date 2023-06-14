@@ -5,7 +5,7 @@ namespace ChapeauModel
     public class Bill
     {
         List<Order> orders;
-        public int billId;
+        public int tableId;
         public int employeeId;
         public string comment;
         public PaymentMethod paymentMethod;

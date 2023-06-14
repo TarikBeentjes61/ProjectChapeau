@@ -29,31 +29,31 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateOrderForm));
-            TableLabel = new Label();
+            lblTable = new Label();
             label1 = new Label();
-            lunchButton = new Button();
-            dinnerButton = new Button();
-            drinksButton = new Button();
-            emplyeeLabel = new Label();
-            orderListView = new ListView();
+            btnLunch = new Button();
+            btnDinner = new Button();
+            btnDrinks = new Button();
+            lblEmployee = new Label();
+            listViewOrder = new ListView();
             label3 = new Label();
-            listView1 = new ListView();
-            listView2 = new ListView();
-            listView3 = new ListView();
+            listViewDeserts = new ListView();
+            listViewStarters = new ListView();
+            listViewMains = new ListView();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
             SuspendLayout();
             // 
-            // TableLabel
+            // lblTable
             // 
-            TableLabel.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            TableLabel.Location = new Point(135, 20);
-            TableLabel.Name = "TableLabel";
-            TableLabel.Size = new Size(148, 55);
-            TableLabel.TabIndex = 1;
-            TableLabel.Text = "Tabel #1";
-            TableLabel.TextAlign = ContentAlignment.MiddleCenter;
+            lblTable.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            lblTable.Location = new Point(136, 18);
+            lblTable.Name = "lblTable";
+            lblTable.Size = new Size(124, 45);
+            lblTable.TabIndex = 1;
+            lblTable.Text = "TAFEL #1";
+            lblTable.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -64,57 +64,58 @@
             label1.TabIndex = 2;
             label1.Text = " ";
             // 
-            // lunchButton
+            // btnLunch
             // 
-            lunchButton.BackColor = Color.FromArgb(138, 210, 176);
-            lunchButton.Location = new Point(12, 91);
-            lunchButton.Name = "lunchButton";
-            lunchButton.Size = new Size(90, 50);
-            lunchButton.TabIndex = 3;
-            lunchButton.Text = "LUNCH";
-            lunchButton.UseVisualStyleBackColor = false;
+            btnLunch.BackColor = Color.FromArgb(138, 210, 176);
+            btnLunch.FlatAppearance.BorderSize = 2;
+            btnLunch.Location = new Point(12, 91);
+            btnLunch.Name = "btnLunch";
+            btnLunch.Size = new Size(90, 50);
+            btnLunch.TabIndex = 3;
+            btnLunch.Text = "LUNCH";
+            btnLunch.UseVisualStyleBackColor = false;
             // 
-            // dinnerButton
+            // btnDinner
             // 
-            dinnerButton.BackColor = Color.FromArgb(138, 210, 176);
-            dinnerButton.Location = new Point(147, 91);
-            dinnerButton.Name = "dinnerButton";
-            dinnerButton.Size = new Size(90, 50);
-            dinnerButton.TabIndex = 4;
-            dinnerButton.Text = "DINNER";
-            dinnerButton.UseVisualStyleBackColor = false;
-            dinnerButton.Click += dinnerButton_Click;
+            btnDinner.BackColor = Color.FromArgb(138, 210, 176);
+            btnDinner.Location = new Point(147, 91);
+            btnDinner.Name = "btnDinner";
+            btnDinner.Size = new Size(90, 50);
+            btnDinner.TabIndex = 4;
+            btnDinner.Text = "DINNER";
+            btnDinner.UseVisualStyleBackColor = false;
+            btnDinner.Click += dinnerButton_Click;
             // 
-            // drinksButton
+            // btnDrinks
             // 
-            drinksButton.BackColor = Color.FromArgb(138, 210, 176);
-            drinksButton.ForeColor = Color.Black;
-            drinksButton.Location = new Point(279, 91);
-            drinksButton.Name = "drinksButton";
-            drinksButton.Size = new Size(90, 50);
-            drinksButton.TabIndex = 5;
-            drinksButton.Text = "DRINKS";
-            drinksButton.UseVisualStyleBackColor = false;
+            btnDrinks.BackColor = Color.FromArgb(138, 210, 176);
+            btnDrinks.ForeColor = Color.Black;
+            btnDrinks.Location = new Point(279, 91);
+            btnDrinks.Name = "btnDrinks";
+            btnDrinks.Size = new Size(90, 50);
+            btnDrinks.TabIndex = 5;
+            btnDrinks.Text = "DRINKS";
+            btnDrinks.UseVisualStyleBackColor = false;
             // 
-            // emplyeeLabel
+            // lblEmployee
             // 
-            emplyeeLabel.BackColor = Color.FromArgb(255, 179, 71);
-            emplyeeLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            emplyeeLabel.Location = new Point(298, 9);
-            emplyeeLabel.Margin = new Padding(0);
-            emplyeeLabel.Name = "emplyeeLabel";
-            emplyeeLabel.Size = new Size(86, 40);
-            emplyeeLabel.TabIndex = 6;
-            emplyeeLabel.Text = "Marlene";
-            emplyeeLabel.TextAlign = ContentAlignment.MiddleCenter;
+            lblEmployee.BackColor = Color.FromArgb(255, 179, 71);
+            lblEmployee.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            lblEmployee.Location = new Point(298, 9);
+            lblEmployee.Margin = new Padding(0);
+            lblEmployee.Name = "lblEmployee";
+            lblEmployee.Size = new Size(86, 40);
+            lblEmployee.TabIndex = 6;
+            lblEmployee.Text = "Naam";
+            lblEmployee.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // orderListView
+            // listViewOrder
             // 
-            orderListView.Location = new Point(12, 847);
-            orderListView.Name = "orderListView";
-            orderListView.Size = new Size(372, 196);
-            orderListView.TabIndex = 7;
-            orderListView.UseCompatibleStateImageBehavior = false;
+            listViewOrder.Location = new Point(12, 847);
+            listViewOrder.Name = "listViewOrder";
+            listViewOrder.Size = new Size(372, 196);
+            listViewOrder.TabIndex = 7;
+            listViewOrder.UseCompatibleStateImageBehavior = false;
             // 
             // label3
             // 
@@ -126,29 +127,29 @@
             label3.TabIndex = 8;
             label3.Text = "Order";
             // 
-            // listView1
+            // listViewDeserts
             // 
-            listView1.Location = new Point(12, 641);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(372, 161);
-            listView1.TabIndex = 9;
-            listView1.UseCompatibleStateImageBehavior = false;
+            listViewDeserts.Location = new Point(12, 641);
+            listViewDeserts.Name = "listViewDeserts";
+            listViewDeserts.Size = new Size(372, 161);
+            listViewDeserts.TabIndex = 9;
+            listViewDeserts.UseCompatibleStateImageBehavior = false;
             // 
-            // listView2
+            // listViewStarters
             // 
-            listView2.Location = new Point(12, 200);
-            listView2.Name = "listView2";
-            listView2.Size = new Size(372, 161);
-            listView2.TabIndex = 10;
-            listView2.UseCompatibleStateImageBehavior = false;
+            listViewStarters.Location = new Point(12, 200);
+            listViewStarters.Name = "listViewStarters";
+            listViewStarters.Size = new Size(372, 161);
+            listViewStarters.TabIndex = 10;
+            listViewStarters.UseCompatibleStateImageBehavior = false;
             // 
-            // listView3
+            // listViewMains
             // 
-            listView3.Location = new Point(12, 420);
-            listView3.Name = "listView3";
-            listView3.Size = new Size(372, 161);
-            listView3.TabIndex = 11;
-            listView3.UseCompatibleStateImageBehavior = false;
+            listViewMains.Location = new Point(12, 420);
+            listViewMains.Name = "listViewMains";
+            listViewMains.Size = new Size(372, 161);
+            listViewMains.TabIndex = 11;
+            listViewMains.UseCompatibleStateImageBehavior = false;
             // 
             // label4
             // 
@@ -192,17 +193,17 @@
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(listView3);
-            Controls.Add(listView2);
-            Controls.Add(listView1);
+            Controls.Add(listViewMains);
+            Controls.Add(listViewStarters);
+            Controls.Add(listViewDeserts);
             Controls.Add(label3);
-            Controls.Add(orderListView);
-            Controls.Add(emplyeeLabel);
-            Controls.Add(drinksButton);
-            Controls.Add(dinnerButton);
-            Controls.Add(lunchButton);
+            Controls.Add(listViewOrder);
+            Controls.Add(lblEmployee);
+            Controls.Add(btnDrinks);
+            Controls.Add(btnDinner);
+            Controls.Add(btnLunch);
             Controls.Add(label1);
-            Controls.Add(TableLabel);
+            Controls.Add(lblTable);
             Margin = new Padding(3, 4, 3, 4);
             Name = "CreateOrderForm";
             Text = "Create Order";
@@ -211,17 +212,17 @@
         }
 
         #endregion
-        private Label TableLabel;
+        private Label lblTable;
         private Label label1;
-        private Button lunchButton;
-        private Button dinnerButton;
-        private Button drinksButton;
-        private Label emplyeeLabel;
-        private ListView orderListView;
+        public Button btnLunch;
+        public Button btnDinner;
+        public Button btnDrinks;
+        private Label lblEmployee;
+        private ListView listViewOrder;
         private Label label3;
-        private ListView listView1;
-        private ListView listView2;
-        private ListView listView3;
+        public ListView listViewDeserts;
+        public ListView listViewStarters;
+        public ListView listViewMains;
         private Label label4;
         private Label label5;
         private Label label6;

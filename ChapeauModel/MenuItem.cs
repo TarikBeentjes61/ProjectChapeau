@@ -7,6 +7,7 @@
         public string itemName;
         public int stock;
         public double price;
+        public double tax;
         public ItemType itemType;
 
         public void AddMenuItem()
