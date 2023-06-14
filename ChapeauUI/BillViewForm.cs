@@ -25,6 +25,7 @@ namespace ChapeauUI
 
         private void btnProceedToPayment_Click(object sender, EventArgs e)
         {
+            //Hide all panels, except Payment
             pnlAddComment.Hide();
             pnlBillSettled.Hide();
             pnlBillView.Hide();
@@ -35,6 +36,7 @@ namespace ChapeauUI
 
         private void btnBackPayment_Click(object sender, EventArgs e)
         {
+            //Hide all panels, except BillView
             pnlAddComment.Hide();
             pnlBillPayment.Hide();
             pnlBillSettled.Hide();
@@ -59,11 +61,45 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
+            //Hide all panels, except Comment
             pnlBillPayment.Hide();
             pnlBillSettled.Hide();
             pnlBillView.Hide();
             pnlAddComment.Show();
             pnlAddComment.Location = new Point(12, 83);
+        }
+
+        private void btnBackComment_Click(object sender, EventArgs e)
+        {
+            //Hide all panels, except Payment
+            pnlAddComment.Hide();
+            pnlBillSettled.Hide();
+            pnlBillView.Hide();
+            pnlBillPayment.Show();
+            pnlBillPayment.Location = new Point(12, 83);
+        }
+
+        private void btnDebit_Click(object sender, EventArgs e)
+        {
+            btnVisa.Select();
+            btnVisa.BackColor = Color.White;
+            btnCash.BackColor = Color.White;
+            btnDebit.BackColor = Color.FromArgb(255, 179, 71);
+            //255; 179; 71
+        }
+
+        private void btnVisa_Click(object sender, EventArgs e)
+        {
+            btnDebit.BackColor = Color.White;
+            btnCash.BackColor = Color.White;
+            btnVisa.BackColor = Color.FromArgb(255, 179, 71);
+        }
+
+        private void btnCash_Click(object sender, EventArgs e)
+        {
+            btnDebit.BackColor = Color.White;
+            btnVisa.BackColor = Color.White;
+            btnCash.BackColor = Color.FromArgb(255, 179, 71);
         }
     }
 }

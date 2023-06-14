@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BillViewForm));
             this.pnlBillSettled = new System.Windows.Forms.Panel();
             this.labelFinalVAT = new System.Windows.Forms.Label();
             this.labelFinalTipAmount = new System.Windows.Forms.Label();
@@ -73,10 +74,12 @@
             this.labelOrderPrice = new System.Windows.Forms.Label();
             this.labelOrderPriceText = new System.Windows.Forms.Label();
             this.labelVATText = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlBillSettled.SuspendLayout();
             this.pnlAddComment.SuspendLayout();
             this.pnlBillPayment.SuspendLayout();
             this.pnlBillView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlBillSettled
@@ -91,7 +94,7 @@
             this.pnlBillSettled.Controls.Add(this.labelFinalOrderPriceText);
             this.pnlBillSettled.Controls.Add(this.labelSettled);
             this.pnlBillSettled.Controls.Add(this.labelBillHas);
-            this.pnlBillSettled.Location = new System.Drawing.Point(1216, 80);
+            this.pnlBillSettled.Location = new System.Drawing.Point(1214, 70);
             this.pnlBillSettled.Name = "pnlBillSettled";
             this.pnlBillSettled.Size = new System.Drawing.Size(372, 555);
             this.pnlBillSettled.TabIndex = 46;
@@ -171,22 +174,22 @@
             // labelSettled
             // 
             this.labelSettled.AutoSize = true;
-            this.labelSettled.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelSettled.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelSettled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.labelSettled.Location = new System.Drawing.Point(122, 197);
+            this.labelSettled.Location = new System.Drawing.Point(114, 197);
             this.labelSettled.Name = "labelSettled";
-            this.labelSettled.Size = new System.Drawing.Size(141, 41);
+            this.labelSettled.Size = new System.Drawing.Size(151, 41);
             this.labelSettled.TabIndex = 38;
             this.labelSettled.Text = "SETTLED!";
             // 
             // labelBillHas
             // 
             this.labelBillHas.AutoSize = true;
-            this.labelBillHas.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelBillHas.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelBillHas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.labelBillHas.Location = new System.Drawing.Point(57, 143);
+            this.labelBillHas.Location = new System.Drawing.Point(43, 143);
             this.labelBillHas.Name = "labelBillHas";
-            this.labelBillHas.Size = new System.Drawing.Size(272, 41);
+            this.labelBillHas.Size = new System.Drawing.Size(294, 41);
             this.labelBillHas.TabIndex = 37;
             this.labelBillHas.Text = "THE BILL HAS BEEN";
             // 
@@ -197,7 +200,7 @@
             this.pnlAddComment.Controls.Add(this.button1);
             this.pnlAddComment.Controls.Add(this.richTextBox1);
             this.pnlAddComment.Controls.Add(this.labelTypeComment);
-            this.pnlAddComment.Location = new System.Drawing.Point(816, 80);
+            this.pnlAddComment.Location = new System.Drawing.Point(814, 70);
             this.pnlAddComment.Name = "pnlAddComment";
             this.pnlAddComment.Size = new System.Drawing.Size(372, 555);
             this.pnlAddComment.TabIndex = 45;
@@ -212,6 +215,7 @@
             this.btnBackComment.TabIndex = 36;
             this.btnBackComment.Text = "BACK";
             this.btnBackComment.UseVisualStyleBackColor = false;
+            this.btnBackComment.Click += new System.EventHandler(this.btnBackComment_Click);
             // 
             // labelCommendSaved
             // 
@@ -268,7 +272,7 @@
             this.pnlBillPayment.Controls.Add(this.labelOrderPricePayment);
             this.pnlBillPayment.Controls.Add(this.labelOrderPricePaymentText);
             this.pnlBillPayment.Controls.Add(this.labelPayment);
-            this.pnlBillPayment.Location = new System.Drawing.Point(414, 83);
+            this.pnlBillPayment.Location = new System.Drawing.Point(414, 70);
             this.pnlBillPayment.Name = "pnlBillPayment";
             this.pnlBillPayment.Size = new System.Drawing.Size(372, 555);
             this.pnlBillPayment.TabIndex = 44;
@@ -431,7 +435,7 @@
             this.pnlBillView.Controls.Add(this.labelOrderPrice);
             this.pnlBillView.Controls.Add(this.labelOrderPriceText);
             this.pnlBillView.Controls.Add(this.labelVATText);
-            this.pnlBillView.Location = new System.Drawing.Point(12, 83);
+            this.pnlBillView.Location = new System.Drawing.Point(12, 70);
             this.pnlBillView.Name = "pnlBillView";
             this.pnlBillView.Size = new System.Drawing.Size(372, 555);
             this.pnlBillView.TabIndex = 43;
@@ -469,12 +473,14 @@
             // 
             // btnDebit
             // 
+            this.btnDebit.BackColor = System.Drawing.SystemColors.Window;
             this.btnDebit.Location = new System.Drawing.Point(13, 363);
             this.btnDebit.Name = "btnDebit";
             this.btnDebit.Size = new System.Drawing.Size(94, 29);
             this.btnDebit.TabIndex = 3;
             this.btnDebit.Text = "DEBIT";
-            this.btnDebit.UseVisualStyleBackColor = true;
+            this.btnDebit.UseVisualStyleBackColor = false;
+            this.btnDebit.Click += new System.EventHandler(this.btnDebit_Click);
             // 
             // listView1
             // 
@@ -492,6 +498,7 @@
             this.btnVisa.TabIndex = 4;
             this.btnVisa.Text = "VISA/AMEX";
             this.btnVisa.UseVisualStyleBackColor = true;
+            this.btnVisa.Click += new System.EventHandler(this.btnVisa_Click);
             // 
             // labelVAT
             // 
@@ -510,6 +517,7 @@
             this.btnCash.TabIndex = 5;
             this.btnCash.Text = "CASH";
             this.btnCash.UseVisualStyleBackColor = true;
+            this.btnCash.Click += new System.EventHandler(this.btnCash_Click);
             // 
             // labelOrderPrice
             // 
@@ -538,12 +546,22 @@
             this.labelVATText.TabIndex = 7;
             this.labelVATText.Text = "VAT:";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(125, 62);
+            this.pictureBox1.TabIndex = 47;
+            this.pictureBox1.TabStop = false;
+            // 
             // BillViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1924, 773);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pnlBillSettled);
             this.Controls.Add(this.pnlAddComment);
             this.Controls.Add(this.pnlBillPayment);
@@ -558,6 +576,7 @@
             this.pnlBillPayment.PerformLayout();
             this.pnlBillView.ResumeLayout(false);
             this.pnlBillView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -609,5 +628,6 @@
         private Label labelOrderPrice;
         private Label labelOrderPriceText;
         private Label labelVATText;
+        private PictureBox pictureBox1;
     }
 }
