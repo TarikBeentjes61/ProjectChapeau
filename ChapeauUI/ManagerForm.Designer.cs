@@ -56,6 +56,7 @@
             buttonAddNewEmployee = new Button();
             label1 = new Label();
             pnlMenu = new Panel();
+            lblBackToMainFromMenu = new Label();
             pictureBox4 = new PictureBox();
             button1 = new Button();
             button2 = new Button();
@@ -369,6 +370,7 @@
             // 
             // pnlMenu
             // 
+            pnlMenu.Controls.Add(lblBackToMainFromMenu);
             pnlMenu.Controls.Add(pictureBox4);
             pnlMenu.Controls.Add(button1);
             pnlMenu.Controls.Add(button2);
@@ -379,6 +381,17 @@
             pnlMenu.Name = "pnlMenu";
             pnlMenu.Size = new Size(374, 673);
             pnlMenu.TabIndex = 17;
+            // 
+            // lblBackToMainFromMenu
+            // 
+            lblBackToMainFromMenu.AutoSize = true;
+            lblBackToMainFromMenu.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            lblBackToMainFromMenu.Location = new Point(3, 121);
+            lblBackToMainFromMenu.Name = "lblBackToMainFromMenu";
+            lblBackToMainFromMenu.Size = new Size(57, 37);
+            lblBackToMainFromMenu.TabIndex = 22;
+            lblBackToMainFromMenu.Text = "<--";
+            lblBackToMainFromMenu.Click += lblBackToMainFromMenu_Click;
             // 
             // pictureBox4
             // 
@@ -435,7 +448,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(6, 110);
+            label2.Location = new Point(50, 111);
             label2.Name = "label2";
             label2.Size = new Size(143, 54);
             label2.TabIndex = 16;
@@ -575,10 +588,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1281, 697);
             Controls.Add(pnlMain);
-            Controls.Add(pnlEmployees);
             Controls.Add(pnlMenu);
             Controls.Add(pnlNewEmployee);
             Controls.Add(pnlNewMenuItem);
+            Controls.Add(pnlEmployees);
             Name = "ManagerForm";
             Text = "ManagerForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -646,5 +659,6 @@
         private Label label2;
         private Button btnBackToMenu;
         private Label lblBackToMain;
+        private Label lblBackToMainFromMenu;
     }
 }

@@ -88,5 +88,10 @@ namespace ChapeauUI
         {
             ShowPanel(pnlMenu);
         }
+
+        private void lblBackToMainFromMenu_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlMain);
+        }
     }
 }
