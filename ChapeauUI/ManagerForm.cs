@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ChapeauModel;
+using ChapeauService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,9 +33,30 @@ namespace ChapeauUI
             panel.Show();
         }
 
+        private List<Employee> GetEmployees()
+        {
+            EmployeeService employeeService = new EmployeeService();
+            List<Employee> employees = employeeService.GetAll();
+            return employees;
+        }
+
+        private void DisplayEmployees(List<Employee> employees)
+        {
+            // clear the listview before filling it
+            listViewEmployees.Items.Clear();
+
+            foreach (Employee employee in employees)
+            {
+                ListViewItem li = new ListViewItem(employee.name.ToString());
+                li.SubItems.Add(employee.role.ToString());
+            }
+        }
+
         private void buttonEmployeeManagement_Click(object sender, EventArgs e)
         {
             ShowPanel(pnlEmployees);
+            List<Employee> employees = GetEmployees();
+            DisplayEmployees(employees);
         }
 
         private void buttonAddNewEmployee_Click(object sender, EventArgs e)
