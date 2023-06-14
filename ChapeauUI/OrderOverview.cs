@@ -50,9 +50,9 @@ namespace ChapeauUI
             form.btnLunch.BackColor = Color.FromArgb(189, 242, 217);
 
             //STARTERS LISTVIEW
-
             MenuItemService menuItemService = new MenuItemService();
-            List<MenuItem> menuItems = menuItemService.GetAll();
+            ItemType starters = ItemType.Starters;
+            List<MenuItem> menuItemsStarters = menuItemService.GetByItemType(starters, 1);
 
             form.listViewStarters.Clear();
             form.listViewStarters.View = View.Details;
@@ -60,16 +60,18 @@ namespace ChapeauUI
             form.listViewStarters.Columns.Add("Name");
             form.listViewStarters.Columns.Add("Price");
 
-            foreach (MenuItem m in menuItems)
+            foreach (MenuItem m in menuItemsStarters)
             {
                 ListViewItem item = new ListViewItem();
 
                 item.SubItems.Add(m.itemName);
                 item.SubItems.Add(m.price.ToString());
-                listViewOrderOverview.Items.Add(item);
+                form.listViewStarters.Items.Add(item);
             }
 
             //MAINS LISTVIEW
+            ItemType mains = ItemType.Mains;
+            List<MenuItem> menuItemsMains = menuItemService.GetByItemType(mains, 1);
 
             form.listViewMains.Clear();
             form.listViewMains.View = View.Details;
@@ -77,7 +79,7 @@ namespace ChapeauUI
             form.listViewMains.Columns.Add("Name");
             form.listViewMains.Columns.Add("Price");
 
-            foreach (MenuItem m in menuItems)
+            foreach (MenuItem m in menuItemsMains)
             {
                 ListViewItem item = new ListViewItem();
 
@@ -88,13 +90,16 @@ namespace ChapeauUI
 
             //DESERTS LISTVIEW
 
+            ItemType deserts = ItemType.Deserts;
+            List<MenuItem> menuItemsDeserts = menuItemService.GetByItemType(deserts, 1);
+
             form.listViewDeserts.Clear();
             form.listViewDeserts.View = View.Details;
 
             form.listViewDeserts.Columns.Add("Name");
             form.listViewDeserts.Columns.Add("Price");
 
-            foreach (MenuItem m in menuItems)
+            foreach (MenuItem m in menuItemsDeserts)
             {
                 ListViewItem item = new ListViewItem();
 
