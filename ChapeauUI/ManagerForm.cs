@@ -15,13 +15,55 @@ namespace ChapeauUI
         public ManagerForm()
         {
             InitializeComponent();
+            ShowPanel(pnlMain);
+        }
+
+        private void ShowPanel(Panel panel)
+        {
+            foreach (Control contrl in this.Controls)
+            {
+                if (contrl is Panel)
+                {
+                    contrl.Hide();
+                }
+            }
+
+            panel.Show();
         }
 
         private void buttonEmployeeManagement_Click(object sender, EventArgs e)
         {
-            EmployeeManagementForm form = new EmployeeManagementForm();
-            form.Show();
-            this.Hide();
+            ShowPanel(pnlEmployees);
+        }
+
+        private void buttonAddNewEmployee_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlNewEmployee);
+        }
+
+        private void btnBackToEmployees_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlEmployees);
+        }
+
+        private void btnAddNewMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlNewMenuItem);
+        }
+
+        private void btnBackToMenu_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlMenu);
+        }
+
+        private void lblBackToMain_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlMain);
+        }
+
+        private void buttonMenu_Click(object sender, EventArgs e)
+        {
+            ShowPanel(pnlMenu);
         }
     }
 }
