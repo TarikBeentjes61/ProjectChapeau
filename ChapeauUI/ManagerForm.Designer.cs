@@ -36,22 +36,21 @@
             buttonMenu = new Button();
             pnlMain = new Panel();
             pnlNewEmployee = new Panel();
-            pictureBox2 = new PictureBox();
-            btnBackToEmployees = new Button();
-            btnAdd = new Button();
-            richTextBoxPassword = new RichTextBox();
-            richTextBoxRole = new RichTextBox();
-            label6 = new Label();
-            label5 = new Label();
-            richTextBoxName = new RichTextBox();
-            label4 = new Label();
-            listView1 = new ListView();
+            textBox1 = new TextBox();
             label3 = new Label();
+            textBox2 = new TextBox();
+            label4 = new Label();
+            label6 = new Label();
+            textBox4 = new TextBox();
+            pictureBox2 = new PictureBox();
+            button3 = new Button();
+            label12 = new Label();
+            label16 = new Label();
             pnlEmployees = new Panel();
             lblBackToMain = new Label();
             pictureBox3 = new PictureBox();
             buttonRemove = new Button();
-            buttonAdjust = new Button();
+            buttonAdjustEmployee = new Button();
             listViewEmployees = new ListView();
             buttonAddNewEmployee = new Button();
             label1 = new Label();
@@ -75,6 +74,19 @@
             btnNewMenuItemAdd = new Button();
             listView3 = new ListView();
             label7 = new Label();
+            pnlAdjustEmployee = new Panel();
+            textBoxAdjustEmployeeRole = new TextBox();
+            label15 = new Label();
+            textBoxAdjustEmployeeNewPassword = new TextBox();
+            label14 = new Label();
+            textBoxAdjustEmployeeOldPassword = new TextBox();
+            label13 = new Label();
+            label11 = new Label();
+            textBoxAdjustEmployeeName = new TextBox();
+            pictureBox6 = new PictureBox();
+            btnConfirmAdjustEmployee = new Button();
+            lblAdjustEmployeeHeader = new Label();
+            lblBackToEmployees = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlMain.SuspendLayout();
             pnlNewEmployee.SuspendLayout();
@@ -85,6 +97,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             pnlNewMenuItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            pnlAdjustEmployee.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -156,21 +170,74 @@
             // 
             // pnlNewEmployee
             // 
-            pnlNewEmployee.Controls.Add(pictureBox2);
-            pnlNewEmployee.Controls.Add(btnBackToEmployees);
-            pnlNewEmployee.Controls.Add(btnAdd);
-            pnlNewEmployee.Controls.Add(richTextBoxPassword);
-            pnlNewEmployee.Controls.Add(richTextBoxRole);
-            pnlNewEmployee.Controls.Add(label6);
-            pnlNewEmployee.Controls.Add(label5);
-            pnlNewEmployee.Controls.Add(richTextBoxName);
-            pnlNewEmployee.Controls.Add(label4);
-            pnlNewEmployee.Controls.Add(listView1);
+            pnlNewEmployee.Controls.Add(textBox1);
             pnlNewEmployee.Controls.Add(label3);
-            pnlNewEmployee.Location = new Point(12, 12);
+            pnlNewEmployee.Controls.Add(textBox2);
+            pnlNewEmployee.Controls.Add(label4);
+            pnlNewEmployee.Controls.Add(label6);
+            pnlNewEmployee.Controls.Add(textBox4);
+            pnlNewEmployee.Controls.Add(pictureBox2);
+            pnlNewEmployee.Controls.Add(button3);
+            pnlNewEmployee.Controls.Add(label12);
+            pnlNewEmployee.Controls.Add(label16);
+            pnlNewEmployee.Location = new Point(895, 12);
             pnlNewEmployee.Name = "pnlNewEmployee";
             pnlNewEmployee.Size = new Size(374, 673);
             pnlNewEmployee.TabIndex = 15;
+            // 
+            // textBox1
+            // 
+            textBox1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Location = new Point(16, 404);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(222, 36);
+            textBox1.TabIndex = 43;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Location = new Point(16, 371);
+            label3.Name = "label3";
+            label3.Size = new Size(55, 30);
+            label3.TabIndex = 42;
+            label3.Text = "Role";
+            // 
+            // textBox2
+            // 
+            textBox2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox2.Location = new Point(16, 310);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(222, 35);
+            textBox2.TabIndex = 41;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(16, 277);
+            label4.Name = "label4";
+            label4.Size = new Size(147, 30);
+            label4.TabIndex = 40;
+            label4.Text = "New Password";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(16, 182);
+            label6.Name = "label6";
+            label6.Size = new Size(69, 30);
+            label6.TabIndex = 37;
+            label6.Text = "Naam";
+            // 
+            // textBox4
+            // 
+            textBox4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox4.Location = new Point(16, 215);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(222, 35);
+            textBox4.TabIndex = 36;
             // 
             // pictureBox2
             // 
@@ -178,116 +245,46 @@
             pictureBox2.Location = new Point(0, 0);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(137, 69);
-            pictureBox2.TabIndex = 14;
+            pictureBox2.TabIndex = 34;
             pictureBox2.TabStop = false;
             // 
-            // btnBackToEmployees
+            // button3
             // 
-            btnBackToEmployees.BackColor = Color.FromArgb(255, 179, 71);
-            btnBackToEmployees.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnBackToEmployees.Location = new Point(16, 601);
-            btnBackToEmployees.Name = "btnBackToEmployees";
-            btnBackToEmployees.Size = new Size(121, 48);
-            btnBackToEmployees.TabIndex = 13;
-            btnBackToEmployees.Text = "BACK";
-            btnBackToEmployees.UseVisualStyleBackColor = false;
-            btnBackToEmployees.Click += btnBackToEmployees_Click;
+            button3.BackColor = Color.FromArgb(138, 210, 176);
+            button3.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.Location = new Point(125, 601);
+            button3.Name = "button3";
+            button3.Size = new Size(122, 48);
+            button3.TabIndex = 33;
+            button3.Text = "CONFIRM";
+            button3.UseVisualStyleBackColor = false;
             // 
-            // btnAdd
+            // label12
             // 
-            btnAdd.BackColor = Color.FromArgb(138, 210, 176);
-            btnAdd.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAdd.Location = new Point(236, 601);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(121, 48);
-            btnAdd.TabIndex = 12;
-            btnAdd.Text = "ADD";
-            btnAdd.UseVisualStyleBackColor = false;
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            label12.Location = new Point(84, 115);
+            label12.Name = "label12";
+            label12.Size = new Size(259, 45);
+            label12.TabIndex = 32;
+            label12.Text = "ADD EMPLOYEE";
             // 
-            // richTextBoxPassword
+            // label16
             // 
-            richTextBoxPassword.BorderStyle = BorderStyle.None;
-            richTextBoxPassword.Location = new Point(194, 293);
-            richTextBoxPassword.Name = "richTextBoxPassword";
-            richTextBoxPassword.Size = new Size(163, 28);
-            richTextBoxPassword.TabIndex = 11;
-            richTextBoxPassword.Text = "";
-            // 
-            // richTextBoxRole
-            // 
-            richTextBoxRole.BorderStyle = BorderStyle.None;
-            richTextBoxRole.Location = new Point(194, 241);
-            richTextBoxRole.Name = "richTextBoxRole";
-            richTextBoxRole.Size = new Size(163, 28);
-            richTextBoxRole.TabIndex = 10;
-            richTextBoxRole.Text = "";
-            // 
-            // label6
-            // 
-            label6.BackColor = Color.FromArgb(196, 196, 196);
-            label6.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(16, 289);
-            label6.Name = "label6";
-            label6.Size = new Size(345, 35);
-            label6.TabIndex = 9;
-            label6.Text = "Password";
-            label6.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            label5.BackColor = Color.FromArgb(196, 196, 196);
-            label5.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(16, 238);
-            label5.Name = "label5";
-            label5.Size = new Size(345, 35);
-            label5.TabIndex = 8;
-            label5.Text = "Role";
-            label5.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // richTextBoxName
-            // 
-            richTextBoxName.BorderStyle = BorderStyle.None;
-            richTextBoxName.Location = new Point(194, 191);
-            richTextBoxName.Name = "richTextBoxName";
-            richTextBoxName.Size = new Size(163, 28);
-            richTextBoxName.TabIndex = 7;
-            richTextBoxName.Text = "";
-            // 
-            // label4
-            // 
-            label4.BackColor = Color.FromArgb(196, 196, 196);
-            label4.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(16, 187);
-            label4.Name = "label4";
-            label4.Size = new Size(345, 35);
-            label4.TabIndex = 6;
-            label4.Text = "Name";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // listView1
-            // 
-            listView1.Location = new Point(0, 170);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(374, 394);
-            listView1.TabIndex = 3;
-            listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(0, 118);
-            label3.Name = "label3";
-            label3.Size = new Size(326, 54);
-            label3.TabIndex = 0;
-            label3.Text = "NEW EMPLOYEE";
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            label16.Location = new Point(3, 118);
+            label16.Name = "label16";
+            label16.Size = new Size(57, 37);
+            label16.TabIndex = 35;
+            label16.Text = "<--";
             // 
             // pnlEmployees
             // 
             pnlEmployees.Controls.Add(lblBackToMain);
             pnlEmployees.Controls.Add(pictureBox3);
             pnlEmployees.Controls.Add(buttonRemove);
-            pnlEmployees.Controls.Add(buttonAdjust);
+            pnlEmployees.Controls.Add(buttonAdjustEmployee);
             pnlEmployees.Controls.Add(listViewEmployees);
             pnlEmployees.Controls.Add(buttonAddNewEmployee);
             pnlEmployees.Controls.Add(label1);
@@ -327,16 +324,18 @@
             buttonRemove.Text = "REMOVE";
             buttonRemove.UseVisualStyleBackColor = false;
             // 
-            // buttonAdjust
+            // buttonAdjustEmployee
             // 
-            buttonAdjust.BackColor = Color.FromArgb(138, 210, 176);
-            buttonAdjust.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonAdjust.Location = new Point(16, 601);
-            buttonAdjust.Name = "buttonAdjust";
-            buttonAdjust.Size = new Size(122, 48);
-            buttonAdjust.TabIndex = 3;
-            buttonAdjust.Text = "ADJUST";
-            buttonAdjust.UseVisualStyleBackColor = false;
+            buttonAdjustEmployee.BackColor = Color.FromArgb(138, 210, 176);
+            buttonAdjustEmployee.Enabled = false;
+            buttonAdjustEmployee.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonAdjustEmployee.Location = new Point(16, 601);
+            buttonAdjustEmployee.Name = "buttonAdjustEmployee";
+            buttonAdjustEmployee.Size = new Size(122, 48);
+            buttonAdjustEmployee.TabIndex = 3;
+            buttonAdjustEmployee.Text = "ADJUST";
+            buttonAdjustEmployee.UseVisualStyleBackColor = false;
+            buttonAdjustEmployee.Click += buttonAdjustEmployee_Click;
             // 
             // listViewEmployees
             // 
@@ -345,6 +344,7 @@
             listViewEmployees.Size = new Size(374, 394);
             listViewEmployees.TabIndex = 2;
             listViewEmployees.UseCompatibleStateImageBehavior = false;
+            listViewEmployees.SelectedIndexChanged += listViewEmployees_SelectedIndexChanged;
             // 
             // buttonAddNewEmployee
             // 
@@ -582,16 +582,152 @@
             label7.TabIndex = 20;
             label7.Text = "NEW MENU ITEM";
             // 
+            // pnlAdjustEmployee
+            // 
+            pnlAdjustEmployee.Controls.Add(textBoxAdjustEmployeeRole);
+            pnlAdjustEmployee.Controls.Add(label15);
+            pnlAdjustEmployee.Controls.Add(textBoxAdjustEmployeeNewPassword);
+            pnlAdjustEmployee.Controls.Add(label14);
+            pnlAdjustEmployee.Controls.Add(textBoxAdjustEmployeeOldPassword);
+            pnlAdjustEmployee.Controls.Add(label13);
+            pnlAdjustEmployee.Controls.Add(label11);
+            pnlAdjustEmployee.Controls.Add(textBoxAdjustEmployeeName);
+            pnlAdjustEmployee.Controls.Add(pictureBox6);
+            pnlAdjustEmployee.Controls.Add(btnConfirmAdjustEmployee);
+            pnlAdjustEmployee.Controls.Add(lblAdjustEmployeeHeader);
+            pnlAdjustEmployee.Controls.Add(lblBackToEmployees);
+            pnlAdjustEmployee.Location = new Point(12, 12);
+            pnlAdjustEmployee.Name = "pnlAdjustEmployee";
+            pnlAdjustEmployee.Size = new Size(374, 673);
+            pnlAdjustEmployee.TabIndex = 18;
+            // 
+            // textBoxAdjustEmployeeRole
+            // 
+            textBoxAdjustEmployeeRole.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxAdjustEmployeeRole.Location = new Point(16, 500);
+            textBoxAdjustEmployeeRole.Name = "textBoxAdjustEmployeeRole";
+            textBoxAdjustEmployeeRole.Size = new Size(222, 36);
+            textBoxAdjustEmployeeRole.TabIndex = 31;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label15.Location = new Point(16, 467);
+            label15.Name = "label15";
+            label15.Size = new Size(55, 30);
+            label15.TabIndex = 30;
+            label15.Text = "Role";
+            // 
+            // textBoxAdjustEmployeeNewPassword
+            // 
+            textBoxAdjustEmployeeNewPassword.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxAdjustEmployeeNewPassword.Location = new Point(16, 405);
+            textBoxAdjustEmployeeNewPassword.Name = "textBoxAdjustEmployeeNewPassword";
+            textBoxAdjustEmployeeNewPassword.Size = new Size(222, 35);
+            textBoxAdjustEmployeeNewPassword.TabIndex = 29;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.Location = new Point(16, 372);
+            label14.Name = "label14";
+            label14.Size = new Size(147, 30);
+            label14.TabIndex = 28;
+            label14.Text = "New Password";
+            // 
+            // textBoxAdjustEmployeeOldPassword
+            // 
+            textBoxAdjustEmployeeOldPassword.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxAdjustEmployeeOldPassword.Location = new Point(16, 310);
+            textBoxAdjustEmployeeOldPassword.Name = "textBoxAdjustEmployeeOldPassword";
+            textBoxAdjustEmployeeOldPassword.Size = new Size(222, 35);
+            textBoxAdjustEmployeeOldPassword.TabIndex = 27;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label13.Location = new Point(16, 277);
+            label13.Name = "label13";
+            label13.Size = new Size(138, 30);
+            label13.TabIndex = 26;
+            label13.Text = "Old Password";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            label11.Location = new Point(16, 182);
+            label11.Name = "label11";
+            label11.Size = new Size(69, 30);
+            label11.TabIndex = 25;
+            label11.Text = "Naam";
+            // 
+            // textBoxAdjustEmployeeName
+            // 
+            textBoxAdjustEmployeeName.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxAdjustEmployeeName.Location = new Point(16, 215);
+            textBoxAdjustEmployeeName.Name = "textBoxAdjustEmployeeName";
+            textBoxAdjustEmployeeName.Size = new Size(222, 35);
+            textBoxAdjustEmployeeName.TabIndex = 24;
+            textBoxAdjustEmployeeName.TextChanged += textBoxAdjustEmployeeName_TextChanged;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
+            pictureBox6.Location = new Point(0, 0);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(137, 69);
+            pictureBox6.TabIndex = 22;
+            pictureBox6.TabStop = false;
+            // 
+            // btnConfirmAdjustEmployee
+            // 
+            btnConfirmAdjustEmployee.BackColor = Color.FromArgb(138, 210, 176);
+            btnConfirmAdjustEmployee.Enabled = false;
+            btnConfirmAdjustEmployee.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnConfirmAdjustEmployee.Location = new Point(125, 601);
+            btnConfirmAdjustEmployee.Name = "btnConfirmAdjustEmployee";
+            btnConfirmAdjustEmployee.Size = new Size(122, 48);
+            btnConfirmAdjustEmployee.TabIndex = 20;
+            btnConfirmAdjustEmployee.Text = "CONFIRM";
+            btnConfirmAdjustEmployee.UseVisualStyleBackColor = false;
+            btnConfirmAdjustEmployee.Click += btnConfirmAdjustEmployee_Click;
+            // 
+            // lblAdjustEmployeeHeader
+            // 
+            lblAdjustEmployeeHeader.AutoSize = true;
+            lblAdjustEmployeeHeader.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAdjustEmployeeHeader.Location = new Point(50, 124);
+            lblAdjustEmployeeHeader.Name = "lblAdjustEmployeeHeader";
+            lblAdjustEmployeeHeader.Size = new Size(212, 30);
+            lblAdjustEmployeeHeader.TabIndex = 17;
+            lblAdjustEmployeeHeader.Text = "ADJUST EMPLOYEE";
+            // 
+            // lblBackToEmployees
+            // 
+            lblBackToEmployees.AutoSize = true;
+            lblBackToEmployees.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            lblBackToEmployees.Location = new Point(3, 118);
+            lblBackToEmployees.Name = "lblBackToEmployees";
+            lblBackToEmployees.Size = new Size(57, 37);
+            lblBackToEmployees.TabIndex = 23;
+            lblBackToEmployees.Text = "<--";
+            lblBackToEmployees.Click += lblBackToEmployees_Click;
+            // 
             // ManagerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1281, 697);
             Controls.Add(pnlMain);
-            Controls.Add(pnlMenu);
             Controls.Add(pnlNewEmployee);
-            Controls.Add(pnlNewMenuItem);
+            Controls.Add(pnlAdjustEmployee);
             Controls.Add(pnlEmployees);
+            Controls.Add(pnlMenu);
+            Controls.Add(pnlNewMenuItem);
             Name = "ManagerForm";
             Text = "ManagerForm";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -609,6 +745,9 @@
             pnlNewMenuItem.ResumeLayout(false);
             pnlNewMenuItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            pnlAdjustEmployee.ResumeLayout(false);
+            pnlAdjustEmployee.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
         }
 
@@ -621,21 +760,10 @@
         private Button buttonMenu;
         private Panel pnlMain;
         private Panel pnlNewEmployee;
-        private Button btnBackToEmployees;
-        private Button btnAdd;
-        private RichTextBox richTextBoxPassword;
-        private RichTextBox richTextBoxRole;
-        private Label label6;
-        private Label label5;
-        private RichTextBox richTextBoxName;
-        private Label label4;
-        private ListView listView1;
-        private Label label3;
-        private PictureBox pictureBox2;
         private Panel pnlEmployees;
         private PictureBox pictureBox3;
         private Button buttonRemove;
-        private Button buttonAdjust;
+        private Button buttonAdjustEmployee;
         private ListView listViewEmployees;
         private Button buttonAddNewEmployee;
         private Label label1;
@@ -660,5 +788,28 @@
         private Button btnBackToMenu;
         private Label lblBackToMain;
         private Label lblBackToMainFromMenu;
+        private Panel pnlAdjustEmployee;
+        private Label lblBackToEmployees;
+        private PictureBox pictureBox6;
+        private Button btnConfirmAdjustEmployee;
+        private Label lblAdjustEmployeeHeader;
+        private TextBox textBoxAdjustEmployeeNewPassword;
+        private Label label14;
+        private TextBox textBoxAdjustEmployeeOldPassword;
+        private Label label13;
+        private Label label11;
+        private TextBox textBoxAdjustEmployeeName;
+        private TextBox textBoxAdjustEmployeeRole;
+        private Label label15;
+        private TextBox textBox1;
+        private Label label3;
+        private TextBox textBox2;
+        private Label label4;
+        private Label label6;
+        private TextBox textBox4;
+        private PictureBox pictureBox2;
+        private Button button3;
+        private Label label12;
+        private Label label16;
     }
 }
