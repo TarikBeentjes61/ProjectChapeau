@@ -40,7 +40,9 @@ namespace ChapeauDAL
                     amount = (int)row["amount"],
                     comment = (string)row["comment"]
                 };
+                orderItems.Add(orderItem);
             }
+            
             return orderItems;
         }
         private OrderItem ReadSingle(DataTable dataTable)

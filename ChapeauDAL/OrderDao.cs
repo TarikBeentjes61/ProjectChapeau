@@ -36,6 +36,7 @@ namespace ChapeauDAL
                     billId = (int)row["Bill_id"],
                     date = (DateTime)row["dateTime"],
                 };
+                orders.Add(order);
             }
             return orders;
         }

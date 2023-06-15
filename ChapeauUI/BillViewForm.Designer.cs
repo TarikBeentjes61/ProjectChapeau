@@ -63,11 +63,13 @@
             this.labelOrderPricePaymentText = new System.Windows.Forms.Label();
             this.labelPayment = new System.Windows.Forms.Label();
             this.pnlBillView = new System.Windows.Forms.Panel();
+            this.btnBackOrderOverview = new System.Windows.Forms.Button();
             this.labelBill = new System.Windows.Forms.Label();
             this.labelChoosePayment = new System.Windows.Forms.Label();
             this.btnProceedToPayment = new System.Windows.Forms.Button();
             this.btnDebit = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewBillOverview = new System.Windows.Forms.ListView();
+            this.AmountColumn = new System.Windows.Forms.ColumnHeader();
             this.btnVisa = new System.Windows.Forms.Button();
             this.labelVAT = new System.Windows.Forms.Label();
             this.btnCash = new System.Windows.Forms.Button();
@@ -352,11 +354,11 @@
             // labelChange
             // 
             this.labelChange.AutoSize = true;
-            this.labelChange.Location = new System.Drawing.Point(269, 194);
+            this.labelChange.Location = new System.Drawing.Point(304, 194);
             this.labelChange.Name = "labelChange";
-            this.labelChange.Size = new System.Drawing.Size(86, 20);
+            this.labelChange.Size = new System.Drawing.Size(51, 20);
             this.labelChange.TabIndex = 28;
-            this.labelChange.Text = "hier change";
+            this.labelChange.Text = "xxxxxx";
             // 
             // labelChangeText
             // 
@@ -397,11 +399,11 @@
             // labelOrderPricePayment
             // 
             this.labelOrderPricePayment.AutoSize = true;
-            this.labelOrderPricePayment.Location = new System.Drawing.Point(224, 69);
+            this.labelOrderPricePayment.Location = new System.Drawing.Point(304, 69);
             this.labelOrderPricePayment.Name = "labelOrderPricePayment";
-            this.labelOrderPricePayment.Size = new System.Drawing.Size(132, 20);
+            this.labelOrderPricePayment.Size = new System.Drawing.Size(51, 20);
             this.labelOrderPricePayment.TabIndex = 23;
-            this.labelOrderPricePayment.Text = "hier de order price";
+            this.labelOrderPricePayment.Text = "xxxxxx";
             // 
             // labelOrderPricePaymentText
             // 
@@ -424,11 +426,12 @@
             // 
             // pnlBillView
             // 
+            this.pnlBillView.Controls.Add(this.btnBackOrderOverview);
             this.pnlBillView.Controls.Add(this.labelBill);
             this.pnlBillView.Controls.Add(this.labelChoosePayment);
             this.pnlBillView.Controls.Add(this.btnProceedToPayment);
             this.pnlBillView.Controls.Add(this.btnDebit);
-            this.pnlBillView.Controls.Add(this.listView1);
+            this.pnlBillView.Controls.Add(this.listViewBillOverview);
             this.pnlBillView.Controls.Add(this.btnVisa);
             this.pnlBillView.Controls.Add(this.labelVAT);
             this.pnlBillView.Controls.Add(this.btnCash);
@@ -439,6 +442,18 @@
             this.pnlBillView.Name = "pnlBillView";
             this.pnlBillView.Size = new System.Drawing.Size(372, 555);
             this.pnlBillView.TabIndex = 43;
+            // 
+            // btnBackOrderOverview
+            // 
+            this.btnBackOrderOverview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnBackOrderOverview.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBackOrderOverview.Location = new System.Drawing.Point(272, 0);
+            this.btnBackOrderOverview.Name = "btnBackOrderOverview";
+            this.btnBackOrderOverview.Size = new System.Drawing.Size(100, 36);
+            this.btnBackOrderOverview.TabIndex = 38;
+            this.btnBackOrderOverview.Text = "BACK";
+            this.btnBackOrderOverview.UseVisualStyleBackColor = false;
+            this.btnBackOrderOverview.Click += new System.EventHandler(this.btnBackOrderOverview_Click);
             // 
             // labelBill
             // 
@@ -482,13 +497,21 @@
             this.btnDebit.UseVisualStyleBackColor = false;
             this.btnDebit.Click += new System.EventHandler(this.btnDebit_Click);
             // 
-            // listView1
+            // listViewBillOverview
             // 
-            this.listView1.Location = new System.Drawing.Point(13, 38);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(344, 282);
-            this.listView1.TabIndex = 10;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listViewBillOverview.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.AmountColumn});
+            this.listViewBillOverview.Location = new System.Drawing.Point(13, 38);
+            this.listViewBillOverview.Name = "listViewBillOverview";
+            this.listViewBillOverview.Size = new System.Drawing.Size(344, 282);
+            this.listViewBillOverview.TabIndex = 10;
+            this.listViewBillOverview.UseCompatibleStateImageBehavior = false;
+            this.listViewBillOverview.View = System.Windows.Forms.View.Details;
+            this.listViewBillOverview.SelectedIndexChanged += new System.EventHandler(this.listViewOrderOverview_SelectedIndexChanged);
+            // 
+            // AmountColumn
+            // 
+            this.AmountColumn.Text = "Amount";
             // 
             // btnVisa
             // 
@@ -503,11 +526,11 @@
             // labelVAT
             // 
             this.labelVAT.AutoSize = true;
-            this.labelVAT.Location = new System.Drawing.Point(294, 448);
+            this.labelVAT.Location = new System.Drawing.Point(306, 448);
             this.labelVAT.Name = "labelVAT";
-            this.labelVAT.Size = new System.Drawing.Size(63, 20);
+            this.labelVAT.Size = new System.Drawing.Size(51, 20);
             this.labelVAT.TabIndex = 9;
-            this.labelVAT.Text = "hier VAT";
+            this.labelVAT.Text = "xxxxxx";
             // 
             // btnCash
             // 
@@ -522,11 +545,11 @@
             // labelOrderPrice
             // 
             this.labelOrderPrice.AutoSize = true;
-            this.labelOrderPrice.Location = new System.Drawing.Point(251, 417);
+            this.labelOrderPrice.Location = new System.Drawing.Point(306, 417);
             this.labelOrderPrice.Name = "labelOrderPrice";
-            this.labelOrderPrice.Size = new System.Drawing.Size(106, 20);
+            this.labelOrderPrice.Size = new System.Drawing.Size(51, 20);
             this.labelOrderPrice.TabIndex = 8;
-            this.labelOrderPrice.Text = "hier orderPrice";
+            this.labelOrderPrice.Text = "xxxxxx";
             // 
             // labelOrderPriceText
             // 
@@ -621,7 +644,7 @@
         private Label labelChoosePayment;
         private Button btnProceedToPayment;
         private Button btnDebit;
-        private ListView listView1;
+        private ListView listViewBillOverview;
         private Button btnVisa;
         private Label labelVAT;
         private Button btnCash;
@@ -629,5 +652,7 @@
         private Label labelOrderPriceText;
         private Label labelVATText;
         private PictureBox pictureBox1;
+        private Button btnBackOrderOverview;
+        private ColumnHeader AmountColumn;
     }
 }
