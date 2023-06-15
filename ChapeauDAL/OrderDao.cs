@@ -14,6 +14,12 @@ namespace ChapeauDAL
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+        public List<Order> GetAll(Role role)
+        {
+            string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] ORDER BY id DESC";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters), role);
+        }
         public List<Order> GetAllByState(OrderStatus status)
         {
             string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] WHERE status = @status";
@@ -32,9 +38,20 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+        private List<OrderItem> GetOrderItemsById(int orderId)
+        {
+            OrderItemDao orderItemDao = new OrderItemDao();
+            return orderItemDao.GetOrderItemsById(orderId);
+        }
+        private List<OrderItem> GetOrderItemsById(int orderId, Role role)
+        {
+            OrderItemDao orderItemDao = new OrderItemDao();
+            return orderItemDao.GetOrderItemsById(orderId, role);
+        }
+
         private List<Order> ReadTables(DataTable dataTable)
         {
-            List<Order> orders= new List<Order>();
+            List<Order> orders = new List<Order>();
             foreach (DataRow row in dataTable.Rows)
             {
                 Order order = new Order()
@@ -50,30 +67,23 @@ namespace ChapeauDAL
             }
             return orders;
         }
-        private List<OrderItem> GetOrderItemsById(int orderId)
+        private List<Order> ReadTables(DataTable dataTable, Role role)
         {
-            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem] WHERE Order_id = @orderId";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@orderId", (int)orderId),
-             };
-            return ReadOrderItemTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        private List<OrderItem> ReadOrderItemTables(DataTable dataTable) 
-        {
-            List<OrderItem> orderItems = new List<OrderItem>();
+            List<Order> orders= new List<Order>();
             foreach (DataRow row in dataTable.Rows)
             {
-                OrderItem orderItem = new OrderItem()
+                Order order = new Order()
                 {
-                    orderId = (int)row["Order_id"],
-                    menuItemId = (int)row["MenuItem_id"],
-                    amount = (int)row["amount"],
-                    comment = (string)row["comment"]
+                    tableId = (int)row["Table_id"],
+                    employeeId = (int)row["Employee_id"],
+                    billId = (int)row["Bill_id"],
+                    date = (DateTime)row["dateTime"],
+                    status = (OrderStatus)row["status"],
+                    OrderItems = GetOrderItemsById((int)row["id"], role)
                 };
-                orderItems.Add(orderItem);
+                orders.Add(order);
             }
-            return orderItems;
+            return orders;
         }
         private Order ReadSingle(DataTable dataTable)
         {

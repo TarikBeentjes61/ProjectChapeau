@@ -2,6 +2,6 @@
 {
     public enum OrderStatus
     {
-        Waiting, Doing, Finished
+        Preparation, Prepared, Served
     }
 }

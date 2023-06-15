@@ -1,166 +1,174 @@
-﻿using System;
+﻿using ChapeauModel;
+using ChapeauService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ChapeauModel;
-using ChapeauService;
 
 namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private readonly Color Green = Color.FromArgb(128, 255, 128);
-        private readonly Color Orange = Color.FromArgb(255, 179, 71);
-        private readonly ItemType[] BarItems = { ItemType.SoftFrinks, ItemType.Wines, ItemType.Beers };
-        private OrderItem LastSelectedItem; //Keep track of the last selected item from the list
         private Role currentRole;
+        private readonly Color ServedColour = Color.FromArgb(128, 210, 176); 
+        private readonly Color BaristaColour = Color.FromArgb(253, 154, 39); 
+        private readonly Color ChefColour = Color.FromArgb(255, 179, 71); 
+
+        private OrderItem? lastSelectedItem; //Keep track of the last selected item
         public CurrentOrdersForm(Role role)
         {
-            currentRole = role;
             InitializeComponent();
-            Start();
+            currentRole = role;
+            ChangeHeaderLabel();
+            ChangePanelColours();
+            RefreshData();
         }
-        public void Start()
+        
+        private void ChangeHeaderLabel()
         {
-            LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
-            LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
+            //Main header name changes depending on the role from the logged in user
+            if (currentRole == Role.Barista)
+                mainLabel.Text = "Bar Orders";
+            else
+                mainLabel.Text = "Kitchen Orders";
         }
-        private List<Order> GetOrdersByStatus(OrderStatus status)
+        private void ChangePanelColours()
         {
-            //SELECT * FROM OrderItem JOIN MenuItem ON OrderItem.MenuItem_id = MenuItem.id WHERE MenuItem.itemType < 4 AND [status] = @status
-            OrderService orderService = new OrderService();
-            return orderService.GetAllByStatus(status);
-        }
+            Color panelColour;
+            if (currentRole == Role.Chef)
+                panelColour = ChefColour;
+            else
+                panelColour = BaristaColour;
 
-        private void LoadOrders(List<Order> orders, ListView list)
-        {
-            //Loads the orders for the given list, both lists have the same columns so it works in a single method.
-            list.Items.Clear();
-            bool colorState = false;
-            foreach (Order order in orders)
+            //Loop through all the panels of the form and change the colour.
+            foreach (Panel pnl in this.Controls.OfType<Panel>())
             {
-                foreach (OrderItem item in order.OrderItems)
-                {
-                    ListViewItem li = new ListViewItem(order.tableId.ToString());
-                    li.Tag = item;
-                    li.SubItems.Add(order.date.ToString("HH:mm"));
-                    li.SubItems.Add(order.WaitingTime.ToString("hh':'mm"));
-                    li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
-                    li.SubItems.Add(item.amount.ToString());
-                    li.BackColor = GetRowColor(colorState);
-                    list.Items.Add(li);
-                }
-                colorState = !colorState;
+                pnl.BackColor = panelColour;
             }
         }
-        private void LoadFinishedOrders(List<Order> orders)
+        private void RefreshData()
         {
-            listViewFinished.Items.Clear();
-            //Looping through all the orders and orderitems to fill the rows
-            bool colorState = false;
-            foreach (Order order in orders)
+            //Refreshed all the loaded data from list and the selected item
+            LoadOrders(GetAllOrders());
+            if (lastSelectedItem != null)
             {
-                foreach (OrderItem item in order.OrderItems)
-                {
-                    ListViewItem li = new ListViewItem(order.tableId.ToString());
-                    li.Tag = item;
-                    li.SubItems.Add(order.date.ToString("HH:mm"));
-                    li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
-                    li.SubItems.Add(item.amount.ToString());
-                    li.BackColor = GetRowColor(colorState);
-                    listViewFinished.Items.Add(li);
-                }
-                colorState = !colorState;
+                lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
+                DisplaySelectedItem();
             }
         }
-        private Color GetRowColor(bool state) 
+        private Order GetOrderById(int id)
         {
-            //Gets a color depending on the state which changes everytime a different order enters the table
-            if (state)
-                return Color.White;
-            return Color.LightGray;
+            OrderService orderService = new OrderService();
+            return orderService.GetById(id);
+        }
+        private List<Order> GetAllOrders()
+        {
+            //Gets all the orders depending on the current role.
+            //Chef only gets items that are from menu 1 or 2
+            //Barista only gets items that are from menu 3
+            OrderService orderService = new OrderService();
+            return orderService.GetAll(currentRole);
+        }
+        private OrderItem GetOrderItemById(int id)
+        {
+            OrderItemService orderItemService = new OrderItemService();
+            return orderItemService.GetById(id);
         }
         private MenuItem GetMenuItem(int id)
         {
             MenuItemService menuItemService = new MenuItemService();
             return menuItemService.GetById(id);
         }
-        private void ClearSelectedMainLists()
+        private void LoadOrders(List<Order> orders)
         {
-            listViewWaiting.SelectedItems.Clear();
-            listViewDoing.SelectedItems.Clear();
-        }
-        private void ChangeMainListState()
-        {
-            listViewWaiting.Enabled = !listViewWaiting.Enabled;
-            listViewDoing.Enabled = !listViewDoing.Enabled;
-        }
-        private void ShowChangeStatusPanel(OrderStatus status)
-        {
-            //Change the color and text of the change status button depending on the status of the last selected item
-            ChangeMainListState();
-            if(status == OrderStatus.Waiting)
+            //Loads the orders for the given list
+            listViewOrders.Items.Clear();
+            foreach (Order order in orders)
             {
-                changeStatusButton.BackColor = Green;
-                changeStatusButton.Text = "Change to Doing";
-            }
-            else
-            {
-                changeStatusButton.BackColor = Orange;
-                changeStatusButton.Text = "Change to Finished";
-            }
-            changeStatusPanel.Show();
-        }
-        private void listViewWaiting_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            if (e.IsSelected)
-            {
-                LastSelectedItem = (OrderItem)e.Item.Tag;
-                ShowChangeStatusPanel(OrderStatus.Waiting);
+                //if (IsOrderServed(order)) break;
+                foreach (OrderItem item in order.OrderItems) //Loop through all of the items from the order
+                {
+                    ListViewItem li = new ListViewItem(item.orderItemId.ToString());
+                    li.Tag = item;
+                    li.SubItems.Add(item.orderId.ToString());
+                    li.SubItems.Add(item.amount.ToString());
+                    li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
+                    li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
+                    listViewOrders.Items.Add(li);
+                }
             }
         }
-        private void listViewDoing_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        private bool IsOrderServed(Order order)
         {
-            if(e.IsSelected)
+            int count = 0;
+            foreach (OrderItem item in order.OrderItems)
             {
-                LastSelectedItem = (OrderItem)e.Item.Tag;
-                ShowChangeStatusPanel(OrderStatus.Doing);
+                if (item.status == OrderStatus.Served)
+                    count++;
+            }
+            return count == order.OrderItems.Count ? true : false; 
+        }
+        private Color GetColourByState(OrderStatus status)
+        {
+            //Gets a colour depending on the given state
+            switch (status)
+            {
+                case OrderStatus.Preparation:
+                    return Color.White;
+                case OrderStatus.Prepared:
+                    return ChefColour;
+                case OrderStatus.Served:
+                    return ServedColour;
+                default:
+                    return Color.White;
+            }
+        }
+        private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            //Gets called whenever u click on an item within the list
+            if (!e.IsSelected)
+                return;
+           
+            lastSelectedItem = (OrderItem)e.Item.Tag;
+            DisplaySelectedItem();
+        }
+        private void DisplaySelectedItem()
+        {
+            //Fills all the labels with data from the last selected item
+            selectedOrderIdLabel.Text = lastSelectedItem.orderItemId.ToString();
+            selectedOrderStatusLabel.Text = lastSelectedItem.status.ToString();
+            commentLabel.Text = lastSelectedItem.comment.ToString();
+            tableLabel.Text = GetOrderById(lastSelectedItem.orderId).tableId.ToString();
+        }
+        private void UpdateSelectedItem(OrderStatus status)
+        {
+            //Gets called whenever a button click happens, updates the data and refreshes it.
+            //The selected item changes it status depending on the button pressed.
+            if(lastSelectedItem != null)
+            {
+                OrderItemService orderItemService = new OrderItemService();
+                orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
+                RefreshData();
             }
         }
 
-        private void FinishedOrdersButton_Click(object sender, EventArgs e)
+        //Button events
+        private void preperationButton_Click(object sender, EventArgs e)
         {
-            LoadFinishedOrders(GetOrdersByStatus(OrderStatus.Finished));
-            ChangeMainListState();
-            finishedPanel.BringToFront();
-            finishedPanel.Show();
+            UpdateSelectedItem(OrderStatus.Preparation);
         }
-        private void finishedBackButton_Click(object sender, EventArgs e)
+        private void preparedButton_Click(object sender, EventArgs e)
         {
-            ClearSelectedMainLists();
-            ChangeMainListState();
-            finishedPanel.Hide();
+            UpdateSelectedItem(OrderStatus.Prepared);
         }
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void ServedButton_Click(object sender, EventArgs e)
         {
-            ClearSelectedMainLists();
-            ChangeMainListState();
-            changeStatusPanel.Hide();
-        }
-        private void changeStatusButton_Click(object sender, EventArgs e)
-        {
-            OrderItemService orderItemService = new OrderItemService();
-            orderItemService.UpdateStatusById(LastSelectedItem.menuItemId, OrderStatus.Waiting);
-            LoadOrders(GetOrdersByStatus(OrderStatus.Waiting), listViewWaiting);
-            LoadOrders(GetOrdersByStatus(OrderStatus.Doing), listViewDoing);
-            changeStatusPanel.Hide();
-            ChangeMainListState();
+            UpdateSelectedItem(OrderStatus.Served);
         }
     }
 }

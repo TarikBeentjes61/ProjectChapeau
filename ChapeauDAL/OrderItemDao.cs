@@ -13,23 +13,49 @@ namespace ChapeauDAL
     {
         public List<OrderItem> GetAll()
         {
-            string query = "SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem]";
+            string query = "SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem]";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
         public OrderItem GetById(int id)
         {
-            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem] WHERE id = @id";
+            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+        public List<OrderItem> GetOrderItemsById(int orderId)
+        {
+            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@orderId", orderId),
+             };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public List<OrderItem> GetOrderItemsById(int orderId, Role role)
+        {
+            string query = "";
+            if (role == Role.Chef)
+            {
+                query = $"SELECT OI.id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status] FROM OrderItem AS OI JOIN MenuItem AS M ON OI.MenuItem_id = M.id WHERE M.Menu_id IN (1,2) AND OI.Order_id = @orderId ORDER BY OI.[status] ASC";
+            }
+            else if (role == Role.Barista) 
+            {
+                query = $"SELECT OI.id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status] FROM OrderItem AS OI JOIN MenuItem AS M ON OI.MenuItem_id = M.id WHERE M.Menu_id = 3 AND OI.Order_id = @orderId ORDER BY OI.[status] ASC";
+            }
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@orderId", orderId),
+             };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
         public void UpdateStatusById (int id, OrderStatus status)
         {
-            string query = $"UPDATE OrderItem SET status = @status WHERE id = @id";
+            string query = $"UPDATE OrderItem SET [status] = @status WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
@@ -44,10 +70,12 @@ namespace ChapeauDAL
             {
                 OrderItem orderItem = new OrderItem()
                 {
+                    orderItemId = (int)row["id"],
                     orderId = (int)row["Order_id"],
                     menuItemId = (int)row["MenuItem_id"],
                     amount = (int)row["amount"],
-                    comment = (string)row["comment"]
+                    comment = (string)row["comment"],
+                    status = (OrderStatus)row["status"]
                 };
                 orderItems.Add(orderItem);
             }
@@ -58,10 +86,12 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             OrderItem orderItem = new OrderItem()
             {
+                orderItemId = (int)row["id"],
                 orderId = (int)row["Order_id"],
                 menuItemId = (int)row["MenuItem_id"],
                 amount = (int)row["amount"],
-                comment = (string)row["comment"]
+                comment = (string)row["comment"],
+                status = (OrderStatus)row["status"]
             };
             return orderItem;
         }
