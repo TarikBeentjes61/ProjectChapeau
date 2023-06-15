@@ -53,13 +53,25 @@ namespace ChapeauUI
         }
         private void RefreshData()
         {
-            //Refreshed all the loaded data from list and the selected item
-            LoadOrders(GetAllOrders());
-            if (lastSelectedItem != null)
+            try
             {
-                lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-                DisplaySelectedItem();
+                //Refreshed all the loaded data from list and the selected item
+                DisplayOrders(GetAllOrders());
+                if (lastSelectedItem != null)
+                {
+                    lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
+                    DisplaySelectedItem();
+                }
             }
+            catch (Exception e) 
+            {
+                ShowErrorMessageBox(e);
+            }
+        }
+        private void ShowErrorMessageBox(Exception e)
+        {
+            //Display a message box whenever something goes wrong like loading data
+            MessageBox.Show("Something went wrong while loading the data " + e.Message);
         }
         private Order GetOrderById(int id)
         {
@@ -84,7 +96,7 @@ namespace ChapeauUI
             MenuItemService menuItemService = new MenuItemService();
             return menuItemService.GetById(id);
         }
-        private void LoadOrders(List<Order> orders)
+        private void DisplayOrders(List<Order> orders)
         {
             //Loads the orders for the given list
             listViewOrders.Items.Clear();
@@ -128,15 +140,6 @@ namespace ChapeauUI
                     return Color.White;
             }
         }
-        private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            //Gets called whenever u click on an item within the list
-            if (!e.IsSelected)
-                return;
-           
-            lastSelectedItem = (OrderItem)e.Item.Tag;
-            DisplaySelectedItem();
-        }
         private void DisplaySelectedItem()
         {
             //Fills all the labels with data from the last selected item
@@ -154,6 +157,21 @@ namespace ChapeauUI
                 OrderItemService orderItemService = new OrderItemService();
                 orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
                 RefreshData();
+            }
+        }
+        private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            //Gets called whenever u click on an item within the list
+            if (!e.IsSelected)
+                return;
+            try
+            {
+                lastSelectedItem = (OrderItem)e.Item.Tag;
+                DisplaySelectedItem();
+            }
+            catch(Exception ex) 
+            {
+                ShowErrorMessageBox(ex);
             }
         }
 
