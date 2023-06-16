@@ -17,19 +17,17 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
-        public void AddOrder()
+        public void AddOrder(List<OrderItem> orderItems)
         {
-
+            foreach(OrderItem item in orderItems) 
+            {
+                item.orderId = orderItems.IndexOf(item);
+            }
         }
 
-        public void DeleteOrder()
+        public void DeleteOrder(List<OrderItem> orderItems)
         {
-
-        }
-
-        public void AddOrderItem(OrderItem orderItem)
-        {
-            orderItems.Add(orderItem);
+            orderItems.Clear();
         }
 
         public void StartPreparing()
