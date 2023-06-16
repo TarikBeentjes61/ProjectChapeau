@@ -107,10 +107,15 @@
             lblEmployee4 = new Label();
             lblOrderDrinks = new Label();
             listViewOrderDrinks = new ListView();
+            pnlComment = new Panel();
+            txtBoxComment = new TextBox();
+            btnBack = new Button();
+            btnAddComment = new Button();
             pnlCreateOrderLunch.SuspendLayout();
             pnlOrderOverview.SuspendLayout();
             pnlCreateOrderDinner.SuspendLayout();
             pnlCreateOrderDrinks.SuspendLayout();
+            pnlComment.SuspendLayout();
             SuspendLayout();
             // 
             // lblTableLunchOverview
@@ -186,6 +191,7 @@
             listViewOrderLunch.TabIndex = 7;
             listViewOrderLunch.UseCompatibleStateImageBehavior = false;
             listViewOrderLunch.View = View.Details;
+            listViewOrderLunch.SelectedIndexChanged += listViewOrderLunch_SelectedIndexChanged;
             // 
             // lblOrderLunch
             // 
@@ -294,6 +300,7 @@
             btnRemoveLunch.TabIndex = 17;
             btnRemoveLunch.Text = "REMOVE";
             btnRemoveLunch.UseVisualStyleBackColor = false;
+            btnRemoveLunch.Click += btnRemoveLunch_Click;
             // 
             // btnCommentLunch
             // 
@@ -306,6 +313,7 @@
             btnCommentLunch.TabIndex = 16;
             btnCommentLunch.Text = "COMMENT";
             btnCommentLunch.UseVisualStyleBackColor = false;
+            btnCommentLunch.Click += btnCommentLunch_Click;
             // 
             // btnAddLunch
             // 
@@ -339,7 +347,7 @@
             pnlOrderOverview.Controls.Add(label9);
             pnlOrderOverview.Controls.Add(button2);
             pnlOrderOverview.Controls.Add(button3);
-            pnlOrderOverview.Location = new Point(498, 2);
+            pnlOrderOverview.Location = new Point(485, 2);
             pnlOrderOverview.Name = "pnlOrderOverview";
             pnlOrderOverview.Size = new Size(392, 603);
             pnlOrderOverview.TabIndex = 18;
@@ -541,9 +549,9 @@
             pnlCreateOrderDinner.Controls.Add(lblEmployee3);
             pnlCreateOrderDinner.Controls.Add(lblOrderDinner);
             pnlCreateOrderDinner.Controls.Add(listViewOrderDinner);
-            pnlCreateOrderDinner.Location = new Point(929, 2);
+            pnlCreateOrderDinner.Location = new Point(883, 2);
             pnlCreateOrderDinner.Name = "pnlCreateOrderDinner";
-            pnlCreateOrderDinner.Size = new Size(477, 1047);
+            pnlCreateOrderDinner.Size = new Size(492, 1047);
             pnlCreateOrderDinner.TabIndex = 19;
             // 
             // btnCommentDinner
@@ -768,9 +776,9 @@
             pnlCreateOrderDrinks.Controls.Add(lblEmployee4);
             pnlCreateOrderDrinks.Controls.Add(lblOrderDrinks);
             pnlCreateOrderDrinks.Controls.Add(listViewOrderDrinks);
-            pnlCreateOrderDrinks.Location = new Point(1412, 2);
+            pnlCreateOrderDrinks.Location = new Point(1390, 2);
             pnlCreateOrderDrinks.Name = "pnlCreateOrderDrinks";
-            pnlCreateOrderDrinks.Size = new Size(477, 1056);
+            pnlCreateOrderDrinks.Size = new Size(492, 1056);
             pnlCreateOrderDrinks.TabIndex = 20;
             // 
             // button5
@@ -990,12 +998,57 @@
             listViewOrderDrinks.TabIndex = 7;
             listViewOrderDrinks.UseCompatibleStateImageBehavior = false;
             // 
+            // pnlComment
+            // 
+            pnlComment.Controls.Add(txtBoxComment);
+            pnlComment.Controls.Add(btnBack);
+            pnlComment.Controls.Add(btnAddComment);
+            pnlComment.Location = new Point(485, 618);
+            pnlComment.Name = "pnlComment";
+            pnlComment.Size = new Size(392, 382);
+            pnlComment.TabIndex = 18;
+            // 
+            // txtBoxComment
+            // 
+            txtBoxComment.Location = new Point(88, 79);
+            txtBoxComment.Multiline = true;
+            txtBoxComment.Name = "txtBoxComment";
+            txtBoxComment.Size = new Size(215, 130);
+            txtBoxComment.TabIndex = 18;
+            // 
+            // btnBack
+            // 
+            btnBack.BackColor = Color.FromArgb(255, 179, 71);
+            btnBack.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnBack.Location = new Point(0, 17);
+            btnBack.Margin = new Padding(0);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(80, 40);
+            btnBack.TabIndex = 17;
+            btnBack.Text = "BACK";
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += btnBack_Click;
+            // 
+            // btnAddComment
+            // 
+            btnAddComment.BackColor = Color.FromArgb(255, 179, 71);
+            btnAddComment.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAddComment.Location = new Point(141, 238);
+            btnAddComment.Margin = new Padding(0);
+            btnAddComment.Name = "btnAddComment";
+            btnAddComment.Size = new Size(106, 49);
+            btnAddComment.TabIndex = 16;
+            btnAddComment.Text = "ADD";
+            btnAddComment.UseVisualStyleBackColor = false;
+            btnAddComment.Click += btnAddComment_Click;
+            // 
             // CreateOrderForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1924, 1055);
+            Controls.Add(pnlComment);
             Controls.Add(pnlCreateOrderDrinks);
             Controls.Add(pnlCreateOrderDinner);
             Controls.Add(pnlOrderOverview);
@@ -1012,6 +1065,8 @@
             pnlCreateOrderDinner.PerformLayout();
             pnlCreateOrderDrinks.ResumeLayout(false);
             pnlCreateOrderDrinks.PerformLayout();
+            pnlComment.ResumeLayout(false);
+            pnlComment.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1094,5 +1149,9 @@
         private Button btnRemoveDinner;
         private Button button5;
         private Button button4;
+        private Panel pnlComment;
+        private Button btnAddComment;
+        private TextBox txtBoxComment;
+        private Button btnBack;
     }
 }

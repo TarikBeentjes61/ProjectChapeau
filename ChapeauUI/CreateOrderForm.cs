@@ -1,6 +1,7 @@
 using ChapeauModel;
 using ChapeauService;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ChapeauUI
 {
@@ -16,6 +17,7 @@ namespace ChapeauUI
             pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderLunch.Hide();
+            pnlComment.Hide();
 
             //Disable All Necessary Buttons
             btnLunchUnavailable.Enabled = false;
@@ -36,9 +38,9 @@ namespace ChapeauUI
             {
                 //LUNCH
                 //STARTERS LISTVIEW
-                MenuItemService menuItemService1 = new MenuItemService();
+                MenuItemService menuItemService = new MenuItemService();
                 ItemType startersLunch = ItemType.Starters;
-                List<MenuItem> menuItemsStartersLunch = menuItemService1.GetByItemType(startersLunch, 1);
+                List<MenuItem> menuItemsStartersLunch = menuItemService.GetByItemType(startersLunch, 1);
 
                 listViewStartersLunch.Clear();
                 listViewStartersLunch.View = View.Details;
@@ -58,7 +60,7 @@ namespace ChapeauUI
 
                 //MAINS LISTVIEW
                 ItemType mainsLunch = ItemType.Mains;
-                List<MenuItem> menuItemsMainsLunch = menuItemService1.GetByItemType(mainsLunch, 1);
+                List<MenuItem> menuItemsMainsLunch = menuItemService.GetByItemType(mainsLunch, 1);
 
                 listViewMainsLunch.Clear();
                 listViewMainsLunch.View = View.Details;
@@ -78,7 +80,7 @@ namespace ChapeauUI
 
                 //DESERTS LISTVIEW
                 ItemType desertsLunch = ItemType.Deserts;
-                List<MenuItem> menuItemsDesertsLunch = menuItemService1.GetByItemType(desertsLunch, 1);
+                List<MenuItem> menuItemsDesertsLunch = menuItemService.GetByItemType(desertsLunch, 1);
 
                 listViewDesertsLunch.Clear();
                 listViewDesertsLunch.View = View.Details;
@@ -98,9 +100,8 @@ namespace ChapeauUI
 
                 //DINNER
                 //STARTERS LISTVIEW
-                MenuItemService menuItemService2 = new MenuItemService();
                 ItemType startersDinner = ItemType.Starters;
-                List<MenuItem> menuItemsStartersDinner = menuItemService2.GetByItemType(startersDinner, 2);
+                List<MenuItem> menuItemsStartersDinner = menuItemService.GetByItemType(startersDinner, 2);
 
                 listViewStartersDinner.Clear();
                 listViewStartersDinner.View = View.Details;
@@ -120,7 +121,7 @@ namespace ChapeauUI
 
                 //ENTREES LISTVIEW
                 ItemType entres = ItemType.Entres;
-                List<MenuItem> menuItemsEntres = menuItemService2.GetByItemType(entres, 2);
+                List<MenuItem> menuItemsEntres = menuItemService.GetByItemType(entres, 2);
 
                 listViewEntresDinner.Clear();
                 listViewEntresDinner.View = View.Details;
@@ -140,7 +141,7 @@ namespace ChapeauUI
 
                 //MAINS LISTVIEW
                 ItemType mainsDinner = ItemType.Mains;
-                List<MenuItem> menuItemsMainsDinner = menuItemService2.GetByItemType(mainsDinner, 2);
+                List<MenuItem> menuItemsMainsDinner = menuItemService.GetByItemType(mainsDinner, 2);
 
                 listViewMainsDinner.Clear();
                 listViewMainsDinner.View = View.Details;
@@ -160,7 +161,7 @@ namespace ChapeauUI
 
                 //DESERTS LISTVIEW
                 ItemType desertsDinner = ItemType.Deserts;
-                List<MenuItem> menuItemsDesertsDinner = menuItemService2.GetByItemType(desertsDinner, 2);
+                List<MenuItem> menuItemsDesertsDinner = menuItemService.GetByItemType(desertsDinner, 2);
 
                 listViewDesertsDinner.Clear();
                 listViewDesertsDinner.View = View.Details;
@@ -180,9 +181,8 @@ namespace ChapeauUI
 
                 //DRINKS
                 //SOFT DRINKS LISTVIEW
-                MenuItemService menuItemService3 = new MenuItemService();
                 ItemType softDrinks = ItemType.SoftDrinks;
-                List<MenuItem> menuItemsSoftDrinks = menuItemService3.GetByItemType(softDrinks, 3);
+                List<MenuItem> menuItemsSoftDrinks = menuItemService.GetByItemType(softDrinks, 3);
 
                 listViewSoftDrinks.Clear();
                 listViewSoftDrinks.View = View.Details;
@@ -202,7 +202,7 @@ namespace ChapeauUI
 
                 //BEERS LISTVIEW
                 ItemType beers = ItemType.Beers;
-                List<MenuItem> menuItemsBeers = menuItemService3.GetByItemType(beers, 3);
+                List<MenuItem> menuItemsBeers = menuItemService.GetByItemType(beers, 3);
 
                 listViewBeers.Clear();
                 listViewBeers.View = View.Details;
@@ -222,7 +222,7 @@ namespace ChapeauUI
 
                 //WINES LISTVIEW
                 ItemType wines = ItemType.Wines;
-                List<MenuItem> menuItemsWines = menuItemService3.GetByItemType(wines, 3);
+                List<MenuItem> menuItemsWines = menuItemService.GetByItemType(wines, 3);
 
                 listViewWines.Clear();
                 listViewWines.View = View.Details;
@@ -242,7 +242,7 @@ namespace ChapeauUI
 
                 //SPIRITS LISTVIEW
                 ItemType spirits = ItemType.Spirits;
-                List<MenuItem> menuItemsSpirits = menuItemService3.GetByItemType(spirits, 3);
+                List<MenuItem> menuItemsSpirits = menuItemService.GetByItemType(spirits, 3);
 
                 listViewSpirits.Clear();
                 listViewSpirits.View = View.Details;
@@ -262,7 +262,7 @@ namespace ChapeauUI
 
                 //HOT DRINKS LISTVIEW
                 ItemType hotDrinks = ItemType.HotDrinks;
-                List<MenuItem> menuItemsHotDrinks = menuItemService3.GetByItemType(hotDrinks, 3);
+                List<MenuItem> menuItemsHotDrinks = menuItemService.GetByItemType(hotDrinks, 3);
 
                 listViewHotDrinks.Clear();
                 listViewHotDrinks.View = View.Details;
@@ -286,19 +286,18 @@ namespace ChapeauUI
                 listViewOrderLunch.View = View.Details;
 
                 listViewOrderLunch.Columns.Add("Id", 25);
-                listViewOrderLunch.Columns.Add("Name", 349);
-                listViewOrderLunch.Columns.Add("Price", 45);
+                listViewOrderLunch.Columns.Add("Name", 250);
+                listViewOrderLunch.Columns.Add("Amount", 65);
 
 
                 foreach (OrderItem o in orderItems)
                 {
-                    MenuItemService menuItemService = new MenuItemService();
                     MenuItem menuItem = menuItemService.GetById(o.menuItemId);
 
                     ListViewItem item = new ListViewItem(o.menuItemId.ToString());
 
                     item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(menuItem.price.ToString());
+                    item.SubItems.Add(o.amount.ToString());
                     listViewOrderLunch.Items.Add(item);
                 }
 
@@ -307,40 +306,38 @@ namespace ChapeauUI
                 listViewOrderDinner.View = View.Details;
 
                 listViewOrderDinner.Columns.Add("Id", 25);
-                listViewOrderDinner.Columns.Add("Name", 349);
-                listViewOrderDinner.Columns.Add("Price", 45);
+                listViewOrderDinner.Columns.Add("Name", 250);
+                listViewOrderDinner.Columns.Add("Amount", 65);
 
 
                 foreach (OrderItem o in orderItems)
                 {
-                    MenuItemService menuItemService = new MenuItemService();
                     MenuItem menuItem = menuItemService.GetById(o.menuItemId);
 
                     ListViewItem item = new ListViewItem(o.menuItemId.ToString());
 
                     item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(menuItem.price.ToString());
+                    item.SubItems.Add(o.amount.ToString());
                     listViewOrderDinner.Items.Add(item);
                 }
 
-                //ORDER OVERVIEW DINNER
+                //ORDER OVERVIEW DRINKS
                 listViewOrderDrinks.Clear();
                 listViewOrderDrinks.View = View.Details;
 
                 listViewOrderDrinks.Columns.Add("Id", 25);
-                listViewOrderDrinks.Columns.Add("Name", 349);
-                listViewOrderDrinks.Columns.Add("Price", 45);
+                listViewOrderDrinks.Columns.Add("Name", 250);
+                listViewOrderDrinks.Columns.Add("Amount", 65);
 
 
                 foreach (OrderItem o in orderItems)
                 {
-                    MenuItemService menuItemService = new MenuItemService();
                     MenuItem menuItem = menuItemService.GetById(o.menuItemId);
 
                     ListViewItem item = new ListViewItem(o.menuItemId.ToString());
 
                     item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(menuItem.price.ToString());
+                    item.SubItems.Add(o.amount.ToString());
                     listViewOrderDrinks.Items.Add(item);
                 }
             }
@@ -357,6 +354,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -369,6 +367,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDrinks.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -381,6 +380,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -393,6 +393,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDrinks.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -405,6 +406,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -417,6 +419,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderDinner.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -429,6 +432,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -441,6 +445,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderDinner.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -453,6 +458,7 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderLunch.Hide();
+            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -469,8 +475,12 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
 
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
 
             CreateOrderForm_Load(sender, e);
         }
@@ -485,7 +495,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -499,7 +515,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -514,7 +536,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -528,7 +556,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -542,7 +576,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -556,7 +596,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -571,7 +617,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -585,7 +637,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -599,7 +657,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -613,7 +677,13 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
@@ -627,19 +697,21 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            orderItems.Add(listview.LoadListview(value, orderItems));
+            OrderItem orderItem = listview.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+
             CreateOrderForm_Load(sender, e);
         }
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            Order order = new Order();
-
-
             //Bestelling weergeven
             OrderService orderService = new OrderService();
             //orderService.AddOrder(orderItems);
-
 
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -650,7 +722,6 @@ namespace ChapeauUI
 
             foreach (OrderItem o in orderItems)
             {
-
                 MenuItemService menuItemService = new MenuItemService();
                 MenuItem menuItem = menuItemService.GetById(o.menuItemId);
 
@@ -662,6 +733,59 @@ namespace ChapeauUI
             }
 
             pnlOrderOverview.Show();
+        }
+
+        //COMMENT
+        private void listViewOrderLunch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OrderItem orderItem = new OrderItem();
+            orderItem.comment = txtBoxComment.Text;
+
+            CreateOrderForm_Load(sender, e);
+        }
+        private void btnCommentLunch_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlComment.Show();
+
+            //Hide other panels
+            pnlOrderOverview.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
+            pnlCreateOrderDrinks.Hide();
+        }
+        private void btnAddComment_Click(object sender, EventArgs e)
+        {
+            listViewOrderLunch_SelectedIndexChanged(sender, e);
+        }
+
+        //REMOVE
+        private void btnRemoveLunch_Click(object sender, EventArgs e)
+        {
+            ListViewEditor listview = new ListViewEditor();
+            string value = "";
+
+            foreach (ListViewItem selectedItem in listViewHotDrinks.SelectedItems)
+            {
+                value = selectedItem.SubItems[0].Text;
+            }
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //orderItems.Remove();
+            CreateOrderForm_Load(sender, e);
+        }
+
+        //BACK
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlCreateOrderLunch.Show();
+
+            //Hide other panels
+            pnlOrderOverview.Hide();
+            pnlCreateOrderDinner.Hide();
+            pnlCreateOrderDrinks.Hide();
+            pnlComment.Hide();
         }
     }
 }
