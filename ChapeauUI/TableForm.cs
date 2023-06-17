@@ -33,8 +33,8 @@ namespace ChapeauUI
                 button.Name = t.tableId.ToString();
                 button.Text = $"{t.tableId}";
                 button.Font = new Font("Segoe UI", 18);
-                button.Size = new Size(125, 125);
-                button.Margin = new Padding(10, 10, 10, 10);
+                button.AutoSize = true;
+                button.Margin = new Padding(25, 25, 25, 25);
                 button.Tag = t.status;
                 flpnlTables.Controls.Add(button);
                 button.Click += TableButton_Click;
@@ -118,7 +118,6 @@ namespace ChapeauUI
             btnReserved.Enabled = true;
 
         }
-
         private void btnOccupied_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
@@ -132,7 +131,6 @@ namespace ChapeauUI
             btnFree.Enabled = true;
             btnReserved.Enabled = true;
         }
-
         private void btnReserved_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
@@ -144,9 +142,8 @@ namespace ChapeauUI
             btnOccupied.FlatStyle = FlatStyle.Popup;
             btnReserved.Enabled = false;
             btnFree.Enabled = true;
-            btnReserved.Enabled = true;
+            btnOccupied.Enabled = true;
         }
-
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
             this.Hide();
