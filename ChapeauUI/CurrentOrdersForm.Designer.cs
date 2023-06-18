@@ -69,6 +69,7 @@
             tablePanel = new Panel();
             tableLabel = new Label();
             showServedButton = new Button();
+            pictureBox1 = new PictureBox();
             mainHeaderPanel.SuspendLayout();
             subPanel.SuspendLayout();
             descriptionPanel.SuspendLayout();
@@ -85,6 +86,7 @@
             commentPanel.SuspendLayout();
             tableHeaderPanel.SuspendLayout();
             tablePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // mainHeaderPanel
@@ -130,7 +132,7 @@
             listViewOrders.Location = new Point(-1, 199);
             listViewOrders.Margin = new Padding(3, 2, 3, 2);
             listViewOrders.Name = "listViewOrders";
-            listViewOrders.Size = new Size(686, 357);
+            listViewOrders.Size = new Size(686, 375);
             listViewOrders.TabIndex = 3;
             listViewOrders.TileSize = new Size(40, 40);
             listViewOrders.UseCompatibleStateImageBehavior = false;
@@ -250,9 +252,9 @@
             orderIdPanel.BackColor = Color.FromArgb(255, 179, 71);
             orderIdPanel.BorderStyle = BorderStyle.FixedSingle;
             orderIdPanel.Controls.Add(orderIdLabel);
-            orderIdPanel.Location = new Point(1, 184);
+            orderIdPanel.Location = new Point(0, 184);
             orderIdPanel.Name = "orderIdPanel";
-            orderIdPanel.Size = new Size(128, 47);
+            orderIdPanel.Size = new Size(129, 47);
             orderIdPanel.TabIndex = 4;
             // 
             // orderIdLabel
@@ -524,12 +526,23 @@
             showServedButton.UseVisualStyleBackColor = false;
             showServedButton.Click += showServedButton_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.Chapeau_logo;
+            pictureBox1.Location = new Point(1, -1);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(106, 53);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 11;
+            pictureBox1.TabStop = false;
+            // 
             // CurrentOrdersForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1202, 574);
+            Controls.Add(pictureBox1);
             Controls.Add(showServedButton);
             Controls.Add(descriptionPanel);
             Controls.Add(countPanel);
@@ -577,6 +590,7 @@
             tableHeaderPanel.PerformLayout();
             tablePanel.ResumeLayout(false);
             tablePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -623,5 +637,6 @@
         private Panel tablePanel;
         private Label tableLabel;
         private Button showServedButton;
+        private PictureBox pictureBox1;
     }
 }

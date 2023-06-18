@@ -14,38 +14,35 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private Role currentRole;
+        private Employee loggedInEmployee;
         private bool showServed = true;
+        //Create some colours from RGB values for later use
         private readonly Color ServedColour = Color.FromArgb(128, 210, 176);
         private readonly Color BaristaColour = Color.FromArgb(253, 154, 39);
         private readonly Color ChefColour = Color.FromArgb(255, 179, 71);
 
         private OrderItem? lastSelectedItem; //Keep track of the last selected item
-        public CurrentOrdersForm(Role role)
+        public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
-            currentRole = role;
+            loggedInEmployee = employee;
             ChangeHeaderLabel();
             ChangePanelColours();
-            CreateTimer(30);
+            CreateTimer(30); //Takes in seconds which are converted to milliseconds
             RefreshData();
         }
+
         private void CreateTimer(int seconds)
         {
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = seconds*1000; //interval is in milliseconds so multiply by 1000
+            timer.Interval = seconds * 1000; //interval is in milliseconds so multiply by 1000
             timer.Tick += new EventHandler(Timer_Tick); //Takes in the event that needs to be called when time expires
             timer.Start();
-        }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            //The event that gets called whenever the timer runs out
-            RefreshData();
         }
         private void ChangeHeaderLabel()
         {
             //Main header name changes depending on the role from the logged in user
-            if (currentRole == Role.Barista)
+            if (loggedInEmployee.role == Role.Barista)
                 mainLabel.Text = "Bar Orders";
             else
                 mainLabel.Text = "Kitchen Orders";
@@ -53,7 +50,7 @@ namespace ChapeauUI
         private void ChangePanelColours()
         {
             Color panelColour;
-            if (currentRole == Role.Chef)
+            if (loggedInEmployee.role == Role.Chef)
                 panelColour = ChefColour;
             else
                 panelColour = BaristaColour;
@@ -97,7 +94,7 @@ namespace ChapeauUI
             //Chef only gets items that are from menu 1 or 2
             //Barista only gets items that are from menu 3
             OrderService orderService = new OrderService();
-            return orderService.GetAll(currentRole, showServed);
+            return orderService.GetAll(loggedInEmployee.role, showServed);
         }
         private OrderItem GetOrderItemById(int id)
         {
@@ -115,7 +112,6 @@ namespace ChapeauUI
             listViewOrders.Items.Clear();
             foreach (Order order in orders)
             {
-                //if (IsOrderServed(order)) break;
                 foreach (OrderItem item in order.OrderItems) //Loop through all of the items from the order
                 {
                     ListViewItem li = new ListViewItem(item.orderItemId.ToString());
@@ -127,16 +123,6 @@ namespace ChapeauUI
                     listViewOrders.Items.Add(li);
                 }
             }
-        }
-        private bool IsOrderServed(Order order)
-        {
-            int count = 0;
-            foreach (OrderItem item in order.OrderItems)
-            {
-                if (item.status == OrderStatus.Served)
-                    count++;
-            }
-            return count == order.OrderItems.Count ? true : false;
         }
         private Color GetColourByState(OrderStatus status)
         {
@@ -201,7 +187,11 @@ namespace ChapeauUI
                 ShowErrorMessageBox(ex);
             }
         }
-
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            //The event that gets called whenever the timer runs out
+            RefreshData();
+        }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
         {

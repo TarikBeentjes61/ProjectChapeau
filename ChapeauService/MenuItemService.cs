@@ -6,7 +6,7 @@ namespace ChapeauService
 {
     public class MenuItemService
     {
-        public MenuItemDao menuItemDao;
+        private MenuItemDao menuItemDao;
         public MenuItemService() 
         {
             menuItemDao = new MenuItemDao();

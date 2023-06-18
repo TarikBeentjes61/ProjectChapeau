@@ -6,11 +6,11 @@ namespace ChapeauService
 {
     public class EmployeeService
     {
-        public EmployeeDao employeeDao;
+        private EmployeeDao employeeDao;
 
         public EmployeeService()
         {
-            employeeDao= new EmployeeDao();
+            employeeDao = new EmployeeDao();
         }
         public List<Employee> GetAll()
         {

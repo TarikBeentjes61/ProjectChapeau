@@ -6,7 +6,7 @@ namespace ChapeauService
 {
     public class TableService
     {
-        public TableDao tableDao;
+        private TableDao tableDao;
 
         public TableService()
         {
