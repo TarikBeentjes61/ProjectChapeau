@@ -9,6 +9,7 @@ namespace ChapeauUI
     public partial class CreateOrderForm : Form
     {
         List<OrderItem> orderItems = new List<OrderItem>();
+        Order order = new Order();
         bool btnCommentWasClicked = false;
         bool btnAddCommentWasClicked = false;
         bool btnRemoveWasClicked = false;
@@ -23,7 +24,6 @@ namespace ChapeauUI
             pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderLunch.Hide();
-            pnlComment.Hide();
 
             //Disable All Necessary Buttons
             btnLunchUnavailable.Enabled = false;
@@ -40,7 +40,6 @@ namespace ChapeauUI
         }
         private void CreateOrderForm_Load(object sender, EventArgs e)
         {
-
             try
             {
                 //LUNCH
@@ -361,7 +360,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -374,7 +372,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDrinks.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -387,7 +384,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -400,7 +396,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDrinks.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -413,7 +408,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -426,7 +420,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderDinner.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -439,7 +432,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDrinks.Show();
@@ -452,7 +444,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderDinner.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderLunch.Show();
@@ -465,7 +456,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderLunch.Hide();
-            pnlComment.Hide();
 
             //Show this panel
             pnlCreateOrderDinner.Show();
@@ -733,11 +723,13 @@ namespace ChapeauUI
 
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item); 
+                listViewOrderOverview.Items.Add(item);
                 totalPrice += menuItem.price;
             }
 
-            lblTotal.Text = "Total: " + totalPrice.ToString();
+            //OrderService orderService = new OrderService();
+            //orderService.AddOrder(orderItems);
+            lblTotal.Text = "Total: " + "totalPrice";
             pnlCreateOrderLunch.Hide();
             pnlOrderOverview.Show();
         }
@@ -760,7 +752,7 @@ namespace ChapeauUI
 
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item); 
+                listViewOrderOverview.Items.Add(item);
                 totalPrice += menuItem.price;
             }
 
@@ -808,22 +800,7 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            if (btnCommentWasClicked)
-            {
-                //Show this panel
-                pnlComment.Show();
-
-                //Hide other panels
-                pnlOrderOverview.Hide();
-                pnlCreateOrderLunch.Hide();
-                pnlCreateOrderDinner.Hide();
-                pnlCreateOrderDrinks.Hide();
-            }
-            else if (btnAddCommentWasClicked)
-            {
-                orderItem.comment = txtBoxComment.Text;
-            }
-            else if (btnRemoveWasClicked)
+            if (btnRemoveWasClicked)
             {
                 listview.RemoveListviewItem(value, orderItems);
             }
@@ -841,22 +818,7 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            if (btnCommentWasClicked)
-            {
-                //Show this panel
-                pnlComment.Show();
-
-                //Hide other panels
-                pnlOrderOverview.Hide();
-                pnlCreateOrderLunch.Hide();
-                pnlCreateOrderDinner.Hide();
-                pnlCreateOrderDrinks.Hide();
-            }
-            else if (btnAddCommentWasClicked)
-            {
-                orderItem.comment = txtBoxComment.Text;
-            }
-            else if (btnRemoveWasClicked)
+            if (btnRemoveWasClicked)
             {
                 listview.RemoveListviewItem(value, orderItems);
             }
@@ -873,59 +835,21 @@ namespace ChapeauUI
                 value = selectedItem.SubItems[0].Text;
             }
 
-            if (btnCommentWasClicked)
-            {
-                //Show this panel
-                pnlComment.Show();
-
-                //Hide other panels
-                pnlOrderOverview.Hide();
-                pnlCreateOrderLunch.Hide();
-                pnlCreateOrderDinner.Hide();
-                pnlCreateOrderDrinks.Hide();
-            }
-            else if (btnAddCommentWasClicked)
-            {
-                orderItem.comment = txtBoxComment.Text;
-            }
-            else if (btnRemoveWasClicked)
+            if (btnRemoveWasClicked)
             {
                 listview.RemoveListviewItem(value, orderItems);
             }
-
             CreateOrderForm_Load(sender, e);
         }
 
         //COMMENT
-        private void btnCommentLunch_Click(object sender, EventArgs e)
-        {
-            btnCommentWasClicked = true;
-        }
         private void btnRemoveLunch_Click(object sender, EventArgs e)
         {
             btnRemoveWasClicked = true;
         }
-
-
-        private void btnAddComment_Click(object sender, EventArgs e)
-        {
-            btnAddCommentWasClicked = true;
-
-            listViewOrderLunch_SelectedIndexChanged(sender, e);
-            CreateOrderForm_Load(sender, e);
-        }
-        private void btnCommentDinner_Click(object sender, EventArgs e)
-        {
-            btnCommentWasClicked = true;
-        }
         private void btnRemoveDinner_Click(object sender, EventArgs e)
         {
             btnRemoveWasClicked = true;
-        }
-        private void btnCommentDrinks_Click(object sender, EventArgs e)
-        {
-            btnCommentWasClicked = true;
-
         }
         private void btnRemoveDrinks_Click(object sender, EventArgs e)
         {
@@ -942,7 +866,6 @@ namespace ChapeauUI
             pnlOrderOverview.Hide();
             pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
-            pnlComment.Hide();
         }
     }
 }

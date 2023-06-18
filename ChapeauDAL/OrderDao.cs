@@ -24,9 +24,16 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+        //public void AddOrder(List<OrderItem> orderItems)
+        //{
+        //    string query = "INSERT INTO Order (orderItems) VALUES (@orderItems)";
 
-
-
+        //    SqlParameter[] sqlParameters = new SqlParameter[]
+        //    {
+        //        new SqlParameter("@orderItems", orderItems),
+        //    };
+        //    ExecuteEditQuery(query, sqlParameters);
+        //}
         private List<Order> ReadTables(DataTable dataTable)
         {
             List<Order> orders= new List<Order>();

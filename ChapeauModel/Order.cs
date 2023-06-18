@@ -18,14 +18,15 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
-        public void AddOrder(List<OrderItem> orderItems)
-        {
-            Order order = new Order();
-            foreach(OrderItem o in orderItems) 
-            {
-                o.orderId = order.id;
-            }
-        }
+        //public void AddOrder(List<OrderItem> orderItems)
+        //{
+        //    Order order = new Order();
+        //    foreach (OrderItem o in orderItems) 
+        //    {
+        //        o.orderId = order.id;
+        //    }
+        //    this.orderItems = orderItems;
+        //}
 
         public void DeleteOrder(List<OrderItem> orderItems)
         {
@@ -33,11 +34,6 @@ namespace ChapeauModel
         }
 
         public void StartPreparing()
-        {
-
-        }
-
-        private void UpdateOrder()
         {
 
         }

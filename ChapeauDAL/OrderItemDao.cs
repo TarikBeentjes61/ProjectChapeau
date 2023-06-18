@@ -55,7 +55,5 @@ namespace ChapeauDAL
             };
             return orderItem;
         }
-
-
     }
 }

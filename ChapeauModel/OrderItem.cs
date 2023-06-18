@@ -12,10 +12,5 @@ namespace ChapeauModel
         public int orderId;
         public int amount;
         public string comment;
-
-        public void AddComment()
-        {
-
-        }
     }
 }

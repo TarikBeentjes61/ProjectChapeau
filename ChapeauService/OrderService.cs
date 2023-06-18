@@ -20,9 +20,9 @@ namespace ChapeauService
         {
             return orderDao.GetById(id);
         }
-        //public Order AddOrder(List<OrderItem> orderItems)
+        //public void AddOrder(List<OrderItem> orderItems)
         //{
-        //    return orderDao.AddOrder(orderItems);
+        //    orderDao.AddOrder(orderItems);
         //}
     }
 }
