@@ -42,11 +42,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public void UpdateStock()
-        {
-
-        }
-
         private List<MenuItem> ReadTables(DataTable dataTable)
         {
             List<MenuItem> menuItems = new List<MenuItem>();

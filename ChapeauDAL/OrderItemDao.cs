@@ -99,7 +99,5 @@ namespace ChapeauDAL
             };
             return orderItem;
         }
-
-
     }
 }

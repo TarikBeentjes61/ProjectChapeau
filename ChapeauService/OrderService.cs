@@ -30,7 +30,7 @@ namespace ChapeauService
         }
         //public Order AddOrder(List<OrderItem> orderItems)
         //{
-        //    return orderDao.AddOrder(orderItems);
+        //    orderDao.AddOrder(orderItems);
         //}
     }
 }
