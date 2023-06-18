@@ -27,9 +27,21 @@ namespace ChapeauUI
             currentRole = role;
             ChangeHeaderLabel();
             ChangePanelColours();
+            CreateTimer(30);
             RefreshData();
         }
-
+        private void CreateTimer(int seconds)
+        {
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Interval = seconds*1000; //interval is in milliseconds so multiply by 1000
+            timer.Tick += new EventHandler(Timer_Tick); //Takes in the event that needs to be called when time expires
+            timer.Start();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            //The event that gets called whenever the timer runs out
+            RefreshData();
+        }
         private void ChangeHeaderLabel()
         {
             //Main header name changes depending on the role from the logged in user
