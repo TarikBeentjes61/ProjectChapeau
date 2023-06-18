@@ -20,5 +20,9 @@ namespace ChapeauService
         {
             return orderItemDao.GetById(id);
         }
+        public void UpdateStatusById(int id, OrderStatus status)
+        {
+            orderItemDao.UpdateStatusById(id, status);
+        }
     }
 }
