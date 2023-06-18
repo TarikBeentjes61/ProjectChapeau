@@ -36,22 +36,26 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetOrderItemsById(int orderId, Role role)
+        public List<OrderItem> GetOrderItemsById(int orderId, Role role, bool showServed)
         {
-            string query = "";
+            StringBuilder query = new StringBuilder("SELECT OI.id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status] FROM OrderItem AS OI JOIN MenuItem AS M ON OI.MenuItem_id = M.id WHERE M.Menu_id ");
             if (role == Role.Chef)
             {
-                query = $"SELECT OI.id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status] FROM OrderItem AS OI JOIN MenuItem AS M ON OI.MenuItem_id = M.id WHERE M.Menu_id IN (1,2) AND OI.Order_id = @orderId ORDER BY OI.[status] ASC";
+                query.Append("IN (1,2) ");
             }
             else if (role == Role.Barista) 
             {
-                query = $"SELECT OI.id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status] FROM OrderItem AS OI JOIN MenuItem AS M ON OI.MenuItem_id = M.id WHERE M.Menu_id = 3 AND OI.Order_id = @orderId ORDER BY OI.[status] ASC";
+                query.Append("= 3 ");
             }
+            if (showServed)
+                query.Append($"AND OI.status != {(int)OrderStatus.Served} ");
+            query.Append("AND OI.Order_id = @orderId ORDER BY OI.[status] ASC");
+
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@orderId", orderId),
              };
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query.ToString(), sqlParameters));
         }
         public void UpdateStatusById (int id, OrderStatus status)
         {

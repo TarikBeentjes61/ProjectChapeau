@@ -16,9 +16,9 @@ namespace ChapeauService
         {
             return orderDao.GetAll();  
         }
-        public List<Order> GetAll(Role role)
+        public List<Order> GetAll(Role role, bool showServed)
         {
-            return orderDao.GetAll(role);  
+            return orderDao.GetAll(role, showServed);  
         }
         public Order GetById(int id)
         {

@@ -15,9 +15,10 @@ namespace ChapeauUI
     public partial class CurrentOrdersForm : Form
     {
         private Role currentRole;
-        private readonly Color ServedColour = Color.FromArgb(128, 210, 176); 
-        private readonly Color BaristaColour = Color.FromArgb(253, 154, 39); 
-        private readonly Color ChefColour = Color.FromArgb(255, 179, 71); 
+        private bool showServed = true;
+        private readonly Color ServedColour = Color.FromArgb(128, 210, 176);
+        private readonly Color BaristaColour = Color.FromArgb(253, 154, 39);
+        private readonly Color ChefColour = Color.FromArgb(255, 179, 71);
 
         private OrderItem? lastSelectedItem; //Keep track of the last selected item
         public CurrentOrdersForm(Role role)
@@ -28,7 +29,7 @@ namespace ChapeauUI
             ChangePanelColours();
             RefreshData();
         }
-        
+
         private void ChangeHeaderLabel()
         {
             //Main header name changes depending on the role from the logged in user
@@ -63,7 +64,7 @@ namespace ChapeauUI
                     DisplaySelectedItem();
                 }
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 ShowErrorMessageBox(e);
             }
@@ -84,7 +85,7 @@ namespace ChapeauUI
             //Chef only gets items that are from menu 1 or 2
             //Barista only gets items that are from menu 3
             OrderService orderService = new OrderService();
-            return orderService.GetAll(currentRole);
+            return orderService.GetAll(currentRole, showServed);
         }
         private OrderItem GetOrderItemById(int id)
         {
@@ -123,7 +124,7 @@ namespace ChapeauUI
                 if (item.status == OrderStatus.Served)
                     count++;
             }
-            return count == order.OrderItems.Count ? true : false; 
+            return count == order.OrderItems.Count ? true : false;
         }
         private Color GetColourByState(OrderStatus status)
         {
@@ -148,11 +149,25 @@ namespace ChapeauUI
             commentLabel.Text = lastSelectedItem.comment.ToString();
             tableLabel.Text = GetOrderById(lastSelectedItem.orderId).tableId.ToString();
         }
+        private void DisplayServedButton()
+        {
+            //Changes the colour and text of the show served button depending on the state 
+            if (showServed)
+            {
+                showServedButton.BackColor = ServedColour;
+                showServedButton.Text = "Show Served Orders";
+            }
+            else
+            {
+                showServedButton.BackColor = Color.Red;
+                showServedButton.Text = "Hide Served Orders";
+            }
+        }
         private void UpdateSelectedItem(OrderStatus status)
         {
             //Gets called whenever a button click happens, updates the data and refreshes it.
             //The selected item changes it status depending on the button pressed.
-            if(lastSelectedItem != null)
+            if (lastSelectedItem != null)
             {
                 OrderItemService orderItemService = new OrderItemService();
                 orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
@@ -169,7 +184,7 @@ namespace ChapeauUI
                 lastSelectedItem = (OrderItem)e.Item.Tag;
                 DisplaySelectedItem();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 ShowErrorMessageBox(ex);
             }
@@ -187,6 +202,12 @@ namespace ChapeauUI
         private void ServedButton_Click(object sender, EventArgs e)
         {
             UpdateSelectedItem(OrderStatus.Served);
+        }
+        private void showServedButton_Click(object sender, EventArgs e)
+        {
+            showServed = !showServed;
+            DisplayServedButton();
+            RefreshData();
         }
     }
 }

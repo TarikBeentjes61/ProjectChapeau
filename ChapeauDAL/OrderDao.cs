@@ -14,11 +14,11 @@ namespace ChapeauDAL
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<Order> GetAll(Role role)
+        public List<Order> GetAll(Role role, bool showServed)
         {
             string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] ORDER BY id DESC";
             SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters), role);
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters), role, showServed);
         }
         public List<Order> GetAllByState(OrderStatus status)
         {
@@ -43,10 +43,10 @@ namespace ChapeauDAL
             OrderItemDao orderItemDao = new OrderItemDao();
             return orderItemDao.GetOrderItemsById(orderId);
         }
-        private List<OrderItem> GetOrderItemsById(int orderId, Role role)
+        private List<OrderItem> GetOrderItemsById(int orderId, Role role, bool showServed)
         {
             OrderItemDao orderItemDao = new OrderItemDao();
-            return orderItemDao.GetOrderItemsById(orderId, role);
+            return orderItemDao.GetOrderItemsById(orderId, role, showServed);
         }
 
         private List<Order> ReadTables(DataTable dataTable)
@@ -67,7 +67,7 @@ namespace ChapeauDAL
             }
             return orders;
         }
-        private List<Order> ReadTables(DataTable dataTable, Role role)
+        private List<Order> ReadTables(DataTable dataTable, Role role, bool showServed)
         {
             List<Order> orders= new List<Order>();
             foreach (DataRow row in dataTable.Rows)
@@ -79,7 +79,7 @@ namespace ChapeauDAL
                     billId = (int)row["Bill_id"],
                     date = (DateTime)row["dateTime"],
                     status = (OrderStatus)row["status"],
-                    OrderItems = GetOrderItemsById((int)row["id"], role)
+                    OrderItems = GetOrderItemsById((int)row["id"], role, showServed)
                 };
                 orders.Add(order);
             }

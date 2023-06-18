@@ -28,547 +28,556 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainHeaderPanel = new System.Windows.Forms.Panel();
-            this.mainLabel = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listViewOrders = new System.Windows.Forms.ListView();
-            this.OrderIDHeader = new System.Windows.Forms.ColumnHeader();
-            this.OrderNumberHeader = new System.Windows.Forms.ColumnHeader();
-            this.CountHeader = new System.Windows.Forms.ColumnHeader();
-            this.DescriptionHeader = new System.Windows.Forms.ColumnHeader();
-            this.subPanel = new System.Windows.Forms.Panel();
-            this.changeOrderLabel = new System.Windows.Forms.Label();
-            this.descriptionPanel = new System.Windows.Forms.Panel();
-            this.descriptionLabel = new System.Windows.Forms.Label();
-            this.countPanel = new System.Windows.Forms.Panel();
-            this.countLabel = new System.Windows.Forms.Label();
-            this.orderNumberPanel = new System.Windows.Forms.Panel();
-            this.orderNumberLabel = new System.Windows.Forms.Label();
-            this.orderIdPanel = new System.Windows.Forms.Panel();
-            this.orderIdLabel = new System.Windows.Forms.Label();
-            this.viewOrderPanel = new System.Windows.Forms.Panel();
-            this.viewOrderLabel = new System.Windows.Forms.Label();
-            this.preperationButton = new System.Windows.Forms.Button();
-            this.preparedButton = new System.Windows.Forms.Button();
-            this.ServedButton = new System.Windows.Forms.Button();
-            this.OrderIdHeaderPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.OrderStatusHeaderPanel = new System.Windows.Forms.Panel();
-            this.orderStatusLabel = new System.Windows.Forms.Label();
-            this.selectedIdPanel = new System.Windows.Forms.Panel();
-            this.selectedOrderIdLabel = new System.Windows.Forms.Label();
-            this.selectedStatusPanel = new System.Windows.Forms.Panel();
-            this.selectedOrderStatusLabel = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.commentHeaderPanel = new System.Windows.Forms.Panel();
-            this.commentHeaderLabel = new System.Windows.Forms.Label();
-            this.commentPanel = new System.Windows.Forms.Panel();
-            this.commentLabel = new System.Windows.Forms.Label();
-            this.tableHeaderPanel = new System.Windows.Forms.Panel();
-            this.tableHeaderLabel = new System.Windows.Forms.Label();
-            this.tablePanel = new System.Windows.Forms.Panel();
-            this.tableLabel = new System.Windows.Forms.Label();
-            this.mainHeaderPanel.SuspendLayout();
-            this.subPanel.SuspendLayout();
-            this.descriptionPanel.SuspendLayout();
-            this.countPanel.SuspendLayout();
-            this.orderNumberPanel.SuspendLayout();
-            this.orderIdPanel.SuspendLayout();
-            this.viewOrderPanel.SuspendLayout();
-            this.OrderIdHeaderPanel.SuspendLayout();
-            this.OrderStatusHeaderPanel.SuspendLayout();
-            this.selectedIdPanel.SuspendLayout();
-            this.selectedStatusPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.commentHeaderPanel.SuspendLayout();
-            this.commentPanel.SuspendLayout();
-            this.tableHeaderPanel.SuspendLayout();
-            this.tablePanel.SuspendLayout();
-            this.SuspendLayout();
+            mainHeaderPanel = new Panel();
+            mainLabel = new Label();
+            button1 = new Button();
+            listViewOrders = new ListView();
+            OrderIDHeader = new ColumnHeader();
+            OrderNumberHeader = new ColumnHeader();
+            CountHeader = new ColumnHeader();
+            DescriptionHeader = new ColumnHeader();
+            subPanel = new Panel();
+            changeOrderLabel = new Label();
+            descriptionPanel = new Panel();
+            descriptionLabel = new Label();
+            countPanel = new Panel();
+            countLabel = new Label();
+            orderNumberPanel = new Panel();
+            orderNumberLabel = new Label();
+            orderIdPanel = new Panel();
+            orderIdLabel = new Label();
+            viewOrderPanel = new Panel();
+            viewOrderLabel = new Label();
+            preperationButton = new Button();
+            preparedButton = new Button();
+            ServedButton = new Button();
+            OrderIdHeaderPanel = new Panel();
+            label1 = new Label();
+            OrderStatusHeaderPanel = new Panel();
+            orderStatusLabel = new Label();
+            selectedIdPanel = new Panel();
+            selectedOrderIdLabel = new Label();
+            selectedStatusPanel = new Panel();
+            selectedOrderStatusLabel = new Label();
+            panel1 = new Panel();
+            commentHeaderPanel = new Panel();
+            commentHeaderLabel = new Label();
+            commentPanel = new Panel();
+            commentLabel = new Label();
+            tableHeaderPanel = new Panel();
+            tableHeaderLabel = new Label();
+            tablePanel = new Panel();
+            tableLabel = new Label();
+            showServedButton = new Button();
+            mainHeaderPanel.SuspendLayout();
+            subPanel.SuspendLayout();
+            descriptionPanel.SuspendLayout();
+            countPanel.SuspendLayout();
+            orderNumberPanel.SuspendLayout();
+            orderIdPanel.SuspendLayout();
+            viewOrderPanel.SuspendLayout();
+            OrderIdHeaderPanel.SuspendLayout();
+            OrderStatusHeaderPanel.SuspendLayout();
+            selectedIdPanel.SuspendLayout();
+            selectedStatusPanel.SuspendLayout();
+            panel1.SuspendLayout();
+            commentHeaderPanel.SuspendLayout();
+            commentPanel.SuspendLayout();
+            tableHeaderPanel.SuspendLayout();
+            tablePanel.SuspendLayout();
+            SuspendLayout();
             // 
             // mainHeaderPanel
             // 
-            this.mainHeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.mainHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainHeaderPanel.Controls.Add(this.mainLabel);
-            this.mainHeaderPanel.Location = new System.Drawing.Point(0, 51);
-            this.mainHeaderPanel.Name = "mainHeaderPanel";
-            this.mainHeaderPanel.Size = new System.Drawing.Size(1202, 83);
-            this.mainHeaderPanel.TabIndex = 0;
+            mainHeaderPanel.BackColor = Color.FromArgb(255, 179, 71);
+            mainHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
+            mainHeaderPanel.Controls.Add(mainLabel);
+            mainHeaderPanel.Location = new Point(0, 51);
+            mainHeaderPanel.Name = "mainHeaderPanel";
+            mainHeaderPanel.Size = new Size(1202, 83);
+            mainHeaderPanel.TabIndex = 0;
             // 
             // mainLabel
             // 
-            this.mainLabel.AutoSize = true;
-            this.mainLabel.Font = new System.Drawing.Font("Segoe UI", 32F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.mainLabel.Location = new System.Drawing.Point(421, 11);
-            this.mainLabel.Name = "mainLabel";
-            this.mainLabel.Size = new System.Drawing.Size(326, 59);
-            this.mainLabel.TabIndex = 8;
-            this.mainLabel.Text = "Kitchen Orders";
+            mainLabel.AutoSize = true;
+            mainLabel.Font = new Font("Segoe UI", 32F, FontStyle.Bold, GraphicsUnit.Point);
+            mainLabel.Location = new Point(421, 11);
+            mainLabel.Name = "mainLabel";
+            mainLabel.Size = new Size(326, 59);
+            mainLabel.TabIndex = 8;
+            mainLabel.Text = "Kitchen Orders";
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(1102, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 39);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Name";
-            this.button1.UseVisualStyleBackColor = false;
+            button1.BackColor = Color.FromArgb(255, 179, 71);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(1102, 6);
+            button1.Name = "button1";
+            button1.Size = new Size(95, 39);
+            button1.TabIndex = 1;
+            button1.Text = "Name";
+            button1.UseVisualStyleBackColor = false;
             // 
             // listViewOrders
             // 
-            this.listViewOrders.BackColor = System.Drawing.SystemColors.Window;
-            this.listViewOrders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.OrderIDHeader,
-            this.OrderNumberHeader,
-            this.CountHeader,
-            this.DescriptionHeader});
-            this.listViewOrders.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.listViewOrders.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listViewOrders.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.listViewOrders.FullRowSelect = true;
-            this.listViewOrders.GridLines = true;
-            this.listViewOrders.Location = new System.Drawing.Point(-1, 199);
-            this.listViewOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listViewOrders.Name = "listViewOrders";
-            this.listViewOrders.Size = new System.Drawing.Size(686, 357);
-            this.listViewOrders.TabIndex = 3;
-            this.listViewOrders.TileSize = new System.Drawing.Size(40, 40);
-            this.listViewOrders.UseCompatibleStateImageBehavior = false;
-            this.listViewOrders.View = System.Windows.Forms.View.Details;
-            this.listViewOrders.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewOrders_ItemSelectionChanged);
+            listViewOrders.BackColor = SystemColors.Window;
+            listViewOrders.Columns.AddRange(new ColumnHeader[] { OrderIDHeader, OrderNumberHeader, CountHeader, DescriptionHeader });
+            listViewOrders.Cursor = Cursors.Hand;
+            listViewOrders.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            listViewOrders.ForeColor = SystemColors.ControlText;
+            listViewOrders.FullRowSelect = true;
+            listViewOrders.GridLines = true;
+            listViewOrders.Location = new Point(-1, 199);
+            listViewOrders.Margin = new Padding(3, 2, 3, 2);
+            listViewOrders.Name = "listViewOrders";
+            listViewOrders.Size = new Size(686, 357);
+            listViewOrders.TabIndex = 3;
+            listViewOrders.TileSize = new Size(40, 40);
+            listViewOrders.UseCompatibleStateImageBehavior = false;
+            listViewOrders.View = View.Details;
+            listViewOrders.ItemSelectionChanged += listViewOrders_ItemSelectionChanged;
             // 
             // OrderIDHeader
             // 
-            this.OrderIDHeader.Text = "";
-            this.OrderIDHeader.Width = 127;
+            OrderIDHeader.Text = "";
+            OrderIDHeader.Width = 127;
             // 
             // OrderNumberHeader
             // 
-            this.OrderNumberHeader.Text = "";
-            this.OrderNumberHeader.Width = 147;
+            OrderNumberHeader.Text = "";
+            OrderNumberHeader.Width = 147;
             // 
             // CountHeader
             // 
-            this.CountHeader.Text = "";
-            this.CountHeader.Width = 105;
+            CountHeader.Text = "";
+            CountHeader.Width = 105;
             // 
             // DescriptionHeader
             // 
-            this.DescriptionHeader.Text = "";
-            this.DescriptionHeader.Width = 303;
+            DescriptionHeader.Text = "";
+            DescriptionHeader.Width = 303;
             // 
             // subPanel
             // 
-            this.subPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.subPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.subPanel.Controls.Add(this.changeOrderLabel);
-            this.subPanel.Location = new System.Drawing.Point(684, 184);
-            this.subPanel.Name = "subPanel";
-            this.subPanel.Size = new System.Drawing.Size(518, 47);
-            this.subPanel.TabIndex = 1;
+            subPanel.BackColor = Color.FromArgb(255, 179, 71);
+            subPanel.BorderStyle = BorderStyle.FixedSingle;
+            subPanel.Controls.Add(changeOrderLabel);
+            subPanel.Location = new Point(684, 184);
+            subPanel.Name = "subPanel";
+            subPanel.Size = new Size(518, 47);
+            subPanel.TabIndex = 1;
             // 
             // changeOrderLabel
             // 
-            this.changeOrderLabel.AutoSize = true;
-            this.changeOrderLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.changeOrderLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.changeOrderLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.changeOrderLabel.Location = new System.Drawing.Point(851, 11);
-            this.changeOrderLabel.Name = "changeOrderLabel";
-            this.changeOrderLabel.Size = new System.Drawing.Size(182, 25);
-            this.changeOrderLabel.TabIndex = 1;
-            this.changeOrderLabel.Text = "Change order status";
+            changeOrderLabel.AutoSize = true;
+            changeOrderLabel.FlatStyle = FlatStyle.Flat;
+            changeOrderLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            changeOrderLabel.ForeColor = SystemColors.ControlText;
+            changeOrderLabel.Location = new Point(851, 11);
+            changeOrderLabel.Name = "changeOrderLabel";
+            changeOrderLabel.Size = new Size(182, 25);
+            changeOrderLabel.TabIndex = 1;
+            changeOrderLabel.Text = "Change order status";
             // 
             // descriptionPanel
             // 
-            this.descriptionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.descriptionPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.descriptionPanel.Controls.Add(this.descriptionLabel);
-            this.descriptionPanel.Location = new System.Drawing.Point(379, 184);
-            this.descriptionPanel.Name = "descriptionPanel";
-            this.descriptionPanel.Size = new System.Drawing.Size(306, 47);
-            this.descriptionPanel.TabIndex = 7;
+            descriptionPanel.BackColor = Color.FromArgb(255, 179, 71);
+            descriptionPanel.BorderStyle = BorderStyle.FixedSingle;
+            descriptionPanel.Controls.Add(descriptionLabel);
+            descriptionPanel.Location = new Point(379, 184);
+            descriptionPanel.Name = "descriptionPanel";
+            descriptionPanel.Size = new Size(306, 47);
+            descriptionPanel.TabIndex = 7;
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.descriptionLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.descriptionLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.descriptionLabel.Location = new System.Drawing.Point(101, 11);
-            this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(108, 25);
-            this.descriptionLabel.TabIndex = 0;
-            this.descriptionLabel.Text = "Description";
+            descriptionLabel.AutoSize = true;
+            descriptionLabel.FlatStyle = FlatStyle.Flat;
+            descriptionLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            descriptionLabel.ForeColor = SystemColors.ControlText;
+            descriptionLabel.Location = new Point(101, 11);
+            descriptionLabel.Name = "descriptionLabel";
+            descriptionLabel.Size = new Size(108, 25);
+            descriptionLabel.TabIndex = 0;
+            descriptionLabel.Text = "Description";
             // 
             // countPanel
             // 
-            this.countPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.countPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.countPanel.Controls.Add(this.countLabel);
-            this.countPanel.Location = new System.Drawing.Point(274, 184);
-            this.countPanel.Name = "countPanel";
-            this.countPanel.Size = new System.Drawing.Size(106, 47);
-            this.countPanel.TabIndex = 6;
+            countPanel.BackColor = Color.FromArgb(255, 179, 71);
+            countPanel.BorderStyle = BorderStyle.FixedSingle;
+            countPanel.Controls.Add(countLabel);
+            countPanel.Location = new Point(274, 184);
+            countPanel.Name = "countPanel";
+            countPanel.Size = new Size(106, 47);
+            countPanel.TabIndex = 6;
             // 
             // countLabel
             // 
-            this.countLabel.AutoSize = true;
-            this.countLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.countLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.countLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.countLabel.Location = new System.Drawing.Point(20, 11);
-            this.countLabel.Name = "countLabel";
-            this.countLabel.Size = new System.Drawing.Size(63, 25);
-            this.countLabel.TabIndex = 0;
-            this.countLabel.Text = "Count";
+            countLabel.AutoSize = true;
+            countLabel.FlatStyle = FlatStyle.Flat;
+            countLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            countLabel.ForeColor = SystemColors.ControlText;
+            countLabel.Location = new Point(20, 11);
+            countLabel.Name = "countLabel";
+            countLabel.Size = new Size(63, 25);
+            countLabel.TabIndex = 0;
+            countLabel.Text = "Count";
             // 
             // orderNumberPanel
             // 
-            this.orderNumberPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.orderNumberPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.orderNumberPanel.Controls.Add(this.orderNumberLabel);
-            this.orderNumberPanel.Location = new System.Drawing.Point(128, 184);
-            this.orderNumberPanel.Name = "orderNumberPanel";
-            this.orderNumberPanel.Size = new System.Drawing.Size(148, 47);
-            this.orderNumberPanel.TabIndex = 5;
+            orderNumberPanel.BackColor = Color.FromArgb(255, 179, 71);
+            orderNumberPanel.BorderStyle = BorderStyle.FixedSingle;
+            orderNumberPanel.Controls.Add(orderNumberLabel);
+            orderNumberPanel.Location = new Point(128, 184);
+            orderNumberPanel.Name = "orderNumberPanel";
+            orderNumberPanel.Size = new Size(148, 47);
+            orderNumberPanel.TabIndex = 5;
             // 
             // orderNumberLabel
             // 
-            this.orderNumberLabel.AutoSize = true;
-            this.orderNumberLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.orderNumberLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.orderNumberLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.orderNumberLabel.Location = new System.Drawing.Point(4, 11);
-            this.orderNumberLabel.Name = "orderNumberLabel";
-            this.orderNumberLabel.Size = new System.Drawing.Size(135, 25);
-            this.orderNumberLabel.TabIndex = 0;
-            this.orderNumberLabel.Text = "Order Number";
+            orderNumberLabel.AutoSize = true;
+            orderNumberLabel.FlatStyle = FlatStyle.Flat;
+            orderNumberLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            orderNumberLabel.ForeColor = SystemColors.ControlText;
+            orderNumberLabel.Location = new Point(4, 11);
+            orderNumberLabel.Name = "orderNumberLabel";
+            orderNumberLabel.Size = new Size(135, 25);
+            orderNumberLabel.TabIndex = 0;
+            orderNumberLabel.Text = "Order Number";
             // 
             // orderIdPanel
             // 
-            this.orderIdPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.orderIdPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.orderIdPanel.Controls.Add(this.orderIdLabel);
-            this.orderIdPanel.Location = new System.Drawing.Point(1, 184);
-            this.orderIdPanel.Name = "orderIdPanel";
-            this.orderIdPanel.Size = new System.Drawing.Size(128, 47);
-            this.orderIdPanel.TabIndex = 4;
+            orderIdPanel.BackColor = Color.FromArgb(255, 179, 71);
+            orderIdPanel.BorderStyle = BorderStyle.FixedSingle;
+            orderIdPanel.Controls.Add(orderIdLabel);
+            orderIdPanel.Location = new Point(1, 184);
+            orderIdPanel.Name = "orderIdPanel";
+            orderIdPanel.Size = new Size(128, 47);
+            orderIdPanel.TabIndex = 4;
             // 
             // orderIdLabel
             // 
-            this.orderIdLabel.AutoSize = true;
-            this.orderIdLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.orderIdLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.orderIdLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.orderIdLabel.Location = new System.Drawing.Point(21, 11);
-            this.orderIdLabel.Name = "orderIdLabel";
-            this.orderIdLabel.Size = new System.Drawing.Size(84, 25);
-            this.orderIdLabel.TabIndex = 0;
-            this.orderIdLabel.Text = "Order ID";
+            orderIdLabel.AutoSize = true;
+            orderIdLabel.FlatStyle = FlatStyle.Flat;
+            orderIdLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            orderIdLabel.ForeColor = SystemColors.ControlText;
+            orderIdLabel.Location = new Point(21, 11);
+            orderIdLabel.Name = "orderIdLabel";
+            orderIdLabel.Size = new Size(84, 25);
+            orderIdLabel.TabIndex = 0;
+            orderIdLabel.Text = "Order ID";
             // 
             // viewOrderPanel
             // 
-            this.viewOrderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.viewOrderPanel.Controls.Add(this.viewOrderLabel);
-            this.viewOrderPanel.Location = new System.Drawing.Point(684, 305);
-            this.viewOrderPanel.Name = "viewOrderPanel";
-            this.viewOrderPanel.Size = new System.Drawing.Size(518, 67);
-            this.viewOrderPanel.TabIndex = 4;
+            viewOrderPanel.BackColor = Color.FromArgb(255, 179, 71);
+            viewOrderPanel.Controls.Add(viewOrderLabel);
+            viewOrderPanel.Location = new Point(684, 305);
+            viewOrderPanel.Name = "viewOrderPanel";
+            viewOrderPanel.Size = new Size(518, 67);
+            viewOrderPanel.TabIndex = 4;
             // 
             // viewOrderLabel
             // 
-            this.viewOrderLabel.AutoSize = true;
-            this.viewOrderLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.viewOrderLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.viewOrderLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.viewOrderLabel.Location = new System.Drawing.Point(179, 21);
-            this.viewOrderLabel.Name = "viewOrderLabel";
-            this.viewOrderLabel.Size = new System.Drawing.Size(158, 25);
-            this.viewOrderLabel.TabIndex = 8;
-            this.viewOrderLabel.Text = "View order status";
+            viewOrderLabel.AutoSize = true;
+            viewOrderLabel.FlatStyle = FlatStyle.Flat;
+            viewOrderLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            viewOrderLabel.ForeColor = SystemColors.ControlText;
+            viewOrderLabel.Location = new Point(179, 21);
+            viewOrderLabel.Name = "viewOrderLabel";
+            viewOrderLabel.Size = new Size(158, 25);
+            viewOrderLabel.TabIndex = 8;
+            viewOrderLabel.Text = "View order status";
             // 
             // preperationButton
             // 
-            this.preperationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.preperationButton.Location = new System.Drawing.Point(698, 248);
-            this.preperationButton.Name = "preperationButton";
-            this.preperationButton.Size = new System.Drawing.Size(147, 45);
-            this.preperationButton.TabIndex = 5;
-            this.preperationButton.Text = "In preparation";
-            this.preperationButton.UseVisualStyleBackColor = true;
-            this.preperationButton.Click += new System.EventHandler(this.preperationButton_Click);
+            preperationButton.FlatStyle = FlatStyle.Flat;
+            preperationButton.Location = new Point(698, 248);
+            preperationButton.Name = "preperationButton";
+            preperationButton.Size = new Size(147, 45);
+            preperationButton.TabIndex = 5;
+            preperationButton.Text = "In preparation";
+            preperationButton.UseVisualStyleBackColor = true;
+            preperationButton.Click += preperationButton_Click;
             // 
             // preparedButton
             // 
-            this.preparedButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
-            this.preparedButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.preparedButton.Location = new System.Drawing.Point(871, 248);
-            this.preparedButton.Name = "preparedButton";
-            this.preparedButton.Size = new System.Drawing.Size(147, 45);
-            this.preparedButton.TabIndex = 6;
-            this.preparedButton.Text = "Prepared";
-            this.preparedButton.UseVisualStyleBackColor = false;
-            this.preparedButton.Click += new System.EventHandler(this.preparedButton_Click);
+            preparedButton.BackColor = Color.FromArgb(255, 179, 71);
+            preparedButton.FlatStyle = FlatStyle.Flat;
+            preparedButton.Location = new Point(871, 248);
+            preparedButton.Name = "preparedButton";
+            preparedButton.Size = new Size(147, 45);
+            preparedButton.TabIndex = 6;
+            preparedButton.Text = "Prepared";
+            preparedButton.UseVisualStyleBackColor = false;
+            preparedButton.Click += preparedButton_Click;
             // 
             // ServedButton
             // 
-            this.ServedButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.ServedButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ServedButton.Location = new System.Drawing.Point(1043, 248);
-            this.ServedButton.Name = "ServedButton";
-            this.ServedButton.Size = new System.Drawing.Size(147, 45);
-            this.ServedButton.TabIndex = 7;
-            this.ServedButton.Text = "Served";
-            this.ServedButton.UseVisualStyleBackColor = false;
-            this.ServedButton.Click += new System.EventHandler(this.ServedButton_Click);
+            ServedButton.BackColor = Color.FromArgb(128, 210, 176);
+            ServedButton.FlatStyle = FlatStyle.Flat;
+            ServedButton.Location = new Point(1043, 248);
+            ServedButton.Name = "ServedButton";
+            ServedButton.Size = new Size(147, 45);
+            ServedButton.TabIndex = 7;
+            ServedButton.Text = "Served";
+            ServedButton.UseVisualStyleBackColor = false;
+            ServedButton.Click += ServedButton_Click;
             // 
             // OrderIdHeaderPanel
             // 
-            this.OrderIdHeaderPanel.BackColor = System.Drawing.Color.Gainsboro;
-            this.OrderIdHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.OrderIdHeaderPanel.Controls.Add(this.label1);
-            this.OrderIdHeaderPanel.Location = new System.Drawing.Point(0, 0);
-            this.OrderIdHeaderPanel.Name = "OrderIdHeaderPanel";
-            this.OrderIdHeaderPanel.Size = new System.Drawing.Size(259, 47);
-            this.OrderIdHeaderPanel.TabIndex = 6;
+            OrderIdHeaderPanel.BackColor = Color.Gainsboro;
+            OrderIdHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
+            OrderIdHeaderPanel.Controls.Add(label1);
+            OrderIdHeaderPanel.Location = new Point(0, 0);
+            OrderIdHeaderPanel.Name = "OrderIdHeaderPanel";
+            OrderIdHeaderPanel.Size = new Size(259, 47);
+            OrderIdHeaderPanel.TabIndex = 6;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(47, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Selected order ID";
+            label1.AutoSize = true;
+            label1.FlatStyle = FlatStyle.Flat;
+            label1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.ControlText;
+            label1.Location = new Point(47, 10);
+            label1.Name = "label1";
+            label1.Size = new Size(157, 25);
+            label1.TabIndex = 0;
+            label1.Text = "Selected order ID";
             // 
             // OrderStatusHeaderPanel
             // 
-            this.OrderStatusHeaderPanel.BackColor = System.Drawing.Color.Gainsboro;
-            this.OrderStatusHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.OrderStatusHeaderPanel.Controls.Add(this.orderStatusLabel);
-            this.OrderStatusHeaderPanel.Location = new System.Drawing.Point(258, 0);
-            this.OrderStatusHeaderPanel.Name = "OrderStatusHeaderPanel";
-            this.OrderStatusHeaderPanel.Size = new System.Drawing.Size(260, 47);
-            this.OrderStatusHeaderPanel.TabIndex = 7;
+            OrderStatusHeaderPanel.BackColor = Color.Gainsboro;
+            OrderStatusHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
+            OrderStatusHeaderPanel.Controls.Add(orderStatusLabel);
+            OrderStatusHeaderPanel.Location = new Point(258, 0);
+            OrderStatusHeaderPanel.Name = "OrderStatusHeaderPanel";
+            OrderStatusHeaderPanel.Size = new Size(260, 47);
+            OrderStatusHeaderPanel.TabIndex = 7;
             // 
             // orderStatusLabel
             // 
-            this.orderStatusLabel.AutoSize = true;
-            this.orderStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.orderStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.orderStatusLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.orderStatusLabel.Location = new System.Drawing.Point(71, 10);
-            this.orderStatusLabel.Name = "orderStatusLabel";
-            this.orderStatusLabel.Size = new System.Drawing.Size(116, 25);
-            this.orderStatusLabel.TabIndex = 0;
-            this.orderStatusLabel.Text = "Order Status";
+            orderStatusLabel.AutoSize = true;
+            orderStatusLabel.FlatStyle = FlatStyle.Flat;
+            orderStatusLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            orderStatusLabel.ForeColor = SystemColors.ControlText;
+            orderStatusLabel.Location = new Point(71, 10);
+            orderStatusLabel.Name = "orderStatusLabel";
+            orderStatusLabel.Size = new Size(116, 25);
+            orderStatusLabel.TabIndex = 0;
+            orderStatusLabel.Text = "Order Status";
             // 
             // selectedIdPanel
             // 
-            this.selectedIdPanel.BackColor = System.Drawing.Color.White;
-            this.selectedIdPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selectedIdPanel.Controls.Add(this.selectedOrderIdLabel);
-            this.selectedIdPanel.Location = new System.Drawing.Point(0, 46);
-            this.selectedIdPanel.Name = "selectedIdPanel";
-            this.selectedIdPanel.Size = new System.Drawing.Size(259, 47);
-            this.selectedIdPanel.TabIndex = 7;
+            selectedIdPanel.BackColor = Color.White;
+            selectedIdPanel.BorderStyle = BorderStyle.FixedSingle;
+            selectedIdPanel.Controls.Add(selectedOrderIdLabel);
+            selectedIdPanel.Location = new Point(0, 46);
+            selectedIdPanel.Name = "selectedIdPanel";
+            selectedIdPanel.Size = new Size(259, 47);
+            selectedIdPanel.TabIndex = 7;
             // 
             // selectedOrderIdLabel
             // 
-            this.selectedOrderIdLabel.AutoSize = true;
-            this.selectedOrderIdLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectedOrderIdLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.selectedOrderIdLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.selectedOrderIdLabel.Location = new System.Drawing.Point(112, 13);
-            this.selectedOrderIdLabel.Name = "selectedOrderIdLabel";
-            this.selectedOrderIdLabel.Size = new System.Drawing.Size(0, 25);
-            this.selectedOrderIdLabel.TabIndex = 0;
+            selectedOrderIdLabel.AutoSize = true;
+            selectedOrderIdLabel.FlatStyle = FlatStyle.Flat;
+            selectedOrderIdLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            selectedOrderIdLabel.ForeColor = SystemColors.ControlText;
+            selectedOrderIdLabel.Location = new Point(112, 13);
+            selectedOrderIdLabel.Name = "selectedOrderIdLabel";
+            selectedOrderIdLabel.Size = new Size(0, 25);
+            selectedOrderIdLabel.TabIndex = 0;
             // 
             // selectedStatusPanel
             // 
-            this.selectedStatusPanel.BackColor = System.Drawing.Color.White;
-            this.selectedStatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selectedStatusPanel.Controls.Add(this.selectedOrderStatusLabel);
-            this.selectedStatusPanel.Location = new System.Drawing.Point(258, 46);
-            this.selectedStatusPanel.Name = "selectedStatusPanel";
-            this.selectedStatusPanel.Size = new System.Drawing.Size(260, 47);
-            this.selectedStatusPanel.TabIndex = 8;
+            selectedStatusPanel.BackColor = Color.White;
+            selectedStatusPanel.BorderStyle = BorderStyle.FixedSingle;
+            selectedStatusPanel.Controls.Add(selectedOrderStatusLabel);
+            selectedStatusPanel.Location = new Point(258, 46);
+            selectedStatusPanel.Name = "selectedStatusPanel";
+            selectedStatusPanel.Size = new Size(260, 47);
+            selectedStatusPanel.TabIndex = 8;
             // 
             // selectedOrderStatusLabel
             // 
-            this.selectedOrderStatusLabel.AutoSize = true;
-            this.selectedOrderStatusLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectedOrderStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.selectedOrderStatusLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.selectedOrderStatusLabel.Location = new System.Drawing.Point(92, 12);
-            this.selectedOrderStatusLabel.Name = "selectedOrderStatusLabel";
-            this.selectedOrderStatusLabel.Size = new System.Drawing.Size(0, 25);
-            this.selectedOrderStatusLabel.TabIndex = 0;
+            selectedOrderStatusLabel.AutoSize = true;
+            selectedOrderStatusLabel.FlatStyle = FlatStyle.Flat;
+            selectedOrderStatusLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            selectedOrderStatusLabel.ForeColor = SystemColors.ControlText;
+            selectedOrderStatusLabel.Location = new Point(92, 12);
+            selectedOrderStatusLabel.Name = "selectedOrderStatusLabel";
+            selectedOrderStatusLabel.Size = new Size(0, 25);
+            selectedOrderStatusLabel.TabIndex = 0;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.commentHeaderPanel);
-            this.panel1.Controls.Add(this.commentPanel);
-            this.panel1.Controls.Add(this.OrderStatusHeaderPanel);
-            this.panel1.Controls.Add(this.tableHeaderPanel);
-            this.panel1.Controls.Add(this.selectedStatusPanel);
-            this.panel1.Controls.Add(this.tablePanel);
-            this.panel1.Controls.Add(this.OrderIdHeaderPanel);
-            this.panel1.Controls.Add(this.selectedIdPanel);
-            this.panel1.Location = new System.Drawing.Point(684, 371);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(518, 203);
-            this.panel1.TabIndex = 9;
+            panel1.Controls.Add(commentHeaderPanel);
+            panel1.Controls.Add(commentPanel);
+            panel1.Controls.Add(OrderStatusHeaderPanel);
+            panel1.Controls.Add(tableHeaderPanel);
+            panel1.Controls.Add(selectedStatusPanel);
+            panel1.Controls.Add(tablePanel);
+            panel1.Controls.Add(OrderIdHeaderPanel);
+            panel1.Controls.Add(selectedIdPanel);
+            panel1.Location = new Point(684, 371);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(518, 203);
+            panel1.TabIndex = 9;
             // 
             // commentHeaderPanel
             // 
-            this.commentHeaderPanel.BackColor = System.Drawing.Color.Gainsboro;
-            this.commentHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.commentHeaderPanel.Controls.Add(this.commentHeaderLabel);
-            this.commentHeaderPanel.Location = new System.Drawing.Point(258, 92);
-            this.commentHeaderPanel.Name = "commentHeaderPanel";
-            this.commentHeaderPanel.Size = new System.Drawing.Size(260, 47);
-            this.commentHeaderPanel.TabIndex = 10;
+            commentHeaderPanel.BackColor = Color.Gainsboro;
+            commentHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
+            commentHeaderPanel.Controls.Add(commentHeaderLabel);
+            commentHeaderPanel.Location = new Point(258, 92);
+            commentHeaderPanel.Name = "commentHeaderPanel";
+            commentHeaderPanel.Size = new Size(260, 47);
+            commentHeaderPanel.TabIndex = 10;
             // 
             // commentHeaderLabel
             // 
-            this.commentHeaderLabel.AutoSize = true;
-            this.commentHeaderLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.commentHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.commentHeaderLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.commentHeaderLabel.Location = new System.Drawing.Point(85, 10);
-            this.commentHeaderLabel.Name = "commentHeaderLabel";
-            this.commentHeaderLabel.Size = new System.Drawing.Size(94, 25);
-            this.commentHeaderLabel.TabIndex = 0;
-            this.commentHeaderLabel.Text = "Comment";
+            commentHeaderLabel.AutoSize = true;
+            commentHeaderLabel.FlatStyle = FlatStyle.Flat;
+            commentHeaderLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            commentHeaderLabel.ForeColor = SystemColors.ControlText;
+            commentHeaderLabel.Location = new Point(85, 10);
+            commentHeaderLabel.Name = "commentHeaderLabel";
+            commentHeaderLabel.Size = new Size(94, 25);
+            commentHeaderLabel.TabIndex = 0;
+            commentHeaderLabel.Text = "Comment";
             // 
             // commentPanel
             // 
-            this.commentPanel.BackColor = System.Drawing.Color.White;
-            this.commentPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.commentPanel.Controls.Add(this.commentLabel);
-            this.commentPanel.Location = new System.Drawing.Point(258, 138);
-            this.commentPanel.Name = "commentPanel";
-            this.commentPanel.Size = new System.Drawing.Size(260, 47);
-            this.commentPanel.TabIndex = 12;
+            commentPanel.BackColor = Color.White;
+            commentPanel.BorderStyle = BorderStyle.FixedSingle;
+            commentPanel.Controls.Add(commentLabel);
+            commentPanel.Location = new Point(258, 138);
+            commentPanel.Name = "commentPanel";
+            commentPanel.Size = new Size(260, 47);
+            commentPanel.TabIndex = 12;
             // 
             // commentLabel
             // 
-            this.commentLabel.AutoSize = true;
-            this.commentLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.commentLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.commentLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.commentLabel.Location = new System.Drawing.Point(13, 7);
-            this.commentLabel.MaximumSize = new System.Drawing.Size(230, 30);
-            this.commentLabel.MinimumSize = new System.Drawing.Size(230, 30);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(230, 30);
-            this.commentLabel.TabIndex = 0;
+            commentLabel.AutoSize = true;
+            commentLabel.FlatStyle = FlatStyle.Flat;
+            commentLabel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            commentLabel.ForeColor = SystemColors.ControlText;
+            commentLabel.Location = new Point(13, 7);
+            commentLabel.MaximumSize = new Size(230, 30);
+            commentLabel.MinimumSize = new Size(230, 30);
+            commentLabel.Name = "commentLabel";
+            commentLabel.Size = new Size(230, 30);
+            commentLabel.TabIndex = 0;
             // 
             // tableHeaderPanel
             // 
-            this.tableHeaderPanel.BackColor = System.Drawing.Color.Gainsboro;
-            this.tableHeaderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tableHeaderPanel.Controls.Add(this.tableHeaderLabel);
-            this.tableHeaderPanel.Location = new System.Drawing.Point(0, 92);
-            this.tableHeaderPanel.Name = "tableHeaderPanel";
-            this.tableHeaderPanel.Size = new System.Drawing.Size(259, 47);
-            this.tableHeaderPanel.TabIndex = 9;
+            tableHeaderPanel.BackColor = Color.Gainsboro;
+            tableHeaderPanel.BorderStyle = BorderStyle.FixedSingle;
+            tableHeaderPanel.Controls.Add(tableHeaderLabel);
+            tableHeaderPanel.Location = new Point(0, 92);
+            tableHeaderPanel.Name = "tableHeaderPanel";
+            tableHeaderPanel.Size = new Size(259, 47);
+            tableHeaderPanel.TabIndex = 9;
             // 
             // tableHeaderLabel
             // 
-            this.tableHeaderLabel.AutoSize = true;
-            this.tableHeaderLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tableHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tableHeaderLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tableHeaderLabel.Location = new System.Drawing.Point(104, 10);
-            this.tableHeaderLabel.Name = "tableHeaderLabel";
-            this.tableHeaderLabel.Size = new System.Drawing.Size(56, 25);
-            this.tableHeaderLabel.TabIndex = 0;
-            this.tableHeaderLabel.Text = "Table";
+            tableHeaderLabel.AutoSize = true;
+            tableHeaderLabel.FlatStyle = FlatStyle.Flat;
+            tableHeaderLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            tableHeaderLabel.ForeColor = SystemColors.ControlText;
+            tableHeaderLabel.Location = new Point(104, 10);
+            tableHeaderLabel.Name = "tableHeaderLabel";
+            tableHeaderLabel.Size = new Size(56, 25);
+            tableHeaderLabel.TabIndex = 0;
+            tableHeaderLabel.Text = "Table";
             // 
             // tablePanel
             // 
-            this.tablePanel.BackColor = System.Drawing.Color.White;
-            this.tablePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tablePanel.Controls.Add(this.tableLabel);
-            this.tablePanel.Location = new System.Drawing.Point(0, 138);
-            this.tablePanel.Name = "tablePanel";
-            this.tablePanel.Size = new System.Drawing.Size(259, 47);
-            this.tablePanel.TabIndex = 11;
+            tablePanel.BackColor = Color.White;
+            tablePanel.BorderStyle = BorderStyle.FixedSingle;
+            tablePanel.Controls.Add(tableLabel);
+            tablePanel.Location = new Point(0, 138);
+            tablePanel.Name = "tablePanel";
+            tablePanel.Size = new Size(259, 47);
+            tablePanel.TabIndex = 11;
             // 
             // tableLabel
             // 
-            this.tableLabel.AutoSize = true;
-            this.tableLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tableLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tableLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tableLabel.Location = new System.Drawing.Point(117, 13);
-            this.tableLabel.Name = "tableLabel";
-            this.tableLabel.Size = new System.Drawing.Size(0, 25);
-            this.tableLabel.TabIndex = 0;
+            tableLabel.AutoSize = true;
+            tableLabel.FlatStyle = FlatStyle.Flat;
+            tableLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            tableLabel.ForeColor = SystemColors.ControlText;
+            tableLabel.Location = new Point(117, 13);
+            tableLabel.Name = "tableLabel";
+            tableLabel.Size = new Size(0, 25);
+            tableLabel.TabIndex = 0;
             // 
-            // CurrentOrdersForm2
+            // showServedButton
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1202, 574);
-            this.Controls.Add(this.descriptionPanel);
-            this.Controls.Add(this.countPanel);
-            this.Controls.Add(this.orderNumberPanel);
-            this.Controls.Add(this.orderIdPanel);
-            this.Controls.Add(this.ServedButton);
-            this.Controls.Add(this.preparedButton);
-            this.Controls.Add(this.preperationButton);
-            this.Controls.Add(this.viewOrderPanel);
-            this.Controls.Add(this.subPanel);
-            this.Controls.Add(this.listViewOrders);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.mainHeaderPanel);
-            this.Controls.Add(this.panel1);
-            this.Name = "CurrentOrdersForm2";
-            this.Text = "CurrentOrdersForm2";
-            this.mainHeaderPanel.ResumeLayout(false);
-            this.mainHeaderPanel.PerformLayout();
-            this.subPanel.ResumeLayout(false);
-            this.subPanel.PerformLayout();
-            this.descriptionPanel.ResumeLayout(false);
-            this.descriptionPanel.PerformLayout();
-            this.countPanel.ResumeLayout(false);
-            this.countPanel.PerformLayout();
-            this.orderNumberPanel.ResumeLayout(false);
-            this.orderNumberPanel.PerformLayout();
-            this.orderIdPanel.ResumeLayout(false);
-            this.orderIdPanel.PerformLayout();
-            this.viewOrderPanel.ResumeLayout(false);
-            this.viewOrderPanel.PerformLayout();
-            this.OrderIdHeaderPanel.ResumeLayout(false);
-            this.OrderIdHeaderPanel.PerformLayout();
-            this.OrderStatusHeaderPanel.ResumeLayout(false);
-            this.OrderStatusHeaderPanel.PerformLayout();
-            this.selectedIdPanel.ResumeLayout(false);
-            this.selectedIdPanel.PerformLayout();
-            this.selectedStatusPanel.ResumeLayout(false);
-            this.selectedStatusPanel.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.commentHeaderPanel.ResumeLayout(false);
-            this.commentHeaderPanel.PerformLayout();
-            this.commentPanel.ResumeLayout(false);
-            this.commentPanel.PerformLayout();
-            this.tableHeaderPanel.ResumeLayout(false);
-            this.tableHeaderPanel.PerformLayout();
-            this.tablePanel.ResumeLayout(false);
-            this.tablePanel.PerformLayout();
-            this.ResumeLayout(false);
-
+            showServedButton.BackColor = Color.FromArgb(128, 210, 176);
+            showServedButton.FlatStyle = FlatStyle.Flat;
+            showServedButton.Location = new Point(0, 133);
+            showServedButton.Name = "showServedButton";
+            showServedButton.Size = new Size(276, 52);
+            showServedButton.TabIndex = 10;
+            showServedButton.Text = "Show Served Orders";
+            showServedButton.UseVisualStyleBackColor = false;
+            showServedButton.Click += showServedButton_Click;
+            // 
+            // CurrentOrdersForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Window;
+            ClientSize = new Size(1202, 574);
+            Controls.Add(showServedButton);
+            Controls.Add(descriptionPanel);
+            Controls.Add(countPanel);
+            Controls.Add(orderNumberPanel);
+            Controls.Add(orderIdPanel);
+            Controls.Add(ServedButton);
+            Controls.Add(preparedButton);
+            Controls.Add(preperationButton);
+            Controls.Add(viewOrderPanel);
+            Controls.Add(subPanel);
+            Controls.Add(listViewOrders);
+            Controls.Add(button1);
+            Controls.Add(mainHeaderPanel);
+            Controls.Add(panel1);
+            Name = "CurrentOrdersForm";
+            Text = "CurrentOrdersForm2";
+            mainHeaderPanel.ResumeLayout(false);
+            mainHeaderPanel.PerformLayout();
+            subPanel.ResumeLayout(false);
+            subPanel.PerformLayout();
+            descriptionPanel.ResumeLayout(false);
+            descriptionPanel.PerformLayout();
+            countPanel.ResumeLayout(false);
+            countPanel.PerformLayout();
+            orderNumberPanel.ResumeLayout(false);
+            orderNumberPanel.PerformLayout();
+            orderIdPanel.ResumeLayout(false);
+            orderIdPanel.PerformLayout();
+            viewOrderPanel.ResumeLayout(false);
+            viewOrderPanel.PerformLayout();
+            OrderIdHeaderPanel.ResumeLayout(false);
+            OrderIdHeaderPanel.PerformLayout();
+            OrderStatusHeaderPanel.ResumeLayout(false);
+            OrderStatusHeaderPanel.PerformLayout();
+            selectedIdPanel.ResumeLayout(false);
+            selectedIdPanel.PerformLayout();
+            selectedStatusPanel.ResumeLayout(false);
+            selectedStatusPanel.PerformLayout();
+            panel1.ResumeLayout(false);
+            commentHeaderPanel.ResumeLayout(false);
+            commentHeaderPanel.PerformLayout();
+            commentPanel.ResumeLayout(false);
+            commentPanel.PerformLayout();
+            tableHeaderPanel.ResumeLayout(false);
+            tableHeaderPanel.PerformLayout();
+            tablePanel.ResumeLayout(false);
+            tablePanel.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -613,5 +622,6 @@
         private Label tableHeaderLabel;
         private Panel tablePanel;
         private Label tableLabel;
+        private Button showServedButton;
     }
 }
