@@ -34,5 +34,27 @@ namespace ChapeauModel
 
             return orderItem;
         }
+
+        public void RemoveListviewItem(string value, List<OrderItem> orderItems)
+        {
+            int menuItemId = int.Parse(value);
+
+            foreach (OrderItem o in orderItems)
+            {
+                if (o.menuItemId == menuItemId)
+                {
+                    if(o.amount > 1)
+                    {
+                        o.amount--;
+                    }
+                    else
+                    {
+                        orderItems.Remove(o);
+                    }
+                    break;
+                }
+                
+            }
+        }
     }
 }

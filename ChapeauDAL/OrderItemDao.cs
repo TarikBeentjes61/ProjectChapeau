@@ -18,7 +18,6 @@ namespace ChapeauDAL
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
 
         }
-
         public OrderItem GetById(int id)
         {
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment FROM [OrderItem] WHERE id = @id";
@@ -56,5 +55,7 @@ namespace ChapeauDAL
             };
             return orderItem;
         }
+
+
     }
 }

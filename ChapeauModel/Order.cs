@@ -9,6 +9,7 @@ namespace ChapeauModel
         public int employeeId;
         public int tableId;
         public int billId;
+        public int id;
         public DateTime date;
         public OrderStatus status;
 
@@ -19,9 +20,10 @@ namespace ChapeauModel
 
         public void AddOrder(List<OrderItem> orderItems)
         {
-            foreach(OrderItem item in orderItems) 
+            Order order = new Order();
+            foreach(OrderItem o in orderItems) 
             {
-                item.orderId = orderItems.IndexOf(item);
+                o.orderId = order.id;
             }
         }
 

@@ -2,12 +2,18 @@ using ChapeauModel;
 using ChapeauService;
 using System.Windows.Forms;
 using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChapeauUI
 {
     public partial class CreateOrderForm : Form
     {
         List<OrderItem> orderItems = new List<OrderItem>();
+        bool btnCommentWasClicked = false;
+        bool btnAddCommentWasClicked = false;
+        bool btnRemoveWasClicked = false;
+        OrderItem orderItem = new OrderItem();
+        double totalPrice = 0;
 
         public CreateOrderForm(/*int table, Employee employee*/)
         {
@@ -34,6 +40,7 @@ namespace ChapeauUI
         }
         private void CreateOrderForm_Load(object sender, EventArgs e)
         {
+
             try
             {
                 //LUNCH
@@ -281,7 +288,7 @@ namespace ChapeauUI
                     listViewHotDrinks.Items.Add(item);
                 }
 
-                //ORDER OVERVIEW LUNCH
+                //ORDER LUNCH PANEL
                 listViewOrderLunch.Clear();
                 listViewOrderLunch.View = View.Details;
 
@@ -301,7 +308,7 @@ namespace ChapeauUI
                     listViewOrderLunch.Items.Add(item);
                 }
 
-                //ORDER OVERVIEW DINNER
+                //ORDER DINNER PANEL
                 listViewOrderDinner.Clear();
                 listViewOrderDinner.View = View.Details;
 
@@ -321,7 +328,7 @@ namespace ChapeauUI
                     listViewOrderDinner.Items.Add(item);
                 }
 
-                //ORDER OVERVIEW DRINKS
+                //ORDER DRINKS PANEL
                 listViewOrderDrinks.Clear();
                 listViewOrderDrinks.View = View.Details;
 
@@ -710,15 +717,66 @@ namespace ChapeauUI
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
             //Bestelling weergeven
-            OrderService orderService = new OrderService();
-            //orderService.AddOrder(orderItems);
-
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
 
-            listViewOrderOverview.Columns.Add("Amount");
-            listViewOrderOverview.Columns.Add("Name");
-            listViewOrderOverview.Columns.Add("Price");
+            listViewOrderOverview.Columns.Add("Amount", 25);
+            listViewOrderOverview.Columns.Add("Name", 370);
+            listViewOrderOverview.Columns.Add("Price", 45);
+
+            foreach (OrderItem o in orderItems)
+            {
+                MenuItemService menuItemService = new MenuItemService();
+                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.amount.ToString());
+
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(menuItem.price.ToString());
+                listViewOrderOverview.Items.Add(item); 
+                totalPrice += menuItem.price;
+            }
+
+            lblTotal.Text = "Total: " + totalPrice.ToString();
+            pnlCreateOrderLunch.Hide();
+            pnlOrderOverview.Show();
+        }
+        private void btnAddDinner_Click(object sender, EventArgs e)
+        {
+            //Bestelling weergeven
+            listViewOrderOverview.Clear();
+            listViewOrderOverview.View = View.Details;
+
+            listViewOrderOverview.Columns.Add("Amount", 25);
+            listViewOrderOverview.Columns.Add("Name", 370);
+            listViewOrderOverview.Columns.Add("Price", 45);
+
+            foreach (OrderItem o in orderItems)
+            {
+                MenuItemService menuItemService = new MenuItemService();
+                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.amount.ToString());
+
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(menuItem.price.ToString());
+                listViewOrderOverview.Items.Add(item); 
+                totalPrice += menuItem.price;
+            }
+
+            lblTotal.Text = "Total: " + totalPrice.ToString();
+            pnlCreateOrderDinner.Hide();
+            pnlOrderOverview.Show();
+        }
+
+        private void btnAddDrinks_Click(object sender, EventArgs e)
+        {
+            listViewOrderOverview.Clear();
+            listViewOrderOverview.View = View.Details;
+
+            listViewOrderOverview.Columns.Add("Amount", 25);
+            listViewOrderOverview.Columns.Add("Name", 370);
+            listViewOrderOverview.Columns.Add("Price", 45);
 
             foreach (OrderItem o in orderItems)
             {
@@ -730,49 +788,148 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
+                totalPrice += menuItem.price;
             }
 
+            lblTotal.Text = "Total: " + totalPrice.ToString();
+            pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
         }
 
-        //COMMENT
+
+
         private void listViewOrderLunch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            OrderItem orderItem = new OrderItem();
-            orderItem.comment = txtBoxComment.Text;
-
-            CreateOrderForm_Load(sender, e);
-        }
-        private void btnCommentLunch_Click(object sender, EventArgs e)
-        {
-            //Show this panel
-            pnlComment.Show();
-
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
-            pnlCreateOrderDrinks.Hide();
-        }
-        private void btnAddComment_Click(object sender, EventArgs e)
-        {
-            listViewOrderLunch_SelectedIndexChanged(sender, e);
-        }
-
-        //REMOVE
-        private void btnRemoveLunch_Click(object sender, EventArgs e)
         {
             ListViewEditor listview = new ListViewEditor();
             string value = "";
 
-            foreach (ListViewItem selectedItem in listViewHotDrinks.SelectedItems)
+            foreach (ListViewItem selectedItem in listViewOrderLunch.SelectedItems)
             {
                 value = selectedItem.SubItems[0].Text;
             }
 
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //orderItems.Remove();
+            if (btnCommentWasClicked)
+            {
+                //Show this panel
+                pnlComment.Show();
+
+                //Hide other panels
+                pnlOrderOverview.Hide();
+                pnlCreateOrderLunch.Hide();
+                pnlCreateOrderDinner.Hide();
+                pnlCreateOrderDrinks.Hide();
+            }
+            else if (btnAddCommentWasClicked)
+            {
+                orderItem.comment = txtBoxComment.Text;
+            }
+            else if (btnRemoveWasClicked)
+            {
+                listview.RemoveListviewItem(value, orderItems);
+            }
+
             CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewOrderDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListViewEditor listview = new ListViewEditor();
+            string value = "";
+
+            foreach (ListViewItem selectedItem in listViewOrderDinner.SelectedItems)
+            {
+                value = selectedItem.SubItems[0].Text;
+            }
+
+            if (btnCommentWasClicked)
+            {
+                //Show this panel
+                pnlComment.Show();
+
+                //Hide other panels
+                pnlOrderOverview.Hide();
+                pnlCreateOrderLunch.Hide();
+                pnlCreateOrderDinner.Hide();
+                pnlCreateOrderDrinks.Hide();
+            }
+            else if (btnAddCommentWasClicked)
+            {
+                orderItem.comment = txtBoxComment.Text;
+            }
+            else if (btnRemoveWasClicked)
+            {
+                listview.RemoveListviewItem(value, orderItems);
+            }
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewOrderDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListViewEditor listview = new ListViewEditor();
+            string value = "";
+
+            foreach (ListViewItem selectedItem in listViewOrderDrinks.SelectedItems)
+            {
+                value = selectedItem.SubItems[0].Text;
+            }
+
+            if (btnCommentWasClicked)
+            {
+                //Show this panel
+                pnlComment.Show();
+
+                //Hide other panels
+                pnlOrderOverview.Hide();
+                pnlCreateOrderLunch.Hide();
+                pnlCreateOrderDinner.Hide();
+                pnlCreateOrderDrinks.Hide();
+            }
+            else if (btnAddCommentWasClicked)
+            {
+                orderItem.comment = txtBoxComment.Text;
+            }
+            else if (btnRemoveWasClicked)
+            {
+                listview.RemoveListviewItem(value, orderItems);
+            }
+
+            CreateOrderForm_Load(sender, e);
+        }
+
+        //COMMENT
+        private void btnCommentLunch_Click(object sender, EventArgs e)
+        {
+            btnCommentWasClicked = true;
+        }
+        private void btnRemoveLunch_Click(object sender, EventArgs e)
+        {
+            btnRemoveWasClicked = true;
+        }
+
+
+        private void btnAddComment_Click(object sender, EventArgs e)
+        {
+            btnAddCommentWasClicked = true;
+
+            listViewOrderLunch_SelectedIndexChanged(sender, e);
+            CreateOrderForm_Load(sender, e);
+        }
+        private void btnCommentDinner_Click(object sender, EventArgs e)
+        {
+            btnCommentWasClicked = true;
+        }
+        private void btnRemoveDinner_Click(object sender, EventArgs e)
+        {
+            btnRemoveWasClicked = true;
+        }
+        private void btnCommentDrinks_Click(object sender, EventArgs e)
+        {
+            btnCommentWasClicked = true;
+
+        }
+        private void btnRemoveDrinks_Click(object sender, EventArgs e)
+        {
+            btnRemoveWasClicked = true;
         }
 
         //BACK

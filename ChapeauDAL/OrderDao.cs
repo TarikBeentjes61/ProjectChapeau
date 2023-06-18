@@ -24,16 +24,8 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //public Order AddOrder(List<OrderItem> orderItems)
-        //{
-        //    string query = $"INSERT INTO [Order] (orderItems) VALUES (@orderItems)";
-        //    SqlParameter[] sqlParameters = new SqlParameter[]
-        //     {
-        //        new SqlParameter("@orderItems", orderItems ),
-        //     };
-        //    return AddSingle(ExecuteEditQuery(query, sqlParameters));
-        //}
+
+
 
         private List<Order> ReadTables(DataTable dataTable)
         {
@@ -63,18 +55,18 @@ namespace ChapeauDAL
             };
             return order;
         }
-        //private Order AddSingle(DataTable dataTable)
-        //{
-        //    DataRow row = dataTable.Rows[0];
-        //    Order order = new Order()
-        //    {
-        //        tableId = (int)row["Table_id"],
-        //        employeeId = (int)row["Employee_id"],
-        //        billId = (int)row["Bill_id"],
-        //        date = (DateTime)row["dateTime"],
-        //        status = (OrderStatus)row["status"]
-        //    };
-        //    return order;
-        //}
+        private Order AddSingle(DataTable dataTable)
+        {
+            DataRow row = dataTable.Rows[0];
+            Order order = new Order()
+            {
+                tableId = (int)row["Table_id"],
+                employeeId = (int)row["Employee_id"],
+                billId = (int)row["Bill_id"],
+                date = (DateTime)row["dateTime"],
+                status = (OrderStatus)row["status"]
+            };
+            return order;
+        }
     }
 }
