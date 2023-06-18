@@ -27,6 +27,7 @@ namespace ChapeauUI
             InitializeComponent();
             loggedInEmployee = employee;
             ChangeHeaderLabel();
+            DisplayLogoutButton();
             ChangePanelColours();
             CreateTimer(30); //Takes in seconds which are converted to milliseconds
             RefreshData();
@@ -46,6 +47,10 @@ namespace ChapeauUI
                 mainLabel.Text = "Bar Orders";
             else
                 mainLabel.Text = "Kitchen Orders";
+        }
+        private void DisplayLogoutButton()
+        {
+            logoutButton.Text = loggedInEmployee.name;
         }
         private void ChangePanelColours()
         {

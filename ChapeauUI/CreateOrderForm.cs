@@ -15,7 +15,7 @@ namespace ChapeauUI
         OrderItem orderItem = new OrderItem();
         double totalPrice = 0;
 
-        public CreateOrderForm(/*int table, Employee employee*/)
+        public CreateOrderForm(int table, Employee employee)
         {
             InitializeComponent();
 

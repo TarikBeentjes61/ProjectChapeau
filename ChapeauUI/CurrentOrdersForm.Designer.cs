@@ -30,7 +30,7 @@
         {
             mainHeaderPanel = new Panel();
             mainLabel = new Label();
-            button1 = new Button();
+            logoutButton = new Button();
             listViewOrders = new ListView();
             OrderIDHeader = new ColumnHeader();
             OrderNumberHeader = new ColumnHeader();
@@ -109,16 +109,16 @@
             mainLabel.TabIndex = 8;
             mainLabel.Text = "Kitchen Orders";
             // 
-            // button1
+            // logoutButton
             // 
-            button1.BackColor = Color.FromArgb(255, 179, 71);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(1102, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(95, 39);
-            button1.TabIndex = 1;
-            button1.Text = "Name";
-            button1.UseVisualStyleBackColor = false;
+            logoutButton.BackColor = Color.FromArgb(255, 179, 71);
+            logoutButton.FlatStyle = FlatStyle.Flat;
+            logoutButton.Location = new Point(1102, 6);
+            logoutButton.Name = "logoutButton";
+            logoutButton.Size = new Size(95, 39);
+            logoutButton.TabIndex = 1;
+            logoutButton.Text = "Name";
+            logoutButton.UseVisualStyleBackColor = false;
             // 
             // listViewOrders
             // 
@@ -554,7 +554,7 @@
             Controls.Add(viewOrderPanel);
             Controls.Add(subPanel);
             Controls.Add(listViewOrders);
-            Controls.Add(button1);
+            Controls.Add(logoutButton);
             Controls.Add(mainHeaderPanel);
             Controls.Add(panel1);
             Name = "CurrentOrdersForm";
@@ -597,7 +597,7 @@
         #endregion
 
         private Panel mainHeaderPanel;
-        private Button button1;
+        private Button logoutButton;
         private ListView listViewOrders;
         private Panel subPanel;
         private Panel orderNumberPanel;
