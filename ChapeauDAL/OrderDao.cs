@@ -98,5 +98,18 @@ namespace ChapeauDAL
             };
             return order;
         }
+        private Order AddSingle(DataTable dataTable)
+        {
+            DataRow row = dataTable.Rows[0];
+            Order order = new Order()
+            {
+                tableId = (int)row["Table_id"],
+                employeeId = (int)row["Employee_id"],
+                billId = (int)row["Bill_id"],
+                date = (DateTime)row["dateTime"],
+                status = (OrderStatus)row["status"]
+            };
+            return order;
+        }
     }
 }

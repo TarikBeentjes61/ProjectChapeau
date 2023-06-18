@@ -28,5 +28,9 @@ namespace ChapeauService
         {
             return orderDao.GetAllByState(status);
         }
+        //public Order AddOrder(List<OrderItem> orderItems)
+        //{
+        //    return orderDao.AddOrder(orderItems);
+        //}
     }
 }
