@@ -55,27 +55,27 @@
             // 
             // flpnlTables
             // 
-            flpnlTables.Location = new Point(73, 76);
-            flpnlTables.Margin = new Padding(3, 2, 3, 2);
+            flpnlTables.Location = new Point(83, 101);
             flpnlTables.Name = "flpnlTables";
-            flpnlTables.Size = new Size(264, 533);
+            flpnlTables.Size = new Size(302, 711);
             flpnlTables.TabIndex = 1;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Chapeau_logo;
-            pictureBox1.Location = new Point(10, 9);
+            pictureBox1.Location = new Point(11, 12);
             pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(133, 55);
+            pictureBox1.Size = new Size(152, 73);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // timer1
             // 
             timer1.Enabled = true;
-            timer1.Interval = 1000;
+            timer1.Interval = 5000;
             timer1.Tick += timer1_Tick;
             // 
             // lblName
@@ -84,54 +84,50 @@
             lblName.BackColor = Color.FromArgb(255, 192, 128);
             lblName.BorderStyle = BorderStyle.FixedSingle;
             lblName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            lblName.Location = new Point(287, 9);
+            lblName.Location = new Point(328, 12);
             lblName.Name = "lblName";
             lblName.RightToLeft = RightToLeft.No;
-            lblName.Size = new Size(2, 21);
+            lblName.Size = new Size(2, 25);
             lblName.TabIndex = 5;
             // 
             // panel1
             // 
             panel1.BackColor = Color.LightGreen;
-            panel1.Location = new Point(40, 620);
-            panel1.Margin = new Padding(3, 2, 3, 2);
+            panel1.Location = new Point(46, 827);
             panel1.Name = "panel1";
-            panel1.Size = new Size(22, 19);
+            panel1.Size = new Size(25, 25);
             panel1.TabIndex = 7;
             // 
             // panel2
             // 
             panel2.BackColor = Color.Orange;
-            panel2.Location = new Point(142, 620);
-            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Location = new Point(162, 827);
             panel2.Name = "panel2";
-            panel2.Size = new Size(22, 19);
+            panel2.Size = new Size(25, 25);
             panel2.TabIndex = 8;
             // 
             // panel3
             // 
             panel3.BackColor = Color.Gray;
-            panel3.Location = new Point(245, 620);
-            panel3.Margin = new Padding(3, 2, 3, 2);
+            panel3.Location = new Point(280, 827);
             panel3.Name = "panel3";
-            panel3.Size = new Size(22, 19);
+            panel3.Size = new Size(25, 25);
             panel3.TabIndex = 9;
             // 
             // panel4
             // 
             panel4.BackColor = Color.Salmon;
-            panel4.Location = new Point(347, 620);
-            panel4.Margin = new Padding(3, 2, 3, 2);
+            panel4.Location = new Point(397, 827);
             panel4.Name = "panel4";
-            panel4.Size = new Size(22, 19);
+            panel4.Size = new Size(25, 25);
             panel4.TabIndex = 10;
             // 
             // Free
             // 
             Free.AutoSize = true;
-            Free.Location = new Point(32, 640);
+            Free.Location = new Point(37, 853);
             Free.Name = "Free";
-            Free.Size = new Size(29, 15);
+            Free.Size = new Size(37, 20);
             Free.TabIndex = 12;
             Free.Text = "Free";
             Free.TextAlign = ContentAlignment.TopCenter;
@@ -139,27 +135,27 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(121, 640);
+            label1.Location = new Point(138, 853);
             label1.Name = "label1";
-            label1.Size = new Size(58, 15);
+            label1.Size = new Size(72, 20);
             label1.TabIndex = 14;
             label1.Text = "Occupied";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(228, 640);
+            label2.Location = new Point(261, 853);
             label2.Name = "label2";
-            label2.Size = new Size(54, 15);
+            label2.Size = new Size(69, 20);
             label2.TabIndex = 16;
             label2.Text = "Reserved";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(331, 640);
+            label3.Location = new Point(378, 853);
             label3.Name = "label3";
-            label3.Size = new Size(50, 15);
+            label3.Size = new Size(64, 20);
             label3.TabIndex = 18;
             label3.Text = "Ordered";
             // 
@@ -172,20 +168,18 @@
             pnlTableView.Controls.Add(btnFree);
             pnlTableView.Controls.Add(btnBack);
             pnlTableView.Controls.Add(lblTable);
-            pnlTableView.Location = new Point(0, 76);
-            pnlTableView.Margin = new Padding(3, 2, 3, 2);
+            pnlTableView.Location = new Point(0, 101);
             pnlTableView.Name = "pnlTableView";
-            pnlTableView.Size = new Size(429, 596);
+            pnlTableView.Size = new Size(490, 795);
             pnlTableView.TabIndex = 20;
             // 
             // btnTableOrder
             // 
             btnTableOrder.BackColor = Color.Transparent;
             btnTableOrder.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            btnTableOrder.Location = new Point(121, 276);
-            btnTableOrder.Margin = new Padding(3, 2, 3, 2);
+            btnTableOrder.Location = new Point(138, 368);
             btnTableOrder.Name = "btnTableOrder";
-            btnTableOrder.Size = new Size(168, 32);
+            btnTableOrder.Size = new Size(192, 43);
             btnTableOrder.TabIndex = 13;
             btnTableOrder.Text = "Go to table";
             btnTableOrder.UseVisualStyleBackColor = false;
@@ -195,19 +189,18 @@
             // 
             lblTableID.AutoSize = true;
             lblTableID.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            lblTableID.Location = new Point(193, 92);
+            lblTableID.Location = new Point(221, 123);
             lblTableID.Name = "lblTableID";
-            lblTableID.Size = new Size(0, 37);
+            lblTableID.Size = new Size(0, 46);
             lblTableID.TabIndex = 11;
             // 
             // btnReserved
             // 
             btnReserved.BackColor = Color.Gray;
             btnReserved.FlatStyle = FlatStyle.Popup;
-            btnReserved.Location = new Point(275, 214);
-            btnReserved.Margin = new Padding(3, 2, 3, 2);
+            btnReserved.Location = new Point(314, 285);
             btnReserved.Name = "btnReserved";
-            btnReserved.Size = new Size(82, 24);
+            btnReserved.Size = new Size(94, 32);
             btnReserved.TabIndex = 9;
             btnReserved.Text = "Reserved";
             btnReserved.UseVisualStyleBackColor = false;
@@ -217,10 +210,9 @@
             // 
             btnOccupied.BackColor = Color.Orange;
             btnOccupied.FlatStyle = FlatStyle.Popup;
-            btnOccupied.Location = new Point(161, 214);
-            btnOccupied.Margin = new Padding(3, 2, 3, 2);
+            btnOccupied.Location = new Point(184, 285);
             btnOccupied.Name = "btnOccupied";
-            btnOccupied.Size = new Size(82, 24);
+            btnOccupied.Size = new Size(94, 32);
             btnOccupied.TabIndex = 7;
             btnOccupied.Text = "Occupied";
             btnOccupied.UseVisualStyleBackColor = false;
@@ -231,10 +223,9 @@
             btnFree.BackColor = Color.LightGreen;
             btnFree.FlatStyle = FlatStyle.Popup;
             btnFree.ForeColor = SystemColors.ControlText;
-            btnFree.Location = new Point(48, 214);
-            btnFree.Margin = new Padding(3, 2, 3, 2);
+            btnFree.Location = new Point(55, 285);
             btnFree.Name = "btnFree";
-            btnFree.Size = new Size(82, 24);
+            btnFree.Size = new Size(94, 32);
             btnFree.TabIndex = 5;
             btnFree.Tag = "1";
             btnFree.Text = "Free";
@@ -244,10 +235,9 @@
             // btnBack
             // 
             btnBack.BackColor = Color.Orange;
-            btnBack.Location = new Point(0, 505);
-            btnBack.Margin = new Padding(3, 2, 3, 2);
+            btnBack.Location = new Point(0, 673);
             btnBack.Name = "btnBack";
-            btnBack.Size = new Size(79, 20);
+            btnBack.Size = new Size(90, 27);
             btnBack.TabIndex = 3;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = false;
@@ -257,17 +247,17 @@
             // 
             lblTable.AutoSize = true;
             lblTable.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            lblTable.Location = new Point(121, 92);
+            lblTable.Location = new Point(138, 123);
             lblTable.Name = "lblTable";
-            lblTable.Size = new Size(79, 37);
+            lblTable.Size = new Size(97, 46);
             lblTable.TabIndex = 1;
             lblTable.Text = "Table";
             // 
             // TableForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(429, 672);
+            ClientSize = new Size(490, 896);
             Controls.Add(pnlTableView);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -280,7 +270,6 @@
             Controls.Add(lblName);
             Controls.Add(pictureBox1);
             Controls.Add(flpnlTables);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "TableForm";
             Text = "TableForm";
             Load += TableForm_Load;
