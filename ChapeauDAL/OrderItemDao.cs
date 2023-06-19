@@ -27,6 +27,20 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+        public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
+        {
+            string query = "INSERT INTO OrderITem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@Order_Id", orderId),
+                new SqlParameter("@MenuItem_id", menuitemId),
+                new SqlParameter("@amount", amount),
+                new SqlParameter("@comment", comment),
+                new SqlParameter("@status", (int)status),
+            };
+            ExecuteEditQuery(query, sqlParameters);
+        }
+
         private List<OrderItem> ReadTables(DataTable dataTable)
         {
             List<OrderItem> orderItems = new List<OrderItem>();

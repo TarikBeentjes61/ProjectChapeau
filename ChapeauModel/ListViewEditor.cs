@@ -27,7 +27,7 @@ namespace ChapeauModel
             if (!exists)
             {
                 orderItem.menuItemId = menuItemId;
-                orderItem.orderId = 0;
+                orderItem.orderId = 1;
                 orderItem.amount = 1;
                 orderItem.comment = "";
             }

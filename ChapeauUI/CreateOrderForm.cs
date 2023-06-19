@@ -9,14 +9,12 @@ namespace ChapeauUI
     public partial class CreateOrderForm : Form
     {
         List<OrderItem> orderItems = new List<OrderItem>();
-        Order order = new Order();
-        bool btnCommentWasClicked = false;
-        bool btnAddCommentWasClicked = false;
+        OrderItemService orderItemService = new OrderItemService();
+        OrderService orderService = new OrderService();
         bool btnRemoveWasClicked = false;
-        OrderItem orderItem = new OrderItem();
         double totalPrice = 0;
 
-        public CreateOrderForm(/*int table, Employee employee*/)
+        public CreateOrderForm(/*Table table, Employee employee*/)
         {
             InitializeComponent();
 
@@ -706,6 +704,8 @@ namespace ChapeauUI
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+
             //Bestelling weergeven
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -724,45 +724,59 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
+                o.comment = "";
+                o.status = OrderStatus.ToDo;
                 totalPrice += menuItem.price;
-            }
-
-            //OrderService orderService = new OrderService();
-            //orderService.AddOrder(orderItems);
-            lblTotal.Text = "Total: " + "totalPrice";
-            pnlCreateOrderLunch.Hide();
-            pnlOrderOverview.Show();
-        }
-        private void btnAddDinner_Click(object sender, EventArgs e)
-        {
-            //Bestelling weergeven
-            listViewOrderOverview.Clear();
-            listViewOrderOverview.View = View.Details;
-
-            listViewOrderOverview.Columns.Add("Amount", 25);
-            listViewOrderOverview.Columns.Add("Name", 370);
-            listViewOrderOverview.Columns.Add("Price", 45);
-
-            foreach (OrderItem o in orderItems)
-            {
-                MenuItemService menuItemService = new MenuItemService();
-                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                ListViewItem item = new ListViewItem(o.amount.ToString());
-
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item);
-                totalPrice += menuItem.price;
+                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
+            pnlCreateOrderLunch.Hide();
+            pnlOrderOverview.Show();
+            CreateOrderForm_Load(sender, e);
+        }
+        private void btnAddDinner_Click(object sender, EventArgs e)
+        {
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+
+            //Bestelling weergeven
+            listViewOrderOverview.Clear();
+            listViewOrderOverview.View = View.Details;
+
+            listViewOrderOverview.Columns.Add("Amount", 25);
+            listViewOrderOverview.Columns.Add("Name", 370);
+            listViewOrderOverview.Columns.Add("Price", 45);
+
+            foreach (OrderItem o in orderItems)
+            {
+                MenuItemService menuItemService = new MenuItemService();
+                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.amount.ToString());
+
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(menuItem.price.ToString());
+                listViewOrderOverview.Items.Add(item);
+                o.comment = "";
+                o.status = OrderStatus.ToDo;
+                totalPrice += menuItem.price;
+                o.orderId = orderId;
+                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
+            }
+
+            lblTotal.Text = "Total: " + totalPrice.ToString();
+            orderItems.Clear();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
+            CreateOrderForm_Load(sender, e);
         }
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+
+            //Bestelling weergeven
+
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
 
@@ -780,12 +794,18 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
+                o.comment = "";
+                o.status = OrderStatus.ToDo;
                 totalPrice += menuItem.price;
+                o.orderId = orderId;
+                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
+            orderItems.Clear();
             pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
+            CreateOrderForm_Load(sender, e);
         }
 
 
