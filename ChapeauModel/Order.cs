@@ -18,6 +18,7 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
+
         public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
         
         public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
@@ -39,7 +40,6 @@ namespace ChapeauModel
         //    }
         //    this.orderItems = orderItems;
         //}
-
         public void DeleteOrder(List<OrderItem> orderItems)
         {
             orderItems.Clear();

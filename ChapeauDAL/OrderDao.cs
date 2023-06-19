@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace ChapeauDAL
 {
@@ -38,6 +39,19 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+
+        public int AddOrder(int tableId, int employeeId, int billId, DateTime dateTime, OrderStatus status)
+        {
+            string query = "INSERT INTO [Order] OUTPUT INSERTED.id VALUES (@Table_id, @Employee_id, @Bill_id, @dateTime, @status)";
+
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@Table_id", tableId),
+                new SqlParameter("@Employee_id", employeeId),
+                new SqlParameter("@Bill_id", billId),
+                new SqlParameter("@dateTime", dateTime),
+                new SqlParameter("@status", (int)status),
+            };
         private List<OrderItem> GetOrderItemsById(int orderId)
         {
             OrderItemDao orderItemDao = new OrderItemDao();
@@ -53,12 +67,9 @@ namespace ChapeauDAL
         //{
         //    string query = "INSERT INTO Order (orderItems) VALUES (@orderItems)";
 
-        //    SqlParameter[] sqlParameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@orderItems", orderItems),
-        //    };
-        //    ExecuteEditQuery(query, sqlParameters);
-        //}
+
+            return ExecuteInsertQuery(query, sqlParameters);
+        }
         private List<Order> ReadTables(DataTable dataTable)
         {
             List<Order> orders = new List<Order>();

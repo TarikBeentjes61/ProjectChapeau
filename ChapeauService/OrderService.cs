@@ -1,5 +1,6 @@
 ﻿using ChapeauDAL;
 using ChapeauModel;
+using System;
 using System.Collections.Generic;
 
 namespace ChapeauService
@@ -24,6 +25,12 @@ namespace ChapeauService
         {
             return orderDao.GetById(id);
         }
+
+        public int AddOrder(int tableId, int employeeId, int billId, DateTime dateTime, OrderStatus status)
+        {
+            return orderDao.AddOrder(tableId, employeeId, billId, dateTime, status);
+        }
+
         public List<Order> GetAllByStatus(OrderStatus status)
         {
             return orderDao.GetAllByState(status);
@@ -32,5 +39,6 @@ namespace ChapeauService
         //{
         //    orderDao.AddOrder(orderItems);
         //}
+
     }
 }
