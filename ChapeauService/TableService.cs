@@ -6,7 +6,7 @@ namespace ChapeauService
 {
     public class TableService
     {
-        public TableDao tableDao;
+        private TableDao tableDao;
 
         public TableService()
         {
@@ -19,6 +19,10 @@ namespace ChapeauService
         public Table GetById(int id)
         {
             return tableDao.GetById(id);
+        }
+        public void UpdateById(int id, int status)
+        {
+            tableDao.UpdateById(id, status);
         }
     }
 }
