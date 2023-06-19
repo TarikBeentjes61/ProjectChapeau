@@ -862,7 +862,7 @@ namespace ChapeauUI
             CreateOrderForm_Load(sender, e);
         }
 
-        //COMMENT
+        //REMOVE
         private void btnRemoveLunch_Click(object sender, EventArgs e)
         {
             btnRemoveWasClicked = true;
@@ -875,17 +875,37 @@ namespace ChapeauUI
         {
             btnRemoveWasClicked = true;
         }
-
-        //BACK
-        private void btnBack_Click(object sender, EventArgs e)
+        private void btnGoToOverviewLunch_Click(object sender, EventArgs e)
         {
             //Show this panel
-            pnlCreateOrderLunch.Show();
+            pnlOrderOverview.Show();
 
             //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
+        }
+
+        private void btnGoToOverviewDinner_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlOrderOverview.Show();
+
+            //Hide other panels
+            pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlOrderOverview.Show();
+
+            //Hide other panels
+            pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
         }
     }
 }
