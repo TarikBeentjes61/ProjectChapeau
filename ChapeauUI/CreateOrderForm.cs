@@ -19,7 +19,7 @@ namespace ChapeauUI
         public CreateOrderForm(int table, Employee employee)
         {
             InitializeComponent();
-            
+
             this.employee = employee;
             tableId = table;
 
@@ -30,10 +30,10 @@ namespace ChapeauUI
             lblEmployee4.Text = employee.name;
 
             //TABLE
-            lblTableOrderOverview.Text = tableId.ToString();
-            lblTableLunchOverview.Text = tableId.ToString();
-            lblTableDinnerOverview.Text = tableId.ToString();
-            lblTableDrinksOverview.Text = tableId.ToString();
+            lblTableOrderOverview.Text = "Table " + tableId.ToString();
+            lblTableLunchOverview.Text = "Table " + tableId.ToString();
+            lblTableDinnerOverview.Text = "Table " + tableId.ToString();
+            lblTableDrinksOverview.Text = "Table " + tableId.ToString();
 
             //Hide other panels
             pnlCreateOrderDinner.Hide();
@@ -44,6 +44,7 @@ namespace ChapeauUI
             btnLunchUnavailable.Enabled = false;
             btnDinnerUnavailable.Enabled = false;
             btnDrinksUnavailable.Enabled = false;
+            btnPay.Enabled = false;
 
             //Change Necessary Button Colors
             btnLunchUnavailable.BackColor = Color.FromArgb(189, 242, 217);
@@ -750,6 +751,7 @@ namespace ChapeauUI
             lblTotal.Text = "Total: " + totalPrice.ToString();
             pnlCreateOrderLunch.Hide();
             pnlOrderOverview.Show();
+            btnPay.Enabled = true;
             CreateOrderForm_Load(sender, e);
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
@@ -784,6 +786,7 @@ namespace ChapeauUI
             lblTotal.Text = "Total: " + totalPrice.ToString();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
+            btnPay.Enabled = true;
             CreateOrderForm_Load(sender, e);
         }
 
@@ -819,6 +822,7 @@ namespace ChapeauUI
             lblTotal.Text = "Total: " + totalPrice.ToString();
             pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
+            btnPay.Enabled = true;
             CreateOrderForm_Load(sender, e);
         }
 
@@ -920,6 +924,12 @@ namespace ChapeauUI
             pnlCreateOrderDrinks.Hide();
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
+        }
+
+        private void btnPay_Click(object sender, EventArgs e)
+        {
+            PaymentForm paymentForm = new PaymentForm(tableId, employee);
+            paymentForm.Show();
         }
     }
 }
