@@ -1,20 +1,33 @@
-﻿using ChapeauModel;
+﻿using ChapeauDAL;
+using ChapeauModel;
 using ChapeauService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChapeauUI
 {
     public partial class BillViewForm : Form
     {
-        private int changePricetest = 0;
+        private bool setChange = false;
+        private bool setTip = false;
+        private bool goFurther = false;
+        private bool buttonClicked = false;
+        private double changePrice = 0;
+        private PaymentMethod paymentMethode;
+        private double doubleOrderPrice = 0;
+        private double totalTip = 0;
+        private string comment = "";
+        private double orderTotalPrice = 0;
+
         public BillViewForm()
         {
             InitializeComponent();
@@ -51,35 +64,40 @@ namespace ChapeauUI
             listViewBillOverview.Columns.Add(price);
 
             //labelOrderPrice
-            double orderTotalPrice = 0;
-            double totalPriceAmount = 0;
-            double vatAmount = 0;
             double totalVat = 0;
 
+            double calVat = 0;
+            double calPrice = 0;
+            double calTotalVat = 0;
+
+            Bill bill = new Bill();
+            MenuItemService menuItemService = new MenuItemService();
 
             foreach (OrderItem order in orderItems)
             {
                 ListViewItem item = new ListViewItem(order.amount.ToString());
 
-                MenuItemService menuItemService = new MenuItemService();
                 MenuItem menuItem = menuItemService.GetById(order.menuItemId);
+                calVat = bill.CalculateVAT(menuItem.tax, menuItem.price);
+                calPrice = bill.CalculateTotalPrice(calVat, order.amount, menuItem.price);
+                calTotalVat = bill.CalculateTotalVAT(calPrice, menuItem.tax);
 
-                //Berekeningen
-                vatAmount = menuItem.tax / 100; //0.21
-                totalPriceAmount = ((menuItem.price * order.amount) * (1 + vatAmount)); //7.5(price) * amount * vat(1 + 0.21)
-                totalVat += ((menuItem.price * order.amount) * vatAmount); // 15(price * amount) * 0.21
-                orderTotalPrice += totalPriceAmount; //optellen totalPrice voor labelOrderPrice
+                orderTotalPrice += calPrice;
+                totalVat += calTotalVat;
 
                 item.SubItems.Add(menuItem.itemName.ToString());
-                item.SubItems.Add(totalPriceAmount.ToString("F"));
+                item.SubItems.Add("€" + calPrice.ToString("F"));
                 listViewBillOverview.Items.Add(item);
             }
 
-            labelOrderPrice.Text = orderTotalPrice.ToString("F");
-            labelOrderPricePayment.Text = orderTotalPrice.ToString("F");
-            labelVAT.Text = totalVat.ToString("F");
+            labelOrderPrice.Text = "€" + orderTotalPrice.ToString("F");
+            labelOrderPricePayment.Text = "€" + orderTotalPrice.ToString("F");
+            labelFinalOrderPrice.Text = "€" + orderTotalPrice.ToString("F");
+
+            doubleOrderPrice = orderTotalPrice;
+            labelVAT.Text = "€" + totalVat.ToString("F");
+            labelFinalVAT.Text = "€" + totalVat.ToString("F");
         }
-        private bool buttonClicked = false;
 
 
         private void btnProceedToPayment_Click(object sender, EventArgs e)
@@ -117,39 +135,94 @@ namespace ChapeauUI
             } else
             {
                 double input = double.Parse(txtBoxAmountPaid.Text);
-                double totalOrderPrice = Convert.ToDouble(labelOrderPricePayment.Text);
-                double changePrice = 0;
+                //double totalOrderPrice = Convert.ToDouble(labelOrderPricePayment.Text);
+                //double totalOrderPrice = double.Parse(labelOrderPricePayment.Text);
+                //double changePrice = 0;
 
-                if (input < totalOrderPrice)
+                if (input < doubleOrderPrice)
                 {
                     MessageBox.Show("Amount paid is lower than the order price. Please check again.");
                 }
                 else
                 {
-                    changePrice = input - totalOrderPrice;
-                    labelChange.Text = changePrice.ToString("F");
+                    changePrice = input - doubleOrderPrice;
+                    labelChange.Text = "€" + changePrice.ToString("F");
+                    labelFinalAmountPaid.Text = "€" + input.ToString("F");
+                    setChange = true;
                 }
             }
         }
 
         private void btnAddChangeToTip_Click(object sender, EventArgs e)
         {
+            labelFinalTipAmount.Text = "€0,00";
+            if (!setChange)
+            {
+                MessageBox.Show("Please enter a amount of pay;");
+            } else
+            {
+                totalTip = changePrice;
+                labelTotalTip.Text = "€" + totalTip.ToString("F");
 
+                //update Change
+                changePrice = 0;
+                labelChange.Text = "€" + changePrice.ToString("F");
+                setTip = true;
+            }
         }
 
         private void btnSetTip_Click(object sender, EventArgs e)
         {
+            if (txtBoxCustomTip.Text == "")
+            {
+                MessageBox.Show("Please enter a amount of tip.");
+            }
+            else
+            {
+                double input = double.Parse(txtBoxCustomTip.Text);
 
+                if (input > changePrice)
+                {
+                    MessageBox.Show("Amount tip is higher than the change. Please check again.");
+                }
+                else
+                {
+                    //update Change
+                    changePrice -= input;
+                    labelChange.Text = "€" + changePrice.ToString("F");
+
+
+                    labelTotalTip.Text = "€" + input.ToString("F");
+                    totalTip = changePrice;
+                    labelFinalTipAmount.Text = "€" + input.ToString("F");
+                    setTip = true;
+                }
+            }
         }
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            //Hide all panels, except Comment
-            pnlBillPayment.Hide();
-            pnlBillSettled.Hide();
-            pnlBillView.Hide();
-            pnlAddComment.Show();
-            pnlAddComment.Location = new Point(12, 83);
+            if (!setChange)
+            {
+                MessageBox.Show("There is not an amount paid. Please enter a amount.");
+            }
+            else if (!setTip)
+            {
+                MessageBox.Show("There is no tip. Please enter a tip.");
+            }
+            else
+            {
+                //Hide all panels, except Comment
+                pnlBillPayment.Hide();
+                pnlBillSettled.Hide();
+                pnlBillView.Hide();
+                pnlAddComment.Show();
+                pnlAddComment.Location = new Point(12, 83);
+                labelChangeFinal.Text = "€" + changePrice.ToString("F");
+            }
+
+
+            //tip en change required
         }
 
         private void btnBackComment_Click(object sender, EventArgs e)
@@ -170,6 +243,7 @@ namespace ChapeauUI
             btnCash.BackColor = Color.White;
             btnDebit.BackColor = Color.FromArgb(255, 179, 71);
             buttonClicked = true;
+            paymentMethode = PaymentMethod.Pin;
             //255; 179; 71
         }
 
@@ -179,6 +253,7 @@ namespace ChapeauUI
             btnCash.BackColor = Color.White;
             btnVisa.BackColor = Color.FromArgb(255, 179, 71);
             buttonClicked = true;
+            paymentMethode = PaymentMethod.CreditCard;
 
         }
 
@@ -188,6 +263,7 @@ namespace ChapeauUI
             btnVisa.BackColor = Color.White;
             btnCash.BackColor = Color.FromArgb(255, 179, 71);
             buttonClicked = true;
+            paymentMethode = PaymentMethod.Cash;
 
         }
 
@@ -199,9 +275,54 @@ namespace ChapeauUI
 
         }
 
-        private void listViewOrderOverview_SelectedIndexChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
+            if(labelCustomerComment.Text == "")
+            {
+                MessageBox.Show("No comment has been given, please enter comment.");
+                labelCommendSaved.Hide();
+            } else
+            {
+                labelCommendSaved.Show();
+                labelCommendSaved.ForeColor = Color.FromArgb(138, 210, 176);
+                labelCommendSaved.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+                labelCommendSaved.Text = "COMMENT HAS BEEN SAVED";
 
+                comment = labelCustomerComment.Text;
+            }            
+        }
+
+
+
+        private void btnFinishPayment_Click(object sender, EventArgs e)
+        {
+            //database verander dbo.BILL van tip en payed.
+            BillService billService = new BillService();
+
+            //id, comment, paymentMethod, tip, payed.
+            billService.UpdateBill(1, comment, (int)paymentMethode, totalTip, 1);
+
+            
+        }
+
+        private void btnContinueWithPayment_Click(object sender, EventArgs e)
+        {
+                //Hide all panels, except Payment
+                pnlAddComment.Hide();
+                pnlBillView.Hide();
+                pnlBillPayment.Hide();
+                pnlBillSettled.Show();
+                pnlBillSettled.Location = new Point(12, 83);
+
+        }
+
+        private void btnBackBillSettled_Click(object sender, EventArgs e)
+        {
+            pnlBillView.Hide();
+            pnlBillPayment.Hide();
+            pnlBillSettled.Hide();
+            pnlAddComment.Show();
+            pnlAddComment.Location = new Point(12, 83);
         }
     }
 }

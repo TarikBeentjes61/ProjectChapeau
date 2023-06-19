@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BillViewForm));
             this.pnlBillSettled = new System.Windows.Forms.Panel();
+            this.btnFinishPayment = new System.Windows.Forms.Button();
+            this.btnBackBillSettled = new System.Windows.Forms.Button();
+            this.labelChangeFinal = new System.Windows.Forms.Label();
+            this.labelChangeFinalText = new System.Windows.Forms.Label();
             this.labelFinalVAT = new System.Windows.Forms.Label();
             this.labelFinalTipAmount = new System.Windows.Forms.Label();
             this.labelFinalAmountPaid = new System.Windows.Forms.Label();
@@ -41,12 +45,15 @@
             this.labelSettled = new System.Windows.Forms.Label();
             this.labelBillHas = new System.Windows.Forms.Label();
             this.pnlAddComment = new System.Windows.Forms.Panel();
+            this.btnContinueWithPayment = new System.Windows.Forms.Button();
             this.btnBackComment = new System.Windows.Forms.Button();
             this.labelCommendSaved = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btnConfirmComment = new System.Windows.Forms.Button();
+            this.labelCustomerComment = new System.Windows.Forms.RichTextBox();
             this.labelTypeComment = new System.Windows.Forms.Label();
             this.pnlBillPayment = new System.Windows.Forms.Panel();
+            this.labelTotalTip = new System.Windows.Forms.Label();
+            this.labelChangeTotalTip = new System.Windows.Forms.Label();
             this.btnBackPayment = new System.Windows.Forms.Button();
             this.btnPay = new System.Windows.Forms.Button();
             this.btnSetTip = new System.Windows.Forms.Button();
@@ -86,6 +93,10 @@
             // 
             // pnlBillSettled
             // 
+            this.pnlBillSettled.Controls.Add(this.btnFinishPayment);
+            this.pnlBillSettled.Controls.Add(this.btnBackBillSettled);
+            this.pnlBillSettled.Controls.Add(this.labelChangeFinal);
+            this.pnlBillSettled.Controls.Add(this.labelChangeFinalText);
             this.pnlBillSettled.Controls.Add(this.labelFinalVAT);
             this.pnlBillSettled.Controls.Add(this.labelFinalTipAmount);
             this.pnlBillSettled.Controls.Add(this.labelFinalAmountPaid);
@@ -101,10 +112,52 @@
             this.pnlBillSettled.Size = new System.Drawing.Size(372, 555);
             this.pnlBillSettled.TabIndex = 46;
             // 
+            // btnFinishPayment
+            // 
+            this.btnFinishPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnFinishPayment.Font = new System.Drawing.Font("Segoe UI", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnFinishPayment.Location = new System.Drawing.Point(3, 495);
+            this.btnFinishPayment.Name = "btnFinishPayment";
+            this.btnFinishPayment.Size = new System.Drawing.Size(366, 55);
+            this.btnFinishPayment.TabIndex = 41;
+            this.btnFinishPayment.Text = "FINISH PAYMENT";
+            this.btnFinishPayment.UseVisualStyleBackColor = false;
+            this.btnFinishPayment.Click += new System.EventHandler(this.btnFinishPayment_Click);
+            // 
+            // btnBackBillSettled
+            // 
+            this.btnBackBillSettled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnBackBillSettled.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBackBillSettled.Location = new System.Drawing.Point(269, 3);
+            this.btnBackBillSettled.Name = "btnBackBillSettled";
+            this.btnBackBillSettled.Size = new System.Drawing.Size(100, 36);
+            this.btnBackBillSettled.TabIndex = 41;
+            this.btnBackBillSettled.Text = "BACK";
+            this.btnBackBillSettled.UseVisualStyleBackColor = false;
+            this.btnBackBillSettled.Click += new System.EventHandler(this.btnBackBillSettled_Click);
+            // 
+            // labelChangeFinal
+            // 
+            this.labelChangeFinal.AutoSize = true;
+            this.labelChangeFinal.Location = new System.Drawing.Point(202, 417);
+            this.labelChangeFinal.Name = "labelChangeFinal";
+            this.labelChangeFinal.Size = new System.Drawing.Size(97, 20);
+            this.labelChangeFinal.TabIndex = 47;
+            this.labelChangeFinal.Text = "hier CHANGE";
+            // 
+            // labelChangeFinalText
+            // 
+            this.labelChangeFinalText.AutoSize = true;
+            this.labelChangeFinalText.Location = new System.Drawing.Point(71, 417);
+            this.labelChangeFinalText.Name = "labelChangeFinalText";
+            this.labelChangeFinalText.Size = new System.Drawing.Size(71, 20);
+            this.labelChangeFinalText.TabIndex = 46;
+            this.labelChangeFinalText.Text = "CHANGE:";
+            // 
             // labelFinalVAT
             // 
             this.labelFinalVAT.AutoSize = true;
-            this.labelFinalVAT.Location = new System.Drawing.Point(202, 375);
+            this.labelFinalVAT.Location = new System.Drawing.Point(202, 388);
             this.labelFinalVAT.Name = "labelFinalVAT";
             this.labelFinalVAT.Size = new System.Drawing.Size(63, 20);
             this.labelFinalVAT.TabIndex = 45;
@@ -113,7 +166,7 @@
             // labelFinalTipAmount
             // 
             this.labelFinalTipAmount.AutoSize = true;
-            this.labelFinalTipAmount.Location = new System.Drawing.Point(202, 339);
+            this.labelFinalTipAmount.Location = new System.Drawing.Point(202, 354);
             this.labelFinalTipAmount.Name = "labelFinalTipAmount";
             this.labelFinalTipAmount.Size = new System.Drawing.Size(111, 20);
             this.labelFinalTipAmount.TabIndex = 44;
@@ -122,7 +175,7 @@
             // labelFinalAmountPaid
             // 
             this.labelFinalAmountPaid.AutoSize = true;
-            this.labelFinalAmountPaid.Location = new System.Drawing.Point(202, 309);
+            this.labelFinalAmountPaid.Location = new System.Drawing.Point(202, 323);
             this.labelFinalAmountPaid.Name = "labelFinalAmountPaid";
             this.labelFinalAmountPaid.Size = new System.Drawing.Size(123, 20);
             this.labelFinalAmountPaid.TabIndex = 43;
@@ -131,7 +184,7 @@
             // labelFinalOrderPrice
             // 
             this.labelFinalOrderPrice.AutoSize = true;
-            this.labelFinalOrderPrice.Location = new System.Drawing.Point(202, 277);
+            this.labelFinalOrderPrice.Location = new System.Drawing.Point(202, 288);
             this.labelFinalOrderPrice.Name = "labelFinalOrderPrice";
             this.labelFinalOrderPrice.Size = new System.Drawing.Size(111, 20);
             this.labelFinalOrderPrice.TabIndex = 42;
@@ -140,7 +193,7 @@
             // labelFinalVATText
             // 
             this.labelFinalVATText.AutoSize = true;
-            this.labelFinalVATText.Location = new System.Drawing.Point(71, 372);
+            this.labelFinalVATText.Location = new System.Drawing.Point(68, 388);
             this.labelFinalVATText.Name = "labelFinalVATText";
             this.labelFinalVATText.Size = new System.Drawing.Size(37, 20);
             this.labelFinalVATText.TabIndex = 41;
@@ -149,7 +202,7 @@
             // labelFinalTipAmountText
             // 
             this.labelFinalTipAmountText.AutoSize = true;
-            this.labelFinalTipAmountText.Location = new System.Drawing.Point(71, 339);
+            this.labelFinalTipAmountText.Location = new System.Drawing.Point(71, 354);
             this.labelFinalTipAmountText.Name = "labelFinalTipAmountText";
             this.labelFinalTipAmountText.Size = new System.Drawing.Size(99, 20);
             this.labelFinalTipAmountText.TabIndex = 40;
@@ -158,7 +211,7 @@
             // labelFinalAmountPaidText
             // 
             this.labelFinalAmountPaidText.AutoSize = true;
-            this.labelFinalAmountPaidText.Location = new System.Drawing.Point(71, 309);
+            this.labelFinalAmountPaidText.Location = new System.Drawing.Point(71, 323);
             this.labelFinalAmountPaidText.Name = "labelFinalAmountPaidText";
             this.labelFinalAmountPaidText.Size = new System.Drawing.Size(111, 20);
             this.labelFinalAmountPaidText.TabIndex = 39;
@@ -167,7 +220,7 @@
             // labelFinalOrderPriceText
             // 
             this.labelFinalOrderPriceText.AutoSize = true;
-            this.labelFinalOrderPriceText.Location = new System.Drawing.Point(71, 277);
+            this.labelFinalOrderPriceText.Location = new System.Drawing.Point(71, 288);
             this.labelFinalOrderPriceText.Name = "labelFinalOrderPriceText";
             this.labelFinalOrderPriceText.Size = new System.Drawing.Size(102, 20);
             this.labelFinalOrderPriceText.TabIndex = 15;
@@ -178,7 +231,7 @@
             this.labelSettled.AutoSize = true;
             this.labelSettled.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelSettled.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.labelSettled.Location = new System.Drawing.Point(114, 197);
+            this.labelSettled.Location = new System.Drawing.Point(114, 211);
             this.labelSettled.Name = "labelSettled";
             this.labelSettled.Size = new System.Drawing.Size(151, 41);
             this.labelSettled.TabIndex = 38;
@@ -189,7 +242,7 @@
             this.labelBillHas.AutoSize = true;
             this.labelBillHas.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelBillHas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.labelBillHas.Location = new System.Drawing.Point(43, 143);
+            this.labelBillHas.Location = new System.Drawing.Point(43, 155);
             this.labelBillHas.Name = "labelBillHas";
             this.labelBillHas.Size = new System.Drawing.Size(294, 41);
             this.labelBillHas.TabIndex = 37;
@@ -197,15 +250,28 @@
             // 
             // pnlAddComment
             // 
+            this.pnlAddComment.Controls.Add(this.btnContinueWithPayment);
             this.pnlAddComment.Controls.Add(this.btnBackComment);
             this.pnlAddComment.Controls.Add(this.labelCommendSaved);
-            this.pnlAddComment.Controls.Add(this.button1);
-            this.pnlAddComment.Controls.Add(this.richTextBox1);
+            this.pnlAddComment.Controls.Add(this.btnConfirmComment);
+            this.pnlAddComment.Controls.Add(this.labelCustomerComment);
             this.pnlAddComment.Controls.Add(this.labelTypeComment);
             this.pnlAddComment.Location = new System.Drawing.Point(814, 70);
             this.pnlAddComment.Name = "pnlAddComment";
             this.pnlAddComment.Size = new System.Drawing.Size(372, 555);
             this.pnlAddComment.TabIndex = 45;
+            // 
+            // btnContinueWithPayment
+            // 
+            this.btnContinueWithPayment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnContinueWithPayment.Font = new System.Drawing.Font("Segoe UI", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnContinueWithPayment.Location = new System.Drawing.Point(3, 495);
+            this.btnContinueWithPayment.Name = "btnContinueWithPayment";
+            this.btnContinueWithPayment.Size = new System.Drawing.Size(366, 55);
+            this.btnContinueWithPayment.TabIndex = 40;
+            this.btnContinueWithPayment.Text = "CONTINUE WITH PAYMENT";
+            this.btnContinueWithPayment.UseVisualStyleBackColor = false;
+            this.btnContinueWithPayment.Click += new System.EventHandler(this.btnContinueWithPayment_Click);
             // 
             // btnBackComment
             // 
@@ -222,30 +288,30 @@
             // labelCommendSaved
             // 
             this.labelCommendSaved.AutoSize = true;
-            this.labelCommendSaved.Location = new System.Drawing.Point(52, 498);
+            this.labelCommendSaved.Location = new System.Drawing.Point(32, 388);
             this.labelCommendSaved.Name = "labelCommendSaved";
-            this.labelCommendSaved.Size = new System.Drawing.Size(260, 20);
+            this.labelCommendSaved.Size = new System.Drawing.Size(0, 20);
             this.labelCommendSaved.TabIndex = 22;
-            this.labelCommendSaved.Text = "Hier komt commend have been saved";
             // 
-            // button1
+            // btnConfirmComment
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(3, 420);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(366, 55);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "CONFIRM";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnConfirmComment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
+            this.btnConfirmComment.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnConfirmComment.Location = new System.Drawing.Point(6, 428);
+            this.btnConfirmComment.Name = "btnConfirmComment";
+            this.btnConfirmComment.Size = new System.Drawing.Size(366, 55);
+            this.btnConfirmComment.TabIndex = 21;
+            this.btnConfirmComment.Text = "SAVE COMMENT";
+            this.btnConfirmComment.UseVisualStyleBackColor = false;
+            this.btnConfirmComment.Click += new System.EventHandler(this.button1_Click);
             // 
-            // richTextBox1
+            // labelCustomerComment
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(16, 143);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(340, 245);
-            this.richTextBox1.TabIndex = 20;
-            this.richTextBox1.Text = "";
+            this.labelCustomerComment.Location = new System.Drawing.Point(16, 143);
+            this.labelCustomerComment.Name = "labelCustomerComment";
+            this.labelCustomerComment.Size = new System.Drawing.Size(340, 231);
+            this.labelCustomerComment.TabIndex = 20;
+            this.labelCustomerComment.Text = "";
             // 
             // labelTypeComment
             // 
@@ -259,6 +325,8 @@
             // 
             // pnlBillPayment
             // 
+            this.pnlBillPayment.Controls.Add(this.labelTotalTip);
+            this.pnlBillPayment.Controls.Add(this.labelChangeTotalTip);
             this.pnlBillPayment.Controls.Add(this.btnBackPayment);
             this.pnlBillPayment.Controls.Add(this.btnPay);
             this.pnlBillPayment.Controls.Add(this.btnSetTip);
@@ -278,6 +346,23 @@
             this.pnlBillPayment.Name = "pnlBillPayment";
             this.pnlBillPayment.Size = new System.Drawing.Size(372, 555);
             this.pnlBillPayment.TabIndex = 44;
+            // 
+            // labelTotalTip
+            // 
+            this.labelTotalTip.AutoSize = true;
+            this.labelTotalTip.Location = new System.Drawing.Point(304, 455);
+            this.labelTotalTip.Name = "labelTotalTip";
+            this.labelTotalTip.Size = new System.Drawing.Size(0, 20);
+            this.labelTotalTip.TabIndex = 39;
+            // 
+            // labelChangeTotalTip
+            // 
+            this.labelChangeTotalTip.AutoSize = true;
+            this.labelChangeTotalTip.Location = new System.Drawing.Point(6, 455);
+            this.labelChangeTotalTip.Name = "labelChangeTotalTip";
+            this.labelChangeTotalTip.Size = new System.Drawing.Size(32, 20);
+            this.labelChangeTotalTip.TabIndex = 38;
+            this.labelChangeTotalTip.Text = "TIP:";
             // 
             // btnBackPayment
             // 
@@ -306,7 +391,7 @@
             // btnSetTip
             // 
             this.btnSetTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.btnSetTip.Location = new System.Drawing.Point(290, 439);
+            this.btnSetTip.Location = new System.Drawing.Point(289, 388);
             this.btnSetTip.Name = "btnSetTip";
             this.btnSetTip.Size = new System.Drawing.Size(66, 29);
             this.btnSetTip.TabIndex = 33;
@@ -316,7 +401,7 @@
             // 
             // txtBoxCustomTip
             // 
-            this.txtBoxCustomTip.Location = new System.Drawing.Point(202, 399);
+            this.txtBoxCustomTip.Location = new System.Drawing.Point(201, 339);
             this.txtBoxCustomTip.Name = "txtBoxCustomTip";
             this.txtBoxCustomTip.Size = new System.Drawing.Size(154, 27);
             this.txtBoxCustomTip.TabIndex = 32;
@@ -324,7 +409,7 @@
             // btnAddChangeToTip
             // 
             this.btnAddChangeToTip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
-            this.btnAddChangeToTip.Location = new System.Drawing.Point(3, 326);
+            this.btnAddChangeToTip.Location = new System.Drawing.Point(3, 288);
             this.btnAddChangeToTip.Name = "btnAddChangeToTip";
             this.btnAddChangeToTip.Size = new System.Drawing.Size(366, 41);
             this.btnAddChangeToTip.TabIndex = 31;
@@ -335,7 +420,7 @@
             // labelCustomTip
             // 
             this.labelCustomTip.AutoSize = true;
-            this.labelCustomTip.Location = new System.Drawing.Point(3, 399);
+            this.labelCustomTip.Location = new System.Drawing.Point(0, 339);
             this.labelCustomTip.Name = "labelCustomTip";
             this.labelCustomTip.Size = new System.Drawing.Size(94, 20);
             this.labelCustomTip.TabIndex = 30;
@@ -345,7 +430,7 @@
             // 
             this.labelTIP.AutoSize = true;
             this.labelTIP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelTIP.Location = new System.Drawing.Point(3, 266);
+            this.labelTIP.Location = new System.Drawing.Point(3, 253);
             this.labelTIP.Name = "labelTIP";
             this.labelTIP.Size = new System.Drawing.Size(42, 28);
             this.labelTIP.TabIndex = 29;
@@ -356,9 +441,8 @@
             this.labelChange.AutoSize = true;
             this.labelChange.Location = new System.Drawing.Point(304, 194);
             this.labelChange.Name = "labelChange";
-            this.labelChange.Size = new System.Drawing.Size(51, 20);
+            this.labelChange.Size = new System.Drawing.Size(0, 20);
             this.labelChange.TabIndex = 28;
-            this.labelChange.Text = "xxxxxx";
             // 
             // labelChangeText
             // 
@@ -507,7 +591,6 @@
             this.listViewBillOverview.TabIndex = 10;
             this.listViewBillOverview.UseCompatibleStateImageBehavior = false;
             this.listViewBillOverview.View = System.Windows.Forms.View.Details;
-            this.listViewBillOverview.SelectedIndexChanged += new System.EventHandler(this.listViewOrderOverview_SelectedIndexChanged);
             // 
             // AmountColumn
             // 
@@ -620,8 +703,8 @@
         private Panel pnlAddComment;
         private Button btnBackComment;
         private Label labelCommendSaved;
-        private Button button1;
-        private RichTextBox richTextBox1;
+        private Button btnConfirmComment;
+        private RichTextBox labelCustomerComment;
         private Label labelTypeComment;
         private Panel pnlBillPayment;
         private Button btnBackPayment;
@@ -654,5 +737,12 @@
         private PictureBox pictureBox1;
         private Button btnBackOrderOverview;
         private ColumnHeader AmountColumn;
+        private Label labelTotalTip;
+        private Label labelChangeTotalTip;
+        private Label labelChangeFinal;
+        private Label labelChangeFinalText;
+        private Button btnFinishPayment;
+        private Button btnBackBillSettled;
+        private Button btnContinueWithPayment;
     }
 }

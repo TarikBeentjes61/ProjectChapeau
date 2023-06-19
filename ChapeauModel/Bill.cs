@@ -12,6 +12,8 @@ namespace ChapeauModel
         public int tip;
         public bool payed;
 
+
+
         public Bill()
         {
             orders = new List<Order>();
@@ -19,17 +21,22 @@ namespace ChapeauModel
 
         public void CalculateBill()
         {
-
+            
         }
 
-        public void CalculateVAT()
+        public double CalculateVAT(double vat, double price)
         {
-
+            return price * (vat / 100); //8 * 0.21
         }
 
-        public void CalculateTotalPrice() 
+        public double CalculateTotalPrice(double vat, double amount, double price) 
         {
+            return (price * amount) * (1 + vat); //(8 * 2) * (1 + vat) = 
+        }
 
+        public double CalculateTotalVAT(double price, double vat)
+        {
+            return price * (vat / 100);    
         }
 
         public void UpdateBill() 

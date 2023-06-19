@@ -24,6 +24,21 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+
+        public void UpdateBill(int id, string comment, int paymentMethod, double tip, double payed)
+        {
+            string query = $"UPDATE BILL SET [comment] = @comment, [paymentMethod] = @paymentMethod, [tip] = @tip, [payed] = @payed WHERE id = @id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@id", id ),
+                new SqlParameter("@comment", comment ),
+                new SqlParameter("@paymentMethod", paymentMethod ),
+                new SqlParameter("@tip", tip ),
+                new SqlParameter("@payed", payed ),
+             };
+            ExecuteEditQuery(query, sqlParameters);
+        }
+
         private List<Bill> ReadTables(DataTable dataTable)
         {
             List<Bill> bills = new List<Bill>();
