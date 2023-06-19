@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +28,7 @@ namespace ChapeauUI
             List<Table> tables = tableService.GetAll();
             lblName.Text = employee.name;
             flpnlTables.Controls.Clear();
+            //Creates dynamic table overview depending on count of tables in database
             foreach (Table t in tables)
             {
                 Button button = new Button();
@@ -56,10 +58,12 @@ namespace ChapeauUI
                 }
             }
         }
+        //Reloads the table designs each 5 seconds from the database
         private void timer1_Tick(object sender, EventArgs e)
         {
             TableForm_Load(sender, e);
         }
+        //Each button will have the following method to style and disables the current status button
         private void TableButton_Click(object sender, EventArgs e)
         {
             pnlTableView.Show();
@@ -103,10 +107,12 @@ namespace ChapeauUI
                 btnTableOrder.Tag = id;
             }
         }
+        //To go back to the table overview
         private void btnBack_Click(object sender, EventArgs e)
         {
             pnlTableView.Hide();
         }
+        //Button to see a table status to free
         private void btnFree_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
@@ -119,8 +125,8 @@ namespace ChapeauUI
             btnFree.Enabled = false;
             btnOccupied.Enabled = true;
             btnReserved.Enabled = true;
-
         }
+        //Button to see a table status to occupied
         private void btnOccupied_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
@@ -134,6 +140,7 @@ namespace ChapeauUI
             btnFree.Enabled = true;
             btnReserved.Enabled = true;
         }
+        //Button to see a table status to reserved
         private void btnReserved_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
@@ -147,13 +154,21 @@ namespace ChapeauUI
             btnFree.Enabled = true;
             btnOccupied.Enabled = true;
         }
+        //Gives correct tableId and employee object to the next form
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            int id = int.Parse(clicked.Tag.ToString());
+            int tableId = int.Parse(clicked.Tag.ToString());
             this.Hide();
-            CreateOrderForm createOrderForm = new CreateOrderForm(id, employee);
+            CreateOrderForm createOrderForm = new CreateOrderForm(tableId, employee);
             createOrderForm.Show();
+        }
+        //Clicking the picture will logout
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
         }
     }
 }
