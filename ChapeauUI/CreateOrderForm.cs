@@ -706,7 +706,7 @@ namespace ChapeauUI
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -727,7 +727,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
             }
@@ -739,7 +739,7 @@ namespace ChapeauUI
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -760,7 +760,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 o.orderId = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
@@ -775,7 +775,7 @@ namespace ChapeauUI
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
 
@@ -797,7 +797,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 o.orderId = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
