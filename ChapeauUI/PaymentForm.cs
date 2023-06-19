@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,10 @@ namespace ChapeauUI
 {
     public partial class PaymentForm : Form
     {
-        public PaymentForm()
+        public PaymentForm(int tableId, Employee employee)
         {
             InitializeComponent();
+
         }
     }
 }
