@@ -30,10 +30,10 @@ namespace ChapeauUI
             lblEmployee4.Text = employee.name;
 
             //TABLE
-            lblTableOrderOverview.Text = tableId.ToString();
-            lblTableLunchOverview.Text = tableId.ToString();
-            lblTableDinnerOverview.Text = tableId.ToString();
-            lblTableDrinksOverview.Text = tableId.ToString();
+            lblTableOrderOverview.Text = "Table " + tableId.ToString();
+            lblTableLunchOverview.Text = "Table " + tableId.ToString();
+            lblTableDinnerOverview.Text = "Table " + tableId.ToString();
+            lblTableDrinksOverview.Text = "Table " + tableId.ToString();
 
             //Hide other panels
             pnlCreateOrderDinner.Hide();
