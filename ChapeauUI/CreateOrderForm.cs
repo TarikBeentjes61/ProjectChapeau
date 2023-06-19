@@ -721,7 +721,7 @@ namespace ChapeauUI
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -754,7 +754,7 @@ namespace ChapeauUI
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -790,7 +790,7 @@ namespace ChapeauUI
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
 
             //Bestelling weergeven
 
