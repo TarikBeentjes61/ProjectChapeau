@@ -13,12 +13,27 @@ namespace ChapeauUI
         OrderService orderService = new OrderService();
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
-
+        Employee employee;
+        int tableId;
 
         public CreateOrderForm(int table, Employee employee)
-
         {
             InitializeComponent();
+            
+            this.employee = employee;
+            tableId = table;
+
+            //NAME EMPLOYEE
+            lblEmployee.Text = employee.name;
+            lblEmployee2.Text = employee.name;
+            lblEmployee3.Text = employee.name;
+            lblEmployee4.Text = employee.name;
+
+            //TABLE
+            lblTableOrderOverview.Text = tableId.ToString();
+            lblTableLunchOverview.Text = tableId.ToString();
+            lblTableDinnerOverview.Text = tableId.ToString();
+            lblTableDrinksOverview.Text = tableId.ToString();
 
             //Hide other panels
             pnlCreateOrderDinner.Hide();
@@ -706,7 +721,7 @@ namespace ChapeauUI
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -739,7 +754,7 @@ namespace ChapeauUI
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -767,7 +782,6 @@ namespace ChapeauUI
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
-            orderItems.Clear();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
             CreateOrderForm_Load(sender, e);
@@ -775,10 +789,9 @@ namespace ChapeauUI
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
-
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
 
@@ -804,7 +817,6 @@ namespace ChapeauUI
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
-            orderItems.Clear();
             pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
             CreateOrderForm_Load(sender, e);
@@ -864,7 +876,7 @@ namespace ChapeauUI
             CreateOrderForm_Load(sender, e);
         }
 
-        //COMMENT
+        //REMOVE
         private void btnRemoveLunch_Click(object sender, EventArgs e)
         {
             btnRemoveWasClicked = true;
@@ -877,17 +889,37 @@ namespace ChapeauUI
         {
             btnRemoveWasClicked = true;
         }
-
-        //BACK
-        private void btnBack_Click(object sender, EventArgs e)
+        private void btnGoToOverviewLunch_Click(object sender, EventArgs e)
         {
             //Show this panel
-            pnlCreateOrderLunch.Show();
+            pnlOrderOverview.Show();
 
             //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDinner.Hide();
             pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
+        }
+
+        private void btnGoToOverviewDinner_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlOrderOverview.Show();
+
+            //Hide other panels
+            pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //Show this panel
+            pnlOrderOverview.Show();
+
+            //Hide other panels
+            pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+            pnlCreateOrderDinner.Hide();
         }
     }
 }
