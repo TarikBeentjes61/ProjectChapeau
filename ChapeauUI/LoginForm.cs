@@ -38,7 +38,7 @@ namespace ChapeauUI
                         employee = employeeService.GetById(int.Parse(userID));
                         if (passwordEmployee.Verify(password, employee.salt, employee.hash, SHA256.Create()))
                         {
-                            if(employee.role == Role.Manager)
+                            if (employee.role == Role.Manager)
                             {
                                 this.Hide();
                                 StockForm stockForm = new StockForm();
@@ -56,7 +56,7 @@ namespace ChapeauUI
                                 CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
                                 currentOrdersForm.Show();
                             }
-                            else if(employee.role == Role.Waiter)
+                            else if (employee.role == Role.Waiter)
                             {
                                 this.Hide();
                                 TableForm tableform = new TableForm(employee);
@@ -78,11 +78,11 @@ namespace ChapeauUI
                     lblError.Text = "Wrong User ID or Password";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 lblError.Text = "Wrong User ID or Password";
             }
-            
+
         }
     }
 }
