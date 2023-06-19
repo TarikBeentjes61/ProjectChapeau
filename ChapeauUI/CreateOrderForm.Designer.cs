@@ -44,6 +44,7 @@
             lblMainsLunch = new Label();
             lblDesertsLunch = new Label();
             pnlCreateOrderLunch = new Panel();
+            btnGoToOverviewLunch = new Button();
             btnRemoveLunch = new Button();
             btnAddLunch = new Button();
             pnlOrderOverview = new Panel();
@@ -64,6 +65,7 @@
             button2 = new Button();
             button3 = new Button();
             pnlCreateOrderDinner = new Panel();
+            btnGoToOverviewDinner = new Button();
             btnRemoveDinner = new Button();
             btnAddDinner = new Button();
             lblEntres = new Label();
@@ -83,6 +85,7 @@
             lblOrderDinner = new Label();
             listViewOrderDinner = new ListView();
             pnlCreateOrderDrinks = new Panel();
+            button4 = new Button();
             btnRemoveDrinks = new Button();
             btnAddDrinks = new Button();
             listViewHotDrinks = new ListView();
@@ -103,9 +106,6 @@
             lblEmployee4 = new Label();
             lblOrderDrinks = new Label();
             listViewOrderDrinks = new ListView();
-            btnGoToOverviewLunch = new Button();
-            btnGoToOverviewDinner = new Button();
-            button4 = new Button();
             pnlCreateOrderLunch.SuspendLayout();
             pnlOrderOverview.SuspendLayout();
             pnlCreateOrderDinner.SuspendLayout();
@@ -283,6 +283,19 @@
             pnlCreateOrderLunch.Size = new Size(477, 968);
             pnlCreateOrderLunch.TabIndex = 15;
             // 
+            // btnGoToOverviewLunch
+            // 
+            btnGoToOverviewLunch.BackColor = Color.FromArgb(196, 196, 196);
+            btnGoToOverviewLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToOverviewLunch.Location = new Point(362, 716);
+            btnGoToOverviewLunch.Margin = new Padding(0);
+            btnGoToOverviewLunch.Name = "btnGoToOverviewLunch";
+            btnGoToOverviewLunch.Size = new Size(106, 49);
+            btnGoToOverviewLunch.TabIndex = 18;
+            btnGoToOverviewLunch.Text = "ORDER OVERVIEW";
+            btnGoToOverviewLunch.UseVisualStyleBackColor = false;
+            btnGoToOverviewLunch.Click += btnGoToOverviewLunch_Click;
+            // 
             // btnRemoveLunch
             // 
             btnRemoveLunch.BackColor = Color.FromArgb(196, 196, 196);
@@ -445,6 +458,7 @@
             btnPay.TabIndex = 14;
             btnPay.Text = "PAY";
             btnPay.UseVisualStyleBackColor = false;
+            btnPay.Click += btnPay_Click;
             // 
             // label8
             // 
@@ -523,6 +537,19 @@
             pnlCreateOrderDinner.Name = "pnlCreateOrderDinner";
             pnlCreateOrderDinner.Size = new Size(477, 1042);
             pnlCreateOrderDinner.TabIndex = 19;
+            // 
+            // btnGoToOverviewDinner
+            // 
+            btnGoToOverviewDinner.BackColor = Color.FromArgb(196, 196, 196);
+            btnGoToOverviewDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToOverviewDinner.Location = new Point(362, 821);
+            btnGoToOverviewDinner.Margin = new Padding(0);
+            btnGoToOverviewDinner.Name = "btnGoToOverviewDinner";
+            btnGoToOverviewDinner.Size = new Size(106, 49);
+            btnGoToOverviewDinner.TabIndex = 21;
+            btnGoToOverviewDinner.Text = "ORDER OVERVIEW";
+            btnGoToOverviewDinner.UseVisualStyleBackColor = false;
+            btnGoToOverviewDinner.Click += btnGoToOverviewDinner_Click;
             // 
             // btnRemoveDinner
             // 
@@ -742,6 +769,19 @@
             pnlCreateOrderDrinks.Size = new Size(477, 1067);
             pnlCreateOrderDrinks.TabIndex = 20;
             // 
+            // button4
+            // 
+            button4.BackColor = Color.FromArgb(196, 196, 196);
+            button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button4.Location = new Point(362, 897);
+            button4.Margin = new Padding(0);
+            button4.Name = "button4";
+            button4.Size = new Size(106, 49);
+            button4.TabIndex = 25;
+            button4.Text = "ORDER OVERVIEW";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
+            // 
             // btnRemoveDrinks
             // 
             btnRemoveDrinks.BackColor = Color.FromArgb(196, 196, 196);
@@ -949,45 +989,6 @@
             listViewOrderDrinks.TabIndex = 7;
             listViewOrderDrinks.UseCompatibleStateImageBehavior = false;
             listViewOrderDrinks.SelectedIndexChanged += listViewOrderDrinks_SelectedIndexChanged;
-            // 
-            // btnGoToOverviewLunch
-            // 
-            btnGoToOverviewLunch.BackColor = Color.FromArgb(196, 196, 196);
-            btnGoToOverviewLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToOverviewLunch.Location = new Point(362, 716);
-            btnGoToOverviewLunch.Margin = new Padding(0);
-            btnGoToOverviewLunch.Name = "btnGoToOverviewLunch";
-            btnGoToOverviewLunch.Size = new Size(106, 49);
-            btnGoToOverviewLunch.TabIndex = 18;
-            btnGoToOverviewLunch.Text = "ORDER OVERVIEW";
-            btnGoToOverviewLunch.UseVisualStyleBackColor = false;
-            btnGoToOverviewLunch.Click += btnGoToOverviewLunch_Click;
-            // 
-            // btnGoToOverviewDinner
-            // 
-            btnGoToOverviewDinner.BackColor = Color.FromArgb(196, 196, 196);
-            btnGoToOverviewDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToOverviewDinner.Location = new Point(362, 821);
-            btnGoToOverviewDinner.Margin = new Padding(0);
-            btnGoToOverviewDinner.Name = "btnGoToOverviewDinner";
-            btnGoToOverviewDinner.Size = new Size(106, 49);
-            btnGoToOverviewDinner.TabIndex = 21;
-            btnGoToOverviewDinner.Text = "ORDER OVERVIEW";
-            btnGoToOverviewDinner.UseVisualStyleBackColor = false;
-            btnGoToOverviewDinner.Click += btnGoToOverviewDinner_Click;
-            // 
-            // button4
-            // 
-            button4.BackColor = Color.FromArgb(196, 196, 196);
-            button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.Location = new Point(362, 897);
-            button4.Margin = new Padding(0);
-            button4.Name = "button4";
-            button4.Size = new Size(106, 49);
-            button4.TabIndex = 25;
-            button4.Text = "ORDER OVERVIEW";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
             // 
             // CreateOrderForm
             // 
