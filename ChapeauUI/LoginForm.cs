@@ -47,12 +47,14 @@ namespace ChapeauUI
                             else if (employee.role == Role.Barista)
                             {
                                 this.Hide();
-
+                                CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
+                                currentOrdersForm.Show();
                             }
                             else if (employee.role == Role.Chef)
                             {
                                 this.Hide();
-
+                                CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
+                                currentOrdersForm.Show();
                             }
                             else if(employee.role == Role.Waiter)
                             {

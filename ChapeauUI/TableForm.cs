@@ -76,6 +76,7 @@ namespace ChapeauUI
                 btnReserved.Enabled = true;
                 btnOccupied.Tag = id;
                 btnReserved.Tag = id;
+                btnTableOrder.Tag = id;
             }
             else if ((TableStatus)clicked.Tag == TableStatus.Occupied)
             {
@@ -87,6 +88,7 @@ namespace ChapeauUI
                 btnReserved.Enabled = true;
                 btnFree.Tag = id;
                 btnReserved.Tag = id;
+                btnTableOrder.Tag = id;
             }
             else if ((TableStatus)clicked.Tag == TableStatus.Reserved)
             {
@@ -98,6 +100,7 @@ namespace ChapeauUI
                 btnReserved.Enabled = true;
                 btnFree.Tag = id;
                 btnOccupied.Tag = id;
+                btnTableOrder.Tag = id;
             }
         }
         private void btnBack_Click(object sender, EventArgs e)
@@ -146,8 +149,10 @@ namespace ChapeauUI
         }
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
+            Button clicked = (Button)sender;
+            int id = int.Parse(clicked.Tag.ToString());
             this.Hide();
-            CreateOrderForm createOrderForm = new CreateOrderForm();
+            CreateOrderForm createOrderForm = new CreateOrderForm(id, employee);
             createOrderForm.Show();
         }
     }
