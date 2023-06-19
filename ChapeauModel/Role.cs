@@ -8,6 +8,6 @@ namespace ChapeauModel
 {
     public enum Role
     {
-        Manager, Barista, Chef
+        Manager, Barista, Chef, Waiter
     }
 }

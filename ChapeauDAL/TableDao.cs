@@ -20,9 +20,19 @@ namespace ChapeauDAL
             string query = $"SELECT id, status FROM [Table] WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@id", id ),
+                new SqlParameter("@id", id )
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public void UpdateById(int id, int status)
+        {
+            string query = "UPDATE [Table] SET [status] = @status WHERE id = @id ";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@status", status),
+                new SqlParameter("@id", id)
+            };
+            ExecuteEditQuery(query, sqlParameters);
         }
         private List<Table> ReadTables(DataTable dataTable)
         {
@@ -31,7 +41,7 @@ namespace ChapeauDAL
             {
                 Table table = new Table()
                 {
-                    tableId = (int)row["Table_id"],
+                    tableId = (int)row["id"],
                     status = (TableStatus)row["status"]
                 };
                 tables.Add(table);
@@ -43,7 +53,7 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Table table = new Table()
             {
-                tableId = (int)row["Table_id"],
+                tableId = (int)row["id"],
                 status = (TableStatus)row["status"]
             };
             return table;

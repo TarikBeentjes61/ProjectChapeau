@@ -18,6 +18,28 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
+
+        public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
+        
+        public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
+
+        public void AddOrder(List<OrderItem> orderItems)
+        {
+            Order order = new Order();
+            foreach(OrderItem o in orderItems) 
+            {
+                o.orderId = order.id;
+            }
+        }
+        //public void AddOrder(List<OrderItem> orderItems)
+        //{
+        //    Order order = new Order();
+        //    foreach (OrderItem o in orderItems) 
+        //    {
+        //        o.orderId = order.id;
+        //    }
+        //    this.orderItems = orderItems;
+        //}
         public void DeleteOrder(List<OrderItem> orderItems)
         {
             orderItems.Clear();

@@ -14,7 +14,9 @@ namespace ChapeauUI
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
 
-        public CreateOrderForm(/*Table table, Employee employee*/)
+
+        public CreateOrderForm(int table, Employee employee)
+
         {
             InitializeComponent();
 

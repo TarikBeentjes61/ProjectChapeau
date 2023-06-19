@@ -10,7 +10,7 @@ namespace ChapeauDAL
     {
         public List<Employee> GetAll()
         {
-            string query = "SELECT id, name, password FROM Employee";
+            string query = "SELECT id, name, hash, salt, role FROM Employee";
 
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -18,7 +18,7 @@ namespace ChapeauDAL
         }
         public Employee GetById(int id)
         {
-            string query = $"SELECT id, name, password FROM Employee WHERE id = @id";
+            string query = $"SELECT id, name, hash, salt, role FROM Employee WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
@@ -34,7 +34,9 @@ namespace ChapeauDAL
                 {
                     employeeId = (int)row["id"],
                     name= (string)row["name"],
-                    password = (string)row["password"]
+                    hash = (string)row["hash"],
+                    salt = (string)row["salt"],
+                    role = (Role)row["role"]
                 };
                 employees.Add(employee);
             }
@@ -47,7 +49,9 @@ namespace ChapeauDAL
             {
                 employeeId = (int)row["id"],
                 name = (string)row["name"],
-                password = (string)row["password"]
+                hash = (string)row["hash"],
+                salt = (string)row["salt"],
+                role = (Role)row["role"]
             };
             return employee;
         }
