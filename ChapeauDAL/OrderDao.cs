@@ -52,6 +52,8 @@ namespace ChapeauDAL
                 new SqlParameter("@dateTime", dateTime),
                 new SqlParameter("@status", (int)status),
             };
+            return ExecuteInsertQuery(query, sqlParameters);
+        }
         private List<OrderItem> GetOrderItemsById(int orderId)
         {
             OrderItemDao orderItemDao = new OrderItemDao();
@@ -61,14 +63,6 @@ namespace ChapeauDAL
         {
             OrderItemDao orderItemDao = new OrderItemDao();
             return orderItemDao.GetOrderItemsById(orderId, role, showServed);
-        }
-
-        //public void AddOrder(List<OrderItem> orderItems)
-        //{
-        //    string query = "INSERT INTO Order (orderItems) VALUES (@orderItems)";
-
-
-            return ExecuteInsertQuery(query, sqlParameters);
         }
         private List<Order> ReadTables(DataTable dataTable)
         {

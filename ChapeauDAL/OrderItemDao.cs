@@ -41,8 +41,6 @@ namespace ChapeauDAL
             };
             ExecuteEditQuery(query, sqlParameters);
         }
-
-
         public List<OrderItem> GetOrderItemsById(int orderId)
         {
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";

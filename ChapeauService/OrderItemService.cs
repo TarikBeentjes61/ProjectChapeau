@@ -22,8 +22,8 @@ namespace ChapeauService
         }
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
-            orderItemDao.AddOrderItems(orderId,  menuitemId,  amount, comment, status);
-
+            orderItemDao.AddOrderItems(orderId, menuitemId, amount, comment, status);
+        }
         public void UpdateStatusById(int id, OrderStatus status)
         {
             orderItemDao.UpdateStatusById(id, status);

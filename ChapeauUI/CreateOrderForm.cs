@@ -13,12 +13,27 @@ namespace ChapeauUI
         OrderService orderService = new OrderService();
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
-
+        Employee employee;
+        int tableId;
 
         public CreateOrderForm(int table, Employee employee)
-
         {
             InitializeComponent();
+            
+            this.employee = employee;
+            tableId = table;
+
+            //NAME EMPLOYEE
+            lblEmployee.Text = employee.name;
+            lblEmployee2.Text = employee.name;
+            lblEmployee3.Text = employee.name;
+            lblEmployee4.Text = employee.name;
+
+            //TABLE
+            lblTableOrderOverview.Text = tableId.ToString();
+            lblTableLunchOverview.Text = tableId.ToString();
+            lblTableDinnerOverview.Text = tableId.ToString();
+            lblTableDrinksOverview.Text = tableId.ToString();
 
             //Hide other panels
             pnlCreateOrderDinner.Hide();
@@ -706,7 +721,7 @@ namespace ChapeauUI
 
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -727,7 +742,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
             }
@@ -739,7 +754,7 @@ namespace ChapeauUI
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
             listViewOrderOverview.Clear();
@@ -760,7 +775,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 o.orderId = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
@@ -775,7 +790,7 @@ namespace ChapeauUI
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(1, 1, 1, DateTime.Now, OrderStatus.ToDo);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             //Bestelling weergeven
 
@@ -797,7 +812,7 @@ namespace ChapeauUI
                 item.SubItems.Add(menuItem.price.ToString());
                 listViewOrderOverview.Items.Add(item);
                 o.comment = "";
-                o.status = OrderStatus.ToDo;
+                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 o.orderId = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
