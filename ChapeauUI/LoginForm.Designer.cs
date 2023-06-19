@@ -90,6 +90,7 @@
             txtBxPassword.Name = "txtBxPassword";
             txtBxPassword.Size = new Size(100, 27);
             txtBxPassword.TabIndex = 11;
+            txtBxPassword.UseSystemPasswordChar = true;
             // 
             // pictureBox1
             // 
