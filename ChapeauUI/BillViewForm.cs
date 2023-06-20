@@ -28,13 +28,19 @@ namespace ChapeauUI
         private string comment = "";
         private double orderTotalPrice = 0;
 
-        public BillViewForm()
-        {
+        Employee employee;
+        int tableId;
+
+        public BillViewForm(int table, Employee employee)
+            {
+             this.employee = employee;
+             tableId = table;
             InitializeComponent();
             pnlAddComment.Hide();
             pnlBillPayment.Hide();
             pnlBillSettled.Hide();
             pnlBillView.Show();
+
 
             OrderItemService orderItemService = new OrderItemService();
             List<OrderItem> orderItems = orderItemService.GetAll();
@@ -270,8 +276,8 @@ namespace ChapeauUI
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
         {
             Hide();
-            OrderOverview orderView = new OrderOverview();
-            orderView.Show();
+            CreateOrderForm orderForm = new CreateOrderForm(tableId, employee);
+            orderForm.Show();
 
         }
 

@@ -928,8 +928,8 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            PaymentForm paymentForm = new PaymentForm(tableId, employee);
-            paymentForm.Show();
+            BillViewForm billViewForm = new BillViewForm(tableId, employee);
+            billViewForm.Show();
         }
 
         private void lblImageChapeau2_Click(object sender, EventArgs e)
