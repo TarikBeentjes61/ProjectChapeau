@@ -180,6 +180,7 @@ namespace ChapeauUI
                 //update Change
                 changePrice = 0;
                 labelChange.Text = "€" + changePrice.ToString("F");
+                labelFinalTipAmount.Text = "€" + totalTip.ToString("F");
                 setTip = true;
             }
         }
@@ -315,7 +316,9 @@ namespace ChapeauUI
             //id, comment, paymentMethod, tip, payed.
             billService.UpdateBill(1, comment, (int)paymentMethode, totalTip, 1);
 
-            
+            TableForm table = new TableForm(employee);
+            this.Close();
+            table.Show();
         }
 
         private void btnContinueWithPayment_Click(object sender, EventArgs e)
