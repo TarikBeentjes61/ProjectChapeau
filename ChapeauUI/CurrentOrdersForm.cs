@@ -22,6 +22,7 @@ namespace ChapeauUI
         private readonly Color ChefColour = Color.FromArgb(255, 179, 71);
 
         private OrderItem? lastSelectedItem; //Keep track of the last selected item
+        private int lastSelectedIndex;
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace ChapeauUI
             ChangeHeaderLabel();
             DisplayLogoutButton();
             ChangePanelColours();
-            CreateTimer(30); //Takes in seconds which are converted to milliseconds
+            CreateTimer(60); //Takes in seconds which are converted to milliseconds
             RefreshData();
         }
 
@@ -83,6 +84,29 @@ namespace ChapeauUI
                 ShowErrorMessageBox(e);
             }
         }
+        private void RefreshSingle()
+        {
+            try
+            {
+                //Remove the changed item and fetch the new one
+                listViewOrders.Items.RemoveAt(lastSelectedIndex);
+                lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
+
+                //Check if the refrshed item belongs in the order list. 
+                if (showServed && lastSelectedItem.status == OrderStatus.Served)
+                {
+                    lastSelectedItem = null;
+                    return;
+                }
+
+                listViewOrders.Items.Add(CreateListViewItem(lastSelectedItem));
+                listViewOrders.Sort();
+            }
+            catch (Exception e)
+            {
+                ShowErrorMessageBox(e);
+            }
+        }
         private void ShowErrorMessageBox(Exception e)
         {
             //Display a message box whenever something goes wrong like loading data
@@ -119,15 +143,21 @@ namespace ChapeauUI
             {
                 foreach (OrderItem item in order.OrderItems) //Loop through all of the items from the order
                 {
-                    ListViewItem li = new ListViewItem(item.orderItemId.ToString());
-                    li.Tag = item;
-                    li.SubItems.Add(item.orderId.ToString());
-                    li.SubItems.Add(item.amount.ToString());
-                    li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
-                    li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
-                    listViewOrders.Items.Add(li);
+                    listViewOrders.Items.Add(CreateListViewItem(item));
                 }
             }
+        }
+        private ListViewItem CreateListViewItem(OrderItem item)
+        {
+            //Creates the list item and fills it with orderitem data
+            ListViewItem li = new ListViewItem(item.orderItemId.ToString());
+            li.Tag = item;
+            li.SubItems.Add(item.orderId.ToString());
+            li.SubItems.Add(item.amount.ToString());
+            li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
+            li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
+            return li;
+
         }
         private Color GetColourByState(OrderStatus status)
         {
@@ -174,7 +204,7 @@ namespace ChapeauUI
             {
                 OrderItemService orderItemService = new OrderItemService();
                 orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
-                RefreshData();
+                RefreshSingle();
             }
         }
         private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -185,6 +215,7 @@ namespace ChapeauUI
             try
             {
                 lastSelectedItem = (OrderItem)e.Item.Tag;
+                lastSelectedIndex = e.ItemIndex;
                 DisplaySelectedItem();
             }
             catch (Exception ex)
@@ -215,6 +246,13 @@ namespace ChapeauUI
             showServed = !showServed;
             DisplayServedButton();
             RefreshData();
+        }
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            //Close the current form and show the login form
+            LoginForm loginForm = new LoginForm();
+            this.Close();
+            loginForm.Show();
         }
     }
 }

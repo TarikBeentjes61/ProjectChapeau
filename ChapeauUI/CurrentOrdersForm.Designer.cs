@@ -119,6 +119,7 @@
             logoutButton.TabIndex = 1;
             logoutButton.Text = "Name";
             logoutButton.UseVisualStyleBackColor = false;
+            logoutButton.Click += logoutButton_Click;
             // 
             // listViewOrders
             // 
@@ -133,6 +134,7 @@
             listViewOrders.Margin = new Padding(3, 2, 3, 2);
             listViewOrders.Name = "listViewOrders";
             listViewOrders.Size = new Size(686, 375);
+            listViewOrders.Sorting = SortOrder.Ascending;
             listViewOrders.TabIndex = 3;
             listViewOrders.TileSize = new Size(40, 40);
             listViewOrders.UseCompatibleStateImageBehavior = false;
@@ -531,7 +533,7 @@
             pictureBox1.Image = Properties.Resources.Chapeau_logo;
             pictureBox1.Location = new Point(1, -1);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(106, 53);
+            pictureBox1.Size = new Size(106, 50);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 11;
             pictureBox1.TabStop = false;
@@ -558,7 +560,7 @@
             Controls.Add(mainHeaderPanel);
             Controls.Add(panel1);
             Name = "CurrentOrdersForm";
-            Text = "CurrentOrdersForm2";
+            Text = "Current Orders";
             mainHeaderPanel.ResumeLayout(false);
             mainHeaderPanel.PerformLayout();
             subPanel.ResumeLayout(false);
