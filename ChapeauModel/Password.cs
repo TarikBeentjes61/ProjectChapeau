@@ -10,18 +10,18 @@ namespace ChapeauModel
     public class Password
     {
         private string salt;
-        private string digest;
+        private string hash;
 
         public Password()
         {
 
         }
-        public Password(string salt, string digest)
+        public Password(string salt, string hash)
         {
             this.salt = salt;
-            this.digest = digest;
+            this.hash = hash;
         }
-
+        //To encrypt a password when a new employee is added
         public Password HashWithSalt(string password, int saltLength, HashAlgorithm hashAlgo)
         {
             RNG rng = new RNG();
@@ -33,7 +33,8 @@ namespace ChapeauModel
             byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
             return new Password(Convert.ToBase64String(saltBytes), Convert.ToBase64String(digestBytes));
         }
-        public bool Verify(string password, string salt, string digest, HashAlgorithm hashAlgo)
+        //Returns a bool if hash is equal to given password
+        public bool Verify(string password, string salt, string hash, HashAlgorithm hashAlgo)
         {
             //encrypts the used password
             byte[] passwordAsBytes = Encoding.UTF8.GetBytes(password);
@@ -43,7 +44,7 @@ namespace ChapeauModel
             byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
 
             //checks if password is equal to input
-            return digest == Convert.ToBase64String(digestBytes);
+            return hash == Convert.ToBase64String(digestBytes);
         }
 
     }

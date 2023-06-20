@@ -35,29 +35,35 @@ namespace ChapeauUI
                     lblError.Text = "";
                     try
                     {
+                        //Collects employee information from database
                         employee = employeeService.GetById(int.Parse(userID));
+                        //Verifies if the password is correct 
                         if (passwordEmployee.Verify(password, employee.salt, employee.hash, SHA256.Create()))
                         {
                             if (employee.role == Role.Manager)
                             {
+                                //Load manager form
                                 this.Hide();
                                 StockForm stockForm = new StockForm();
                                 stockForm.Show();
                             }
                             else if (employee.role == Role.Barista)
                             {
+                                //Load barista form
                                 this.Hide();
                                 CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
                                 currentOrdersForm.Show();
                             }
                             else if (employee.role == Role.Chef)
                             {
+                                //Load chef form
                                 this.Hide();
                                 CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
                                 currentOrdersForm.Show();
                             }
                             else if (employee.role == Role.Waiter)
                             {
+                                //Load waiter form
                                 this.Hide();
                                 TableForm tableform = new TableForm(employee);
                                 tableform.Show();
