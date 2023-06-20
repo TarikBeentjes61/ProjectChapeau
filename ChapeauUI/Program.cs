@@ -1,5 +1,3 @@
-using ChapeauModel;
-
 namespace ChapeauUI
 {
     internal static class Program
@@ -13,7 +11,11 @@ namespace ChapeauUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
+            BillViewForm billViewForm = new BillViewForm();
+            billViewForm.Size = new Size(414, 736);
+
+
+            Application.Run(billViewForm);
         }
     }
 }

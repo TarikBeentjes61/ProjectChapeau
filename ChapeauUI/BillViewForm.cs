@@ -28,6 +28,15 @@ namespace ChapeauUI
         private string comment = "";
         private double orderTotalPrice = 0;
 
+        int tableId;
+        Employee employee;
+        public BillViewForm(int tableId, Employee employee)
+        {
+            InitializeComponent();
+            this.tableId = tableId;
+            this.employee = employee;
+        }
+
         public BillViewForm()
         {
             InitializeComponent();
@@ -35,6 +44,10 @@ namespace ChapeauUI
             pnlBillPayment.Hide();
             pnlBillSettled.Hide();
             pnlBillView.Show();
+
+
+
+            BillViewForm paymentForm = new BillViewForm(tableId, employee);
 
             OrderItemService orderItemService = new OrderItemService();
             List<OrderItem> orderItems = orderItemService.GetAll();
@@ -167,6 +180,7 @@ namespace ChapeauUI
                 //update Change
                 changePrice = 0;
                 labelChange.Text = "€" + changePrice.ToString("F");
+                labelFinalTipAmount.Text = "€" + totalTip.ToString("F");
                 setTip = true;
             }
         }
@@ -270,8 +284,8 @@ namespace ChapeauUI
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
         {
             Hide();
-            OrderOverview orderView = new OrderOverview();
-            orderView.Show();
+            CreateOrderForm orderForm = new CreateOrderForm(tableId, employee);
+            orderForm.Show();
 
         }
 
@@ -302,7 +316,9 @@ namespace ChapeauUI
             //id, comment, paymentMethod, tip, payed.
             billService.UpdateBill(1, comment, (int)paymentMethode, totalTip, 1);
 
-            
+            TableForm table = new TableForm(employee);
+            this.Close();
+            table.Show();
         }
 
         private void btnContinueWithPayment_Click(object sender, EventArgs e)
