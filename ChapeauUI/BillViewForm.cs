@@ -28,13 +28,17 @@ namespace ChapeauUI
         private string comment = "";
         private double orderTotalPrice = 0;
 
-        Employee employee;
         int tableId;
+        Employee employee;
+        public BillViewForm(int tableId, Employee employee)
+        {
+            InitializeComponent();
+            this.tableId = tableId;
+            this.employee = employee;
+        }
 
-        public BillViewForm(int table, Employee employee)
-            {
-             this.employee = employee;
-             tableId = table;
+        public BillViewForm()
+        {
             InitializeComponent();
             pnlAddComment.Hide();
             pnlBillPayment.Hide();
