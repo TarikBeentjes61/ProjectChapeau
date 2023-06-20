@@ -60,7 +60,7 @@ namespace ChapeauDAL
             }
         }
 
-        /* For Insert/Update/Delete Queries */
+        /* For Update/Delete Queries */
         protected void ExecuteEditQuery(string query, SqlParameter[] sqlParameters)
         {
             SqlCommand command = new SqlCommand();
@@ -112,6 +112,30 @@ namespace ChapeauDAL
             }
 
             return dataTable;
+        }
+        /* For Insert Queries */
+        protected int ExecuteInsertQuery(string query, SqlParameter[] sqlParameters)
+        {
+            SqlCommand command = new SqlCommand();
+            int id = 0;
+            try
+            {
+                command.Connection = OpenConnection();
+                command.CommandText = query;
+                command.Parameters.AddRange(sqlParameters);
+                adapter.InsertCommand = command;
+                id = (int)command.ExecuteScalar();
+            }
+            catch (SqlException e)
+            {
+                // Print.ErrorLog(e);
+                throw e;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+            return id;
         }
     }
 }

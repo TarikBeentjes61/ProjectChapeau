@@ -9,6 +9,7 @@ namespace ChapeauModel
         public int employeeId;
         public int tableId;
         public int billId;
+        public int id;
         public DateTime date;
         public OrderStatus status;
 
@@ -17,27 +18,34 @@ namespace ChapeauModel
             orderItems = new List<OrderItem>();
         }
 
-        public void AddOrder()
-        {
 
+        public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
+        
+        public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
+
+        public void AddOrder(List<OrderItem> orderItems)
+        {
+            Order order = new Order();
+            foreach(OrderItem o in orderItems) 
+            {
+                o.orderId = order.id;
+            }
         }
-
-        public void DeleteOrder()
+        //public void AddOrder(List<OrderItem> orderItems)
+        //{
+        //    Order order = new Order();
+        //    foreach (OrderItem o in orderItems) 
+        //    {
+        //        o.orderId = order.id;
+        //    }
+        //    this.orderItems = orderItems;
+        //}
+        public void DeleteOrder(List<OrderItem> orderItems)
         {
-
-        }
-
-        public void AddOrderItem(OrderItem orderItem)
-        {
-            orderItems.Add(orderItem);
+            orderItems.Clear();
         }
 
         public void StartPreparing()
-        {
-
-        }
-
-        private void UpdateOrder()
         {
 
         }

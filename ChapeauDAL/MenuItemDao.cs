@@ -42,11 +42,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public void UpdateStock()
-        {
-
-        }
-
         private List<MenuItem> ReadTables(DataTable dataTable)
         {
             List<MenuItem> menuItems = new List<MenuItem>();
@@ -70,17 +65,21 @@ namespace ChapeauDAL
         private MenuItem ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            MenuItem menuItem = new MenuItem()
+            if (dataTable.Rows.Count > 0)
             {
-                menuItemId = (int)row["id"],
-                menuId = (int)row["Menu_id"],
-                stock = (int)row["stock"],
-                price = Convert.ToDouble(row["priceExc"]),
-                itemName = (string)row["itemName"],
-                tax = Convert.ToDouble(row["tax"]),
-                itemType = (ItemType)row["itemType"],
+                MenuItem menuItem = new MenuItem()
+                {
+                    menuItemId = (int)row["id"],
+                    menuId = (int)row["Menu_id"],
+                    stock = (int)row["stock"],
+                    price = Convert.ToDouble(row["priceExc"]),
+                    itemName = (string)row["itemName"],
+                    tax = Convert.ToDouble(row["tax"]),
+                    itemType = (ItemType)row["itemType"],
+                };
+                return menuItem;
             };
-            return menuItem;
+            return null;
         }
     }
 }
