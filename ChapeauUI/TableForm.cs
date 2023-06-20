@@ -159,14 +159,14 @@ namespace ChapeauUI
         {
             Button clicked = (Button)sender;
             int tableId = int.Parse(clicked.Tag.ToString());
-            this.Hide();
+            this.Close();
             CreateOrderForm createOrderForm = new CreateOrderForm(tableId, employee);
             createOrderForm.Show();
         }
         //Clicking the picture will logout
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
         }
