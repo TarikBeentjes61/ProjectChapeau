@@ -928,7 +928,7 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            PaymentForm paymentForm = new PaymentForm(tableId, employee);
+            BillViewForm paymentForm = new BillViewForm(tableId, employee);
             paymentForm.Show();
         }
 
