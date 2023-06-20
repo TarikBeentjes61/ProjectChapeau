@@ -383,6 +383,7 @@
             lblImageChapeau2.Size = new Size(131, 66);
             lblImageChapeau2.TabIndex = 20;
             lblImageChapeau2.Text = " ";
+            lblImageChapeau2.Click += lblImageChapeau2_Click;
             // 
             // btnLunchOrderOverview
             // 

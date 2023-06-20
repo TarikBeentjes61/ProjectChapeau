@@ -931,5 +931,11 @@ namespace ChapeauUI
             PaymentForm paymentForm = new PaymentForm(tableId, employee);
             paymentForm.Show();
         }
+
+        private void lblImageChapeau2_Click(object sender, EventArgs e)
+        {
+            TableForm tableForm = new TableForm(employee);
+            tableForm.Show();
+        }
     }
 }
