@@ -30,15 +30,11 @@ namespace ChapeauUI
 
         int tableId;
         Employee employee;
+
         public BillViewForm(int tableId, Employee employee)
         {
-            InitializeComponent();
             this.tableId = tableId;
             this.employee = employee;
-        }
-
-        public BillViewForm()
-        {
             InitializeComponent();
             pnlAddComment.Hide();
             pnlBillPayment.Hide();
