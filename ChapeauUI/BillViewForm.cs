@@ -45,6 +45,7 @@ namespace ChapeauUI
             pnlBillSettled.Hide();
             pnlBillView.Show();
 
+            BillViewForm paymentForm = new BillViewForm(tableId, employee);
 
             OrderItemService orderItemService = new OrderItemService();
             List<OrderItem> orderItems = orderItemService.GetAll();
