@@ -30,7 +30,7 @@ namespace ChapeauDAL
 
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
-            string query = "INSERT INTO OrderITem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
+            string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
                 new SqlParameter("@Order_Id", orderId),

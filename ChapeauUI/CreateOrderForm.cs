@@ -1,5 +1,6 @@
 using ChapeauModel;
 using ChapeauService;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -8,9 +9,8 @@ namespace ChapeauUI
 {
     public partial class CreateOrderForm : Form
     {
-        List<OrderItem> orderItems = new List<OrderItem>();
-        OrderItemService orderItemService = new OrderItemService();
-        OrderService orderService = new OrderService();
+        Order order = new Order();
+        List<OrderItem> orderItems;
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
         Employee employee;
@@ -24,349 +24,178 @@ namespace ChapeauUI
             tableId = table;
 
             //NAME EMPLOYEE
-            lblEmployee.Text = employee.name;
-            lblEmployee2.Text = employee.name;
-            lblEmployee3.Text = employee.name;
-            lblEmployee4.Text = employee.name;
+            EmployeeLabels(employee);
 
             //TABLE
-            lblTableOrderOverview.Text = "Table " + tableId.ToString();
-            lblTableLunchOverview.Text = "Table " + tableId.ToString();
-            lblTableDinnerOverview.Text = "Table " + tableId.ToString();
-            lblTableDrinksOverview.Text = "Table " + tableId.ToString();
+            TableLabels();
 
             //Hide other panels
-            pnlCreateOrderDinner.Hide();
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
+            HidePanels();
 
             //Disable All Necessary Buttons
-            btnLunchUnavailable.Enabled = false;
-            btnDinnerUnavailable.Enabled = false;
-            btnDrinksUnavailable.Enabled = false;
-            btnPay.Enabled = false;
+            DisableButtons();
 
             //Change Necessary Button Colors
-            btnLunchUnavailable.BackColor = Color.FromArgb(189, 242, 217);
-            btnDinnerUnavailable.BackColor = Color.FromArgb(189, 242, 217);
-            btnDrinksUnavailable.BackColor = Color.FromArgb(189, 242, 217);
+            ButtonColors();
 
             //Show this panel
             pnlOrderOverview.Show();
         }
+
+        
+
         private void CreateOrderForm_Load(object sender, EventArgs e)
         {
             try
             {
+                MenuItem menuItem = new MenuItem();
+
+
                 //LUNCH
                 //STARTERS LISTVIEW
-                MenuItemService menuItemService = new MenuItemService();
-                ItemType startersLunch = ItemType.Starters;
-                List<MenuItem> menuItemsStartersLunch = menuItemService.GetByItemType(startersLunch, 1);
-
-                listViewStartersLunch.Clear();
-                listViewStartersLunch.View = View.Details;
-
-                listViewStartersLunch.Columns.Add("Id", 25);
-                listViewStartersLunch.Columns.Add("Name", 370);
-                listViewStartersLunch.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsStartersLunch)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewStartersLunch.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewStartersLunch, ItemType.Starters, 1);
 
                 //MAINS LISTVIEW
-                ItemType mainsLunch = ItemType.Mains;
-                List<MenuItem> menuItemsMainsLunch = menuItemService.GetByItemType(mainsLunch, 1);
-
-                listViewMainsLunch.Clear();
-                listViewMainsLunch.View = View.Details;
-
-                listViewMainsLunch.Columns.Add("Id", 25);
-                listViewMainsLunch.Columns.Add("Name", 370);
-                listViewMainsLunch.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsMainsLunch)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewMainsLunch.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewMainsLunch, ItemType.Mains, 1);
 
                 //DESERTS LISTVIEW
-                ItemType desertsLunch = ItemType.Deserts;
-                List<MenuItem> menuItemsDesertsLunch = menuItemService.GetByItemType(desertsLunch, 1);
-
-                listViewDesertsLunch.Clear();
-                listViewDesertsLunch.View = View.Details;
-
-                listViewDesertsLunch.Columns.Add("Id", 25);
-                listViewDesertsLunch.Columns.Add("Name", 370);
-                listViewDesertsLunch.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsDesertsLunch)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewDesertsLunch.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewDesertsLunch, ItemType.Deserts, 1);
 
                 //DINNER
                 //STARTERS LISTVIEW
-                ItemType startersDinner = ItemType.Starters;
-                List<MenuItem> menuItemsStartersDinner = menuItemService.GetByItemType(startersDinner, 2);
+                FillListviewMenuItems(listViewStartersDinner, ItemType.Starters, 2);
 
-                listViewStartersDinner.Clear();
-                listViewStartersDinner.View = View.Details;
-
-                listViewStartersDinner.Columns.Add("Id", 25);
-                listViewStartersDinner.Columns.Add("Name", 370);
-                listViewStartersDinner.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsStartersDinner)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewStartersDinner.Items.Add(item);
-                }
-
-                //ENTREES LISTVIEW
-                ItemType entres = ItemType.Entres;
-                List<MenuItem> menuItemsEntres = menuItemService.GetByItemType(entres, 2);
-
-                listViewEntresDinner.Clear();
-                listViewEntresDinner.View = View.Details;
-
-                listViewEntresDinner.Columns.Add("Id", 25);
-                listViewEntresDinner.Columns.Add("Name", 370);
-                listViewEntresDinner.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsEntres)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewEntresDinner.Items.Add(item);
-                }
+                //ENTRES LISTVIEW
+                FillListviewMenuItems(listViewEntresDinner, ItemType.Entres, 2);
 
                 //MAINS LISTVIEW
-                ItemType mainsDinner = ItemType.Mains;
-                List<MenuItem> menuItemsMainsDinner = menuItemService.GetByItemType(mainsDinner, 2);
+                FillListviewMenuItems(listViewMainsDinner, ItemType.Mains, 2);
 
-                listViewMainsDinner.Clear();
-                listViewMainsDinner.View = View.Details;
-
-                listViewMainsDinner.Columns.Add("Id", 25);
-                listViewMainsDinner.Columns.Add("Name", 370);
-                listViewMainsDinner.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsMainsDinner)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewMainsDinner.Items.Add(item);
-                }
-
-                //DESERTS LISTVIEW
-                ItemType desertsDinner = ItemType.Deserts;
-                List<MenuItem> menuItemsDesertsDinner = menuItemService.GetByItemType(desertsDinner, 2);
-
-                listViewDesertsDinner.Clear();
-                listViewDesertsDinner.View = View.Details;
-
-                listViewDesertsDinner.Columns.Add("Id", 25);
-                listViewDesertsDinner.Columns.Add("Name", 370);
-                listViewDesertsDinner.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsDesertsDinner)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewDesertsDinner.Items.Add(item);
-                }
+                ////DESERTS LISTVIEW
+                FillListviewMenuItems(listViewDesertsDinner, ItemType.Deserts, 2);
 
                 //DRINKS
                 //SOFT DRINKS LISTVIEW
-                ItemType softDrinks = ItemType.SoftDrinks;
-                List<MenuItem> menuItemsSoftDrinks = menuItemService.GetByItemType(softDrinks, 3);
-
-                listViewSoftDrinks.Clear();
-                listViewSoftDrinks.View = View.Details;
-
-                listViewSoftDrinks.Columns.Add("Id", 25);
-                listViewSoftDrinks.Columns.Add("Name", 349);
-                listViewSoftDrinks.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsSoftDrinks)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewSoftDrinks.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewSoftDrinks, ItemType.SoftDrinks, 3);
 
                 //BEERS LISTVIEW
-                ItemType beers = ItemType.Beers;
-                List<MenuItem> menuItemsBeers = menuItemService.GetByItemType(beers, 3);
-
-                listViewBeers.Clear();
-                listViewBeers.View = View.Details;
-
-                listViewBeers.Columns.Add("Id", 25);
-                listViewBeers.Columns.Add("Name", 349);
-                listViewBeers.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsBeers)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewBeers.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewBeers, ItemType.Beers, 3);
 
                 //WINES LISTVIEW
-                ItemType wines = ItemType.Wines;
-                List<MenuItem> menuItemsWines = menuItemService.GetByItemType(wines, 3);
-
-                listViewWines.Clear();
-                listViewWines.View = View.Details;
-
-                listViewWines.Columns.Add("Id", 25);
-                listViewWines.Columns.Add("Name", 349);
-                listViewWines.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsWines)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewWines.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewWines, ItemType.Wines, 3);
 
                 //SPIRITS LISTVIEW
-                ItemType spirits = ItemType.Spirits;
-                List<MenuItem> menuItemsSpirits = menuItemService.GetByItemType(spirits, 3);
-
-                listViewSpirits.Clear();
-                listViewSpirits.View = View.Details;
-
-                listViewSpirits.Columns.Add("Id", 25);
-                listViewSpirits.Columns.Add("Name", 349);
-                listViewSpirits.Columns.Add("Price", 45);
-
-                foreach (MenuItem m in menuItemsSpirits)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewSpirits.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewSpirits, ItemType.Spirits, 3);
 
                 //HOT DRINKS LISTVIEW
-                ItemType hotDrinks = ItemType.HotDrinks;
-                List<MenuItem> menuItemsHotDrinks = menuItemService.GetByItemType(hotDrinks, 3);
-
-                listViewHotDrinks.Clear();
-                listViewHotDrinks.View = View.Details;
-
-                listViewHotDrinks.Columns.Add("Id", 25);
-                listViewHotDrinks.Columns.Add("Name", 349);
-                listViewHotDrinks.Columns.Add("Price", 45);
-
-
-                foreach (MenuItem m in menuItemsHotDrinks)
-                {
-                    ListViewItem item = new ListViewItem(m.menuItemId.ToString());
-
-                    item.SubItems.Add(m.itemName);
-                    item.SubItems.Add(m.price.ToString());
-                    listViewHotDrinks.Items.Add(item);
-                }
+                FillListviewMenuItems(listViewHotDrinks, ItemType.HotDrinks, 3);
 
                 //ORDER LUNCH PANEL
-                listViewOrderLunch.Clear();
-                listViewOrderLunch.View = View.Details;
-
-                listViewOrderLunch.Columns.Add("Id", 25);
-                listViewOrderLunch.Columns.Add("Name", 250);
-                listViewOrderLunch.Columns.Add("Amount", 65);
-
-
-                foreach (OrderItem o in orderItems)
-                {
-                    MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                    ListViewItem item = new ListViewItem(o.menuItemId.ToString());
-
-                    item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(o.amount.ToString());
-                    listViewOrderLunch.Items.Add(item);
-                }
+                FillListviewOrder(listViewOrderLunch, orderItems);
 
                 //ORDER DINNER PANEL
-                listViewOrderDinner.Clear();
-                listViewOrderDinner.View = View.Details;
-
-                listViewOrderDinner.Columns.Add("Id", 25);
-                listViewOrderDinner.Columns.Add("Name", 250);
-                listViewOrderDinner.Columns.Add("Amount", 65);
-
-
-                foreach (OrderItem o in orderItems)
-                {
-                    MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                    ListViewItem item = new ListViewItem(o.menuItemId.ToString());
-
-                    item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(o.amount.ToString());
-                    listViewOrderDinner.Items.Add(item);
-                }
+                FillListviewOrder(listViewOrderDinner, orderItems);
 
                 //ORDER DRINKS PANEL
-                listViewOrderDrinks.Clear();
-                listViewOrderDrinks.View = View.Details;
-
-                listViewOrderDrinks.Columns.Add("Id", 25);
-                listViewOrderDrinks.Columns.Add("Name", 250);
-                listViewOrderDrinks.Columns.Add("Amount", 65);
-
-
-                foreach (OrderItem o in orderItems)
-                {
-                    MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                    ListViewItem item = new ListViewItem(o.menuItemId.ToString());
-
-                    item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(o.amount.ToString());
-                    listViewOrderDrinks.Items.Add(item);
-                }
+                FillListviewOrder(listViewOrderDrinks, orderItems);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Something went wrong {ex.Message}");
             }
+        }
+
+        //MAKE LUNCH ORDER
+        private void listViewStartersLunch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewStartersLunch, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewMainsLunch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewMainsLunch, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewDesertsLunch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewDesertsLunch, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        //MAKE DINNER ORDER
+        private void listViewStartersDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewStartersDinner, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewEntresDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewEntresDinner, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewMainsDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewMainsDinner, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewDesertsDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewDesertsDinner, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        //MAKE DRINKS ORDER
+        private void listViewSoftDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewSoftDrinks, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewBeers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewBeers, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewWines_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewWines, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewSpirits_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewSpirits, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewHotDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AddItemsToOrderListview(listViewHotDrinks, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewOrderLunch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemoveItemsFromListview(listViewOrderLunch, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewOrderDinner_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemoveItemsFromListview(listViewOrderDinner, orderItems);
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void listViewOrderDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemoveItemsFromListview(listViewOrderDrinks, orderItems);
+            CreateOrderForm_Load(sender, e);
         }
 
         //LUNCH ORDER OVERVIEW
@@ -477,324 +306,38 @@ namespace ChapeauUI
             pnlCreateOrderDinner.Show();
         }
 
-        //MAKE LUNCH ORDER
-        private void listViewStartersLunch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewStartersLunch.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewMainsLunch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewMainsLunch.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewDesertsLunch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewDesertsLunch.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        //MAKE DINNER ORDER
-        private void listViewStartersDinner_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewStartersDinner.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewEntresDinner_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewEntresDinner.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewMainsDinner_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewMainsDinner.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewDesertsDinner_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewDesertsDinner.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        //MAKE DRINKS ORDER
-        private void listViewSoftDrinks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewSoftDrinks.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewBeers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewBeers.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewWines_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewWines.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewSpirits_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewSpirits.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewHotDrinks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewHotDrinks.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            OrderItem orderItem = listview.LoadListview(value, orderItems);
-
-            if (orderItem.amount == 1)
-            {
-                orderItems.Add(orderItem);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
-
-            //Bestelling weergeven
-            listViewOrderOverview.Clear();
-            listViewOrderOverview.View = View.Details;
-
-            listViewOrderOverview.Columns.Add("Amount", 25);
-            listViewOrderOverview.Columns.Add("Name", 370);
-            listViewOrderOverview.Columns.Add("Price", 45);
-
-            foreach (OrderItem o in orderItems)
-            {
-                MenuItemService menuItemService = new MenuItemService();
-                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                ListViewItem item = new ListViewItem(o.amount.ToString());
-
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item);
-                o.comment = "";
-                o.status = OrderStatus.Preparation;
-                totalPrice += menuItem.price;
-                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
-            }
-
-            lblTotal.Text = "Total: " + totalPrice.ToString();
+            AddAndShowOrder();
             pnlCreateOrderLunch.Hide();
             pnlOrderOverview.Show();
-            btnPay.Enabled = true;
             CreateOrderForm_Load(sender, e);
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
-
-            //Bestelling weergeven
-            listViewOrderOverview.Clear();
-            listViewOrderOverview.View = View.Details;
-
-            listViewOrderOverview.Columns.Add("Amount", 25);
-            listViewOrderOverview.Columns.Add("Name", 370);
-            listViewOrderOverview.Columns.Add("Price", 45);
-
-            foreach (OrderItem o in orderItems)
-            {
-                MenuItemService menuItemService = new MenuItemService();
-                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
-
-                ListViewItem item = new ListViewItem(o.amount.ToString());
-
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item);
-                o.comment = "";
-                o.status = OrderStatus.Preparation;
-                totalPrice += menuItem.price;
-                o.orderId = orderId;
-                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
-            }
-
-            lblTotal.Text = "Total: " + totalPrice.ToString();
+            AddAndShowOrder();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
-            btnPay.Enabled = true;
             CreateOrderForm_Load(sender, e);
         }
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
+            AddAndShowOrder();
+            pnlCreateOrderDrinks.Hide();
+            pnlOrderOverview.Show();
+            CreateOrderForm_Load(sender, e);
+        }
+
+        private void AddAndShowOrder()
+        {
+            OrderService orderService = new OrderService();
+            OrderItemService orderItemService = new OrderItemService();
+            MenuItemService menuItemService = new MenuItemService();
+            orderItems = order.OrderItems;
+
             int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
-            //Bestelling weergeven
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
 
@@ -804,80 +347,22 @@ namespace ChapeauUI
 
             foreach (OrderItem o in orderItems)
             {
-                MenuItemService menuItemService = new MenuItemService();
                 MenuItem menuItem = menuItemService.GetById(o.menuItemId);
 
-                ListViewItem item = new ListViewItem(o.amount.ToString());
-
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(menuItem.price.ToString());
-                listViewOrderOverview.Items.Add(item);
                 o.comment = "";
                 o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
                 o.orderId = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
+
+                ListViewItem item = new ListViewItem(o.amount.ToString());
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(menuItem.price.ToString());
+                listViewOrderOverview.Items.Add(item);
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
-            pnlCreateOrderDrinks.Hide();
-            pnlOrderOverview.Show();
             btnPay.Enabled = true;
-            CreateOrderForm_Load(sender, e);
-        }
-
-
-
-        private void listViewOrderLunch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewOrderLunch.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            if (btnRemoveWasClicked)
-            {
-                listview.RemoveListviewItem(value, orderItems);
-            }
-
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewOrderDinner_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewOrderDinner.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            if (btnRemoveWasClicked)
-            {
-                listview.RemoveListviewItem(value, orderItems);
-            }
-            CreateOrderForm_Load(sender, e);
-        }
-
-        private void listViewOrderDrinks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListViewEditor listview = new ListViewEditor();
-            string value = "";
-
-            foreach (ListViewItem selectedItem in listViewOrderDrinks.SelectedItems)
-            {
-                value = selectedItem.SubItems[0].Text;
-            }
-
-            if (btnRemoveWasClicked)
-            {
-                listview.RemoveListviewItem(value, orderItems);
-            }
-            CreateOrderForm_Load(sender, e);
         }
 
         //REMOVE
@@ -914,8 +399,7 @@ namespace ChapeauUI
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
         }
-
-        private void button4_Click(object sender, EventArgs e)
+        private void btnGoToOverviewDrinks_Click(object sender, EventArgs e)
         {
             //Show this panel
             pnlOrderOverview.Show();
@@ -925,7 +409,6 @@ namespace ChapeauUI
             pnlCreateOrderLunch.Hide();
             pnlCreateOrderDinner.Hide();
         }
-
         private void btnPay_Click(object sender, EventArgs e)
         {
             BillViewForm paymentForm = new BillViewForm(tableId, employee);
@@ -936,6 +419,133 @@ namespace ChapeauUI
         {
             TableForm tableForm = new TableForm(employee);
             tableForm.Show();
+        }
+
+        //METHODS
+        //Method to fill listview with menuItems
+        private void FillListviewMenuItems(System.Windows.Forms.ListView listView, ItemType itemType, int menuId/*MenuItem menu*/)
+        {
+            MenuItemService menuItemService = new MenuItemService();
+            List<MenuItem> menuItems = menuItemService.GetByItemType(itemType, menuId/*menu.menuId*/);
+
+            listView.Clear();
+            listView.View = View.Details;
+
+            listView.Columns.Add("Id", 25);
+            listView.Columns.Add("Name", 349);
+            listView.Columns.Add("Price", 45);
+
+            foreach (MenuItem m in menuItems)
+            {
+                ListViewItem item = new ListViewItem(m.menuItemId.ToString());
+
+                item.SubItems.Add(m.itemName);
+                item.SubItems.Add(m.price.ToString());
+                listView.Items.Add(item);
+            }
+        }
+
+        //Method to fill listview with orders
+        private void FillListviewOrder(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
+        {
+            orderItems = order.OrderItems;
+
+            MenuItemService menuItemService = new MenuItemService();
+
+            listView.Clear();
+            listView.View = View.Details;
+
+            listView.Columns.Add("Id", 25);
+            listView.Columns.Add("Name", 350);
+            listView.Columns.Add("Amount", 65);
+
+            foreach (OrderItem o in orderItems)
+            {
+                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.menuItemId.ToString());
+
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(o.amount.ToString());
+                listView.Items.Add(item);
+            }
+        }
+
+        //Method to add items to orderview
+        private void AddItemsToOrderListview(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
+        {
+            orderItems = order.OrderItems;
+
+            ListViewEditor listviewEditor = new ListViewEditor();
+            string value = "";
+
+            foreach (ListViewItem selectedItem in listView.SelectedItems)
+            {
+                value = selectedItem.SubItems[0].Text;
+            }
+
+            OrderItem orderItem = listviewEditor.LoadListview(value, orderItems);
+
+            if (orderItem.amount == 1)
+            {
+                orderItems.Add(orderItem);
+            }
+        }
+
+        //Method to remove items from orderview
+        private void RemoveItemsFromListview(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
+        {
+            orderItems = order.OrderItems;
+
+            ListViewEditor listviewEditor = new ListViewEditor();
+            string value = "";
+
+            foreach (ListViewItem selectedItem in listView.SelectedItems)
+            {
+                value = selectedItem.SubItems[0].Text;
+            }
+
+            if (btnRemoveWasClicked)
+            {
+                listviewEditor.RemoveListviewItem(value, orderItems);
+            }
+        }
+        private void HidePanels()
+        {
+            pnlCreateOrderDinner.Hide();
+            pnlCreateOrderDrinks.Hide();
+            pnlCreateOrderLunch.Hide();
+        }
+
+        private void DisableButtons()
+        {
+            btnLunchUnavailable.Enabled = false;
+            btnDinnerUnavailable.Enabled = false;
+            btnDrinksUnavailable.Enabled = false;
+            btnPay.Enabled = false;
+        }
+
+        private void ButtonColors()
+        {
+            btnLunchUnavailable.BackColor = Color.FromArgb(189, 242, 217);
+            btnDinnerUnavailable.BackColor = Color.FromArgb(189, 242, 217);
+            btnDrinksUnavailable.BackColor = Color.FromArgb(189, 242, 217);
+        }
+
+        private void EmployeeLabels(Employee employee)
+        {
+            lblEmployee.Text = employee.name;
+            lblEmployee2.Text = employee.name;
+            lblEmployee3.Text = employee.name;
+            lblEmployee4.Text = employee.name;
+        }
+
+        private void TableLabels()
+        {
+            lblTableOrderOverview.Text = "Table " + tableId.ToString();
+            lblTableLunchOverview.Text = "Table " + tableId.ToString();
+            lblTableDinnerOverview.Text = "Table " + tableId.ToString();
+            lblTableDrinksOverview.Text = "Table " + tableId.ToString();
         }
     }
 }

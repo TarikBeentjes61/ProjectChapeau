@@ -85,7 +85,7 @@
             lblOrderDinner = new Label();
             listViewOrderDinner = new ListView();
             pnlCreateOrderDrinks = new Panel();
-            button4 = new Button();
+            btnGoToOverviewDrinks = new Button();
             btnRemoveDrinks = new Button();
             btnAddDrinks = new Button();
             listViewHotDrinks = new ListView();
@@ -179,9 +179,9 @@
             // 
             // listViewOrderLunch
             // 
-            listViewOrderLunch.Location = new Point(15, 704);
+            listViewOrderLunch.Location = new Point(15, 675);
             listViewOrderLunch.Name = "listViewOrderLunch";
-            listViewOrderLunch.Size = new Size(344, 246);
+            listViewOrderLunch.Size = new Size(444, 211);
             listViewOrderLunch.TabIndex = 7;
             listViewOrderLunch.UseCompatibleStateImageBehavior = false;
             listViewOrderLunch.View = View.Details;
@@ -191,7 +191,7 @@
             // 
             lblOrderLunch.AutoSize = true;
             lblOrderLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            lblOrderLunch.Location = new Point(15, 671);
+            lblOrderLunch.Location = new Point(15, 652);
             lblOrderLunch.Name = "lblOrderLunch";
             lblOrderLunch.Size = new Size(49, 20);
             lblOrderLunch.TabIndex = 8;
@@ -287,7 +287,7 @@
             // 
             btnGoToOverviewLunch.BackColor = Color.FromArgb(196, 196, 196);
             btnGoToOverviewLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToOverviewLunch.Location = new Point(362, 716);
+            btnGoToOverviewLunch.Location = new Point(15, 900);
             btnGoToOverviewLunch.Margin = new Padding(0);
             btnGoToOverviewLunch.Name = "btnGoToOverviewLunch";
             btnGoToOverviewLunch.Size = new Size(106, 49);
@@ -300,7 +300,7 @@
             // 
             btnRemoveLunch.BackColor = Color.FromArgb(196, 196, 196);
             btnRemoveLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnRemoveLunch.Location = new Point(362, 810);
+            btnRemoveLunch.Location = new Point(183, 900);
             btnRemoveLunch.Margin = new Padding(0);
             btnRemoveLunch.Name = "btnRemoveLunch";
             btnRemoveLunch.Size = new Size(106, 49);
@@ -313,7 +313,7 @@
             // 
             btnAddLunch.BackColor = Color.FromArgb(255, 179, 71);
             btnAddLunch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddLunch.Location = new Point(362, 901);
+            btnAddLunch.Location = new Point(353, 900);
             btnAddLunch.Margin = new Padding(0);
             btnAddLunch.Name = "btnAddLunch";
             btnAddLunch.Size = new Size(106, 49);
@@ -543,7 +543,7 @@
             // 
             btnGoToOverviewDinner.BackColor = Color.FromArgb(196, 196, 196);
             btnGoToOverviewDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnGoToOverviewDinner.Location = new Point(362, 821);
+            btnGoToOverviewDinner.Location = new Point(15, 979);
             btnGoToOverviewDinner.Margin = new Padding(0);
             btnGoToOverviewDinner.Name = "btnGoToOverviewDinner";
             btnGoToOverviewDinner.Size = new Size(106, 49);
@@ -556,7 +556,7 @@
             // 
             btnRemoveDinner.BackColor = Color.FromArgb(196, 196, 196);
             btnRemoveDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnRemoveDinner.Location = new Point(362, 901);
+            btnRemoveDinner.Location = new Point(186, 979);
             btnRemoveDinner.Margin = new Padding(0);
             btnRemoveDinner.Name = "btnRemoveDinner";
             btnRemoveDinner.Size = new Size(106, 49);
@@ -569,7 +569,7 @@
             // 
             btnAddDinner.BackColor = Color.FromArgb(255, 179, 71);
             btnAddDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddDinner.Location = new Point(362, 979);
+            btnAddDinner.Location = new Point(353, 979);
             btnAddDinner.Margin = new Padding(0);
             btnAddDinner.Name = "btnAddDinner";
             btnAddDinner.Size = new Size(106, 49);
@@ -726,7 +726,7 @@
             // 
             lblOrderDinner.AutoSize = true;
             lblOrderDinner.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            lblOrderDinner.Location = new Point(15, 767);
+            lblOrderDinner.Location = new Point(15, 745);
             lblOrderDinner.Name = "lblOrderDinner";
             lblOrderDinner.Size = new Size(49, 20);
             lblOrderDinner.TabIndex = 8;
@@ -734,9 +734,9 @@
             // 
             // listViewOrderDinner
             // 
-            listViewOrderDinner.Location = new Point(15, 790);
+            listViewOrderDinner.Location = new Point(15, 768);
             listViewOrderDinner.Name = "listViewOrderDinner";
-            listViewOrderDinner.Size = new Size(344, 238);
+            listViewOrderDinner.Size = new Size(444, 201);
             listViewOrderDinner.TabIndex = 7;
             listViewOrderDinner.UseCompatibleStateImageBehavior = false;
             listViewOrderDinner.SelectedIndexChanged += listViewOrderDinner_SelectedIndexChanged;
@@ -744,7 +744,7 @@
             // pnlCreateOrderDrinks
             // 
             pnlCreateOrderDrinks.AutoScroll = true;
-            pnlCreateOrderDrinks.Controls.Add(button4);
+            pnlCreateOrderDrinks.Controls.Add(btnGoToOverviewDrinks);
             pnlCreateOrderDrinks.Controls.Add(btnRemoveDrinks);
             pnlCreateOrderDrinks.Controls.Add(btnAddDrinks);
             pnlCreateOrderDrinks.Controls.Add(listViewHotDrinks);
@@ -770,24 +770,24 @@
             pnlCreateOrderDrinks.Size = new Size(477, 1067);
             pnlCreateOrderDrinks.TabIndex = 20;
             // 
-            // button4
+            // btnGoToOverviewDrinks
             // 
-            button4.BackColor = Color.FromArgb(196, 196, 196);
-            button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.Location = new Point(362, 897);
-            button4.Margin = new Padding(0);
-            button4.Name = "button4";
-            button4.Size = new Size(106, 49);
-            button4.TabIndex = 25;
-            button4.Text = "ORDER OVERVIEW";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button4_Click;
+            btnGoToOverviewDrinks.BackColor = Color.FromArgb(196, 196, 196);
+            btnGoToOverviewDrinks.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnGoToOverviewDrinks.Location = new Point(15, 995);
+            btnGoToOverviewDrinks.Margin = new Padding(0);
+            btnGoToOverviewDrinks.Name = "btnGoToOverviewDrinks";
+            btnGoToOverviewDrinks.Size = new Size(106, 49);
+            btnGoToOverviewDrinks.TabIndex = 25;
+            btnGoToOverviewDrinks.Text = "ORDER OVERVIEW";
+            btnGoToOverviewDrinks.UseVisualStyleBackColor = false;
+            btnGoToOverviewDrinks.Click += btnGoToOverviewDrinks_Click;
             // 
             // btnRemoveDrinks
             // 
             btnRemoveDrinks.BackColor = Color.FromArgb(196, 196, 196);
             btnRemoveDrinks.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnRemoveDrinks.Location = new Point(362, 957);
+            btnRemoveDrinks.Location = new Point(186, 995);
             btnRemoveDrinks.Margin = new Padding(0);
             btnRemoveDrinks.Name = "btnRemoveDrinks";
             btnRemoveDrinks.Size = new Size(106, 49);
@@ -800,7 +800,7 @@
             // 
             btnAddDrinks.BackColor = Color.FromArgb(255, 179, 71);
             btnAddDrinks.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAddDrinks.Location = new Point(362, 1006);
+            btnAddDrinks.Location = new Point(353, 995);
             btnAddDrinks.Margin = new Padding(0);
             btnAddDrinks.Name = "btnAddDrinks";
             btnAddDrinks.Size = new Size(106, 49);
@@ -986,7 +986,7 @@
             // 
             listViewOrderDrinks.Location = new Point(15, 900);
             listViewOrderDrinks.Name = "listViewOrderDrinks";
-            listViewOrderDrinks.Size = new Size(344, 166);
+            listViewOrderDrinks.Size = new Size(444, 87);
             listViewOrderDrinks.TabIndex = 7;
             listViewOrderDrinks.UseCompatibleStateImageBehavior = false;
             listViewOrderDrinks.SelectedIndexChanged += listViewOrderDrinks_SelectedIndexChanged;
@@ -1092,6 +1092,6 @@
         private Button btnRemoveDrinks;
         private Button btnGoToOverviewLunch;
         private Button btnGoToOverviewDinner;
-        private Button button4;
+        private Button btnGoToOverviewDrinks;
     }
 }

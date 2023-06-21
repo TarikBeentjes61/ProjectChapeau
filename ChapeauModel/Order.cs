@@ -26,20 +26,12 @@ namespace ChapeauModel
         public void AddOrder(List<OrderItem> orderItems)
         {
             Order order = new Order();
-            foreach(OrderItem o in orderItems) 
+            foreach (OrderItem o in orderItems)
             {
-                o.orderId = order.id;
+                order.OrderItems.Add(o);
             }
+            this.orderItems = orderItems;
         }
-        //public void AddOrder(List<OrderItem> orderItems)
-        //{
-        //    Order order = new Order();
-        //    foreach (OrderItem o in orderItems) 
-        //    {
-        //        o.orderId = order.id;
-        //    }
-        //    this.orderItems = orderItems;
-        //}
         public void DeleteOrder(List<OrderItem> orderItems)
         {
             orderItems.Clear();

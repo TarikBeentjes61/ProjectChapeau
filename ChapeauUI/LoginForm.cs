@@ -43,28 +43,28 @@ namespace ChapeauUI
                             if (employee.role == Role.Manager)
                             {
                                 //Load manager form
-                                this.Close();
+                                this.Hide();
                                 StockForm stockForm = new StockForm();
                                 stockForm.Show();
                             }
                             else if (employee.role == Role.Barista)
                             {
                                 //Load barista form
-                                this.Close();
+                                this.Hide();
                                 CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
                                 currentOrdersForm.Show();
                             }
                             else if (employee.role == Role.Chef)
                             {
                                 //Load chef form
-                                this.Close();
+                                this.Hide();
                                 CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
                                 currentOrdersForm.Show();
                             }
                             else if (employee.role == Role.Waiter)
                             {
                                 //Load waiter form
-                                this.Close();
+                                this.Hide();
                                 TableForm tableform = new TableForm(employee);
                                 tableform.Show();
                             }
