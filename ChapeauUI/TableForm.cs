@@ -16,6 +16,7 @@ namespace ChapeauUI
     public partial class TableForm : Form
     {
         Employee employee;
+        Table table;
         public TableForm(Employee employee)
         {
             InitializeComponent();
@@ -158,9 +159,8 @@ namespace ChapeauUI
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            int tableId = int.Parse(clicked.Tag.ToString());
             this.Close();
-            CreateOrderForm createOrderForm = new CreateOrderForm(tableId, employee);
+            CreateOrderForm createOrderForm = new CreateOrderForm(table, employee);
             createOrderForm.Show();
         }
         //Clicking the picture will logout
