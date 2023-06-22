@@ -32,7 +32,7 @@ namespace ChapeauDAL
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@Order_Id", orderId ),
+                new SqlParameter("@Order_id", orderId ),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }

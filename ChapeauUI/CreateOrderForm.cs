@@ -463,10 +463,10 @@ namespace ChapeauUI
         //Add and show order
         private void AddAndShowOrder(System.Windows.Forms.ListView listView)
         {
+            OrderItem orderItem = new OrderItem();
             OrderService orderService = new OrderService();
             OrderItemService orderItemService = new OrderItemService();
             MenuItemService menuItemService = new MenuItemService();
-
             int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();

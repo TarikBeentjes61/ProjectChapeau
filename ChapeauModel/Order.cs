@@ -6,9 +6,9 @@ namespace ChapeauModel
     public class Order
     {
         private List<OrderItem> orderItems;
-        public int employeeId;
-        public int tableId;
-        public int billId;
+        //public int employeeId;
+        //public int tableId;
+        //public int billId;
         public Employee employee;
         public Table table;
         public Bill bill;
