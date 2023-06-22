@@ -10,18 +10,19 @@ namespace ChapeauUI
     public partial class CreateOrderForm : Form
     {
         Order order = new Order();
+        ChapeauModel.Menu menu = new ChapeauModel.Menu();
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
         Employee employee;
         Table table;
         int tableId;
 
-        public CreateOrderForm(Table table, Employee employee)
+        public CreateOrderForm(Table table/*int tableId*/, Employee employee)
         {
             InitializeComponent();
 
             this.employee = employee;
-            tableId = table.tableId;
+            this.tableId = table.tableId;
 
             //NAME EMPLOYEE
             EmployeeLabels(employee);
@@ -380,7 +381,7 @@ namespace ChapeauUI
         private void FillListviewMenuItems(System.Windows.Forms.ListView listView, ItemType itemType, int menuId/*MenuItem menu*/)
         {
             MenuItemService menuItemService = new MenuItemService();
-            List<MenuItem> menuItems = menuItemService.GetByItemType(itemType, menuId/*menu.menuId*/);
+            menu.MenuItems = menuItemService.GetByItemType(itemType, menuId/*menu.menuId*/);
 
             listView.Clear();
             listView.View = View.Details;
@@ -389,7 +390,7 @@ namespace ChapeauUI
             listView.Columns.Add("Name", 349);
             listView.Columns.Add("Price", 45);
 
-            foreach (MenuItem m in menuItems)
+            foreach (MenuItem m in menu.MenuItems)
             {
                 ListViewItem item = new ListViewItem(m.menuItemId.ToString());
 
@@ -402,8 +403,6 @@ namespace ChapeauUI
         //Method to fill listview with orders
         private void FillListviewOrder(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
-            orderItems = order.OrderItems;
-
             MenuItemService menuItemService = new MenuItemService();
 
             listView.Clear();
@@ -415,9 +414,9 @@ namespace ChapeauUI
 
             foreach (OrderItem o in orderItems)
             {
-                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
-                ListViewItem item = new ListViewItem(o.menuItemId.ToString());
+                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
 
                 item.SubItems.Add(menuItem.itemName);
                 item.SubItems.Add(o.amount.ToString());
@@ -479,17 +478,30 @@ namespace ChapeauUI
 
             foreach (OrderItem o in order.OrderItems)
             {
-                MenuItem menuItem = menuItemService.GetById(o.menuItemId);
+                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
-                o.comment = "";
-                o.status = OrderStatus.Preparation;
                 totalPrice += menuItem.price;
-                o.orderId = orderId;
-                orderItemService.AddOrderItems(orderId, o.menuItemId, o.amount, o.comment, o.status);
+                o.order.id = orderId;
+                orderItemService.AddOrderItems(orderId, o.menuItem.menuItemId, o.amount, o.comment, o.status);
+            }
 
-                ListViewItem item = new ListViewItem(o.amount.ToString());
+            order.OrderItems = orderItemService.GetByOrderId(orderId);//FIX THIS IN THE DAO
+
+            listViewOrderOverview.Clear();
+            listViewOrderOverview.View = View.Details;
+
+            listViewOrderOverview.Columns.Add("Id", 25);
+            listViewOrderOverview.Columns.Add("Name", 350);
+            listViewOrderOverview.Columns.Add("Amount", 65);
+
+            foreach (OrderItem o in order.OrderItems)
+            {
+                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
+
                 item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(menuItem.price.ToString());
+                item.SubItems.Add(o.amount.ToString());
                 listViewOrderOverview.Items.Add(item);
             }
 

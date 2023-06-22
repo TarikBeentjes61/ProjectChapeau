@@ -152,9 +152,9 @@ namespace ChapeauUI
             //Creates the list item and fills it with orderitem data
             ListViewItem li = new ListViewItem(item.orderItemId.ToString());
             li.Tag = item;
-            li.SubItems.Add(item.orderId.ToString());
+            li.SubItems.Add(item.order.id.ToString());
             li.SubItems.Add(item.amount.ToString());
-            li.SubItems.Add(GetMenuItem(item.menuItemId).itemName);
+            li.SubItems.Add(GetMenuItem(item.menuItem.menuItemId).itemName);
             li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
             return li;
 
@@ -180,7 +180,7 @@ namespace ChapeauUI
             selectedOrderIdLabel.Text = lastSelectedItem.orderItemId.ToString();
             selectedOrderStatusLabel.Text = lastSelectedItem.status.ToString();
             commentLabel.Text = lastSelectedItem.comment.ToString();
-            tableLabel.Text = GetOrderById(lastSelectedItem.orderId).tableId.ToString();
+            tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
         }
         private void DisplayServedButton()
         {

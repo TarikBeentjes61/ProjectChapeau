@@ -13,10 +13,9 @@ namespace ChapeauDAL
     {
         public List<OrderItem> GetAll()
         {
-            string query = "SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem]";
+            string query = "SELECT OI.id AS OI_id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status],MI.id AS MI_id, MI.Menu_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax,O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status] FROM OrderItem AS OIJOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id JOIN [Order] AS O ON OI.order_id = O.id ";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
         }
         public OrderItem GetById(int id)
         {
@@ -26,6 +25,16 @@ namespace ChapeauDAL
                 new SqlParameter("@id", id ),
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        public List<OrderItem> GetByOrderId(int orderId)
+        {
+            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@Order_Id", orderId ),
+             };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
 
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
@@ -87,15 +96,36 @@ namespace ChapeauDAL
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (DataRow row in dataTable.Rows)
             {
+                
+                MenuItem menuItem = new MenuItem()
+                {
+                    menuItemId = (int)row["MI_id"],
+                    menuId = (int)row["Menu_id"],
+                    stock = (int)row["stock"],
+                    price = Convert.ToDouble(row["priceExc"]),
+                    itemName = (string)row["itemName"],
+                    tax = Convert.ToDouble(row["tax"]),
+                    itemType = (ItemType)row["itemType"],
+                };
+                Order order = new Order()
+                {
+                    id = (int)row["O_id"],
+                    table = (Table)row["Table"],
+                    employee = (Employee)row["Employee"],
+                    bill = (Bill)row["Bill"],
+                    date = (DateTime)row["dateTime"],
+                    status = (OrderStatus)row["status"]
+                };
                 OrderItem orderItem = new OrderItem()
                 {
-                    orderItemId = (int)row["id"],
-                    orderId = (int)row["Order_id"],
-                    menuItemId = (int)row["MenuItem_id"],
+                    orderItemId = (int)row["OI_id"],
+                    order = order,
+                    menuItem = menuItem,
                     amount = (int)row["amount"],
                     comment = (string)row["comment"],
                     status = (OrderStatus)row["status"]
                 };
+
                 orderItems.Add(orderItem);
             }
             
@@ -107,8 +137,8 @@ namespace ChapeauDAL
             OrderItem orderItem = new OrderItem()
             {
                 orderItemId = (int)row["id"],
-                orderId = (int)row["Order_id"],
-                menuItemId = (int)row["MenuItem_id"],
+                order = (Order)row["Order_id"],
+                menuItem = (MenuItem)row["MenuItem_id"],
                 amount = (int)row["amount"],
                 comment = (string)row["comment"],
                 status = (OrderStatus)row["status"]

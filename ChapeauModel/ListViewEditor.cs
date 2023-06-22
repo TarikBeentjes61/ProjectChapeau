@@ -12,12 +12,14 @@ namespace ChapeauModel
         {
             bool exists = false;
             OrderItem orderItem = new OrderItem();
+            orderItem.menuItem = new MenuItem();
+            orderItem.order = new Order();
 
             int menuItemId = int.Parse(value);
 
             foreach (OrderItem o in orderItems)
             {
-                if (o.menuItemId == menuItemId)
+                if (o.menuItem.menuItemId == menuItemId)
                 {
                     exists = true;
                     o.amount++;
@@ -26,8 +28,8 @@ namespace ChapeauModel
 
             if (!exists)
             {
-                orderItem.menuItemId = menuItemId;
-                orderItem.orderId = 1;
+                orderItem.menuItem.menuItemId = menuItemId;
+                orderItem.order.id = 1;
                 orderItem.amount = 1;
                 orderItem.comment = "";
             }
@@ -41,7 +43,7 @@ namespace ChapeauModel
 
             foreach (OrderItem o in orderItems)
             {
-                if (o.menuItemId == menuItemId)
+                if (o.menuItem.menuItemId == menuItemId)
                 {
                     if(o.amount > 1)
                     {

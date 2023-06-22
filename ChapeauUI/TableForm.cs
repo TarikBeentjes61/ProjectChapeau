@@ -16,7 +16,7 @@ namespace ChapeauUI
     public partial class TableForm : Form
     {
         Employee employee;
-        Table table;
+        Table table = new Table();
         public TableForm(Employee employee)
         {
             InitializeComponent();
@@ -159,6 +159,7 @@ namespace ChapeauUI
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
+            table.tableId = int.Parse(clicked.Tag.ToString());
             this.Close();
             CreateOrderForm createOrderForm = new CreateOrderForm(table, employee);
             createOrderForm.Show();

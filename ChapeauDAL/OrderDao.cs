@@ -71,9 +71,9 @@ namespace ChapeauDAL
             {
                 Order order = new Order()
                 {
-                    tableId = (int)row["Table_id"],
-                    employeeId = (int)row["Employee_id"],
-                    billId = (int)row["Bill_id"],
+                    table = (Table)row["Table"],
+                    employee = (Employee)row["Employee"],
+                    bill = (Bill)row["Bill"],
                     date = (DateTime)row["dateTime"],
                     status = (OrderStatus)row["status"],
                     OrderItems = GetOrderItemsById((int)row["id"])
@@ -89,9 +89,9 @@ namespace ChapeauDAL
             {
                 Order order = new Order()
                 {
-                    tableId = (int)row["Table_id"],
-                    employeeId = (int)row["Employee_id"],
-                    billId = (int)row["Bill_id"],
+                    table = (Table)row["Table"],
+                    employee = (Employee)row["Employee"],
+                    bill = (Bill)row["Bill"],
                     date = (DateTime)row["dateTime"],
                     status = (OrderStatus)row["status"],
                     OrderItems = GetOrderItemsById((int)row["id"], role, showServed)
@@ -105,9 +105,9 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Order order = new Order()
             {
-                tableId = (int)row["Table_id"],
-                employeeId = (int)row["Employee_id"],
-                billId = (int)row["Bill_id"],
+                table = (Table)row["Table"],
+                employee = (Employee)row["Employee"],
+                bill = (Bill)row["Bill"],
                 date = (DateTime)row["dateTime"],
                 status = (OrderStatus)row["status"]
             };
@@ -118,9 +118,9 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             Order order = new Order()
             {
-                tableId = (int)row["Table_id"],
-                employeeId = (int)row["Employee_id"],
-                billId = (int)row["Bill_id"],
+                table = (Table)row["Table"],
+                employee = (Employee)row["Employee"],
+                bill = (Bill)row["Bill"],
                 date = (DateTime)row["dateTime"],
                 status = (OrderStatus)row["status"]
             };

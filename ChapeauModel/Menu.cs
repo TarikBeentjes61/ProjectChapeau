@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChapeauModel
 {
@@ -7,6 +8,8 @@ namespace ChapeauModel
         public int menuId;
         private List<MenuItem> menuItems;
         public string name;
+
+        public List<MenuItem> MenuItems{ get { return menuItems; } set { menuItems = value; } }
 
         public void SetMenu(List<MenuItem> menuItems)
         {

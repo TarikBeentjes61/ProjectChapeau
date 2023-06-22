@@ -20,6 +20,11 @@ namespace ChapeauService
         {
             return orderItemDao.GetById(id);
         }
+
+        public List<OrderItem> GetByOrderId(int orderId)
+        {
+            return orderItemDao.GetByOrderId(orderId);
+        }
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             orderItemDao.AddOrderItems(orderId, menuitemId, amount, comment, status);

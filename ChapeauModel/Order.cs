@@ -9,6 +9,9 @@ namespace ChapeauModel
         public int employeeId;
         public int tableId;
         public int billId;
+        public Employee employee;
+        public Table table;
+        public Bill bill;
         public int id;
         public DateTime date;
         public OrderStatus status;
@@ -17,7 +20,6 @@ namespace ChapeauModel
         {
             orderItems = new List<OrderItem>();
         }
-
 
         public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
         
@@ -31,10 +33,6 @@ namespace ChapeauModel
                 order.OrderItems.Add(o);
             }
             this.orderItems = orderItems;
-        }
-        public void DeleteOrder(List<OrderItem> orderItems)
-        {
-            orderItems.Clear();
         }
 
         public void StartPreparing()

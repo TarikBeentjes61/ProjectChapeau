@@ -83,7 +83,7 @@ namespace ChapeauUI
             {
                 ListViewItem item = new ListViewItem(order.amount.ToString());
 
-                MenuItem menuItem = menuItemService.GetById(order.menuItemId);
+                MenuItem menuItem = menuItemService.GetById(order.menuItem.menuItemId);
                 calVat = bill.CalculateVAT(menuItem.tax, menuItem.price);
                 calPrice = bill.CalculateTotalPrice(calVat, order.amount, menuItem.price);
                 calTotalVat = bill.CalculateTotalVAT(calPrice, menuItem.tax);
@@ -277,8 +277,8 @@ namespace ChapeauUI
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
         {
             Hide();
-            CreateOrderForm orderForm = new CreateOrderForm(table, employee);
-            orderForm.Show();
+            //CreateOrderForm orderForm = new CreateOrderForm(table, employee);
+            //orderForm.Show();
 
         }
 

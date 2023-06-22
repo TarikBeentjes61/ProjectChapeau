@@ -9,11 +9,11 @@ namespace ChapeauModel
     public class OrderItem
     {
         public int orderItemId;
-        public int menuItemId;
-        public int orderId;
+        public MenuItem menuItem;
+        public Order order;
         public int amount;
-        public string comment;
-        public OrderStatus status;
+        public string comment = "";
+        public OrderStatus status = OrderStatus.Preparation;
 
         public void AddComment()
         {

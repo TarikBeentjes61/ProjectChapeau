@@ -3,6 +3,7 @@
     public class MenuItem
     {
         public int menuItemId;
+        //public Menu menu;
         public int menuId;
         public string itemName;
         public int stock;
