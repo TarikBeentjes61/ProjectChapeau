@@ -29,7 +29,7 @@ namespace ChapeauDAL
 
         public List<OrderItem> GetByOrderId(int orderId)
         {
-            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";
+            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @Order_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Order_id", orderId ),
