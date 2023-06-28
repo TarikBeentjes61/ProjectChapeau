@@ -16,11 +16,14 @@ namespace ChapeauService
         {
             return orderItemDao.GetAll();
         }
+        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        {
+            return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
+        }
         public OrderItem GetById(int id)
         {
             return orderItemDao.GetById(id);
         }
-
         public List<OrderItem> GetByOrderId(int orderId)
         {
             return orderItemDao.GetByOrderId(orderId);

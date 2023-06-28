@@ -11,18 +11,7 @@ namespace ChapeauDAL
         public List<Table> GetAll()
         {
             string query = "SELECT id, status FROM [Table]";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
-        }
-        public Table GetById(int id)
-        {
-            string query = $"SELECT id, status FROM [Table] WHERE id = @id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", id )
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public void UpdateById(int id, int status)
         {
@@ -39,24 +28,18 @@ namespace ChapeauDAL
             List<Table> tables = new List<Table>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Table table = new Table()
-                {
-                    tableId = (int)row["id"],
-                    status = (TableStatus)row["status"]
-                };
+                Table table = CreateTableFromRow(row);
                 tables.Add(table);
             }
             return tables;
         }
-        private Table ReadSingle(DataTable dataTable)
+        private Table CreateTableFromRow(DataRow row)
         {
-            DataRow row = dataTable.Rows[0];
-            Table table = new Table()
+            return new Table()
             {
                 tableId = (int)row["id"],
                 status = (TableStatus)row["status"]
             };
-            return table;
         }
     }
 }

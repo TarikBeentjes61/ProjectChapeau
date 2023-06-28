@@ -10,14 +10,19 @@ namespace ChapeauDAL
     {
         public List<Reservation> GetAll()
         {
-            string query = "SELECT id, Table_id, dateTime FROM [Reservation]";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
+            string query = "SELECT R.id AS R_id, R.[dateTime], R.[name], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Reservation AS R " +
+                "JOIN [Table] AS T ON R.Table_id = T.id";
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public Reservation GetById(int id)
         {
-            string query = $"SELECT @id, Table_id, dateTime FROM [Reservation] WHERE id = @id";
+            string query = "SELECT R.id AS R_id, R.[dateTime], R.[name], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Reservation AS R " +
+                "JOIN [Table] AS T ON R.Table_id = T.id " +
+                "WHERE R.id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
@@ -29,25 +34,29 @@ namespace ChapeauDAL
             List<Reservation> reservations = new List<Reservation>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Reservation reservation = new Reservation()
-                {
-                    tableId = (int)row["Table_id"],
-                    name = (string)row["name"],
-                    date = (DateTime)row["dateTime"],
-                };
+                Reservation reservation = CreateReservationFromRow(row);
+                reservations.Add(reservation);
             }
             return reservations;
         }
         private Reservation ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            Reservation reservation = new Reservation()
+            return CreateReservationFromRow(row);
+        }
+        private Reservation CreateReservationFromRow(DataRow row)
+        {
+            Table table = new Table()
             {
-                tableId = (int)row["Table_id"],
+                tableId = (int)row["T_id"],
+                status = (TableStatus)row["status"]
+            };
+            return new Reservation()
+            {
+                table = table,
                 name = (string)row["name"],
                 date = (DateTime)row["dateTime"],
             };
-            return reservation;
         }
     }
 }

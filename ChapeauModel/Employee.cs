@@ -13,20 +13,6 @@ namespace ChapeauModel
         public string salt;
         public Role role;
 
-        public void AddEmployee(string name, string password)
-        {
-
-        }
-
-        public void EditEmployee() 
-        {
-
-        }
-
-        public void DeleteEmployee()
-        {
-
-        }
         public bool CheckUserID(string input)
         {
             List<char> charList = new List<char>();

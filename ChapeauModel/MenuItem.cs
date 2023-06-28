@@ -3,27 +3,12 @@
     public class MenuItem
     {
         public int menuItemId;
-        //public Menu menu;
-        public int menuId;
+        public Menu menu;
         public string itemName;
         public int stock;
         public double price;
         public double tax;
         public ItemType itemType;
 
-        public void AddMenuItem()
-        {
-            
-        }
-
-        public void EditMenuItem()
-        {
-
-        }
-
-        public void RemoveMenuItem()
-        {
-
-        }
     }
 }
