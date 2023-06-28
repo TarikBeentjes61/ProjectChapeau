@@ -11,11 +11,11 @@ namespace ChapeauDAL
 {
     public class OrderItemDao : BaseDao
     {
-        public List<OrderItem> GetAll()
-        {
-            string query = "SELECT OI.id AS OI_id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status],MI.id AS MI_id, MI.Menu_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax,O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status],M.id AS M_id, M.[name],T.id AS T_id, T.[status],E.id AS E_id, E.[name], E.[hash], E.salt, E.[role] FROM OrderItem AS OI JOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id JOIN [Order] AS O ON OI.order_id = O.id OIN [Menu] AS M ON MI.Menu_id = M.id vJOIN [Table] AS T ON O.Table_id = T.id JOIN [Employee] AS E ON O.Employee_id = E.id ";
-            return ReadTables(ExecuteSelectQuery(query));
-        }
+        //public List<OrderItem> GetAll()
+        //{
+        //    string query = "SELECT OI.id AS OI_id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status],MI.id AS MI_id, MI.Menu_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax,O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status],M.id AS M_id, M.[name],T.id AS T_id, T.[status],E.id AS E_id, E.[name], E.[hash], E.salt, E.[role] FROM OrderItem AS OI JOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id JOIN [Order] AS O ON OI.order_id = O.id OIN [Menu] AS M ON MI.Menu_id = M.id vJOIN [Table] AS T ON O.Table_id = T.id JOIN [Employee] AS E ON O.Employee_id = E.id ";
+        //    return ReadTables(ExecuteSelectQuery(query));
+        //}
         public OrderItem GetById(int id)
         {
             string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE id = @id";
