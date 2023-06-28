@@ -14,7 +14,6 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private bool showServed = true;
         //Create some colours from RGB values for later use
         private readonly Color ServedColour = Color.FromArgb(128, 210, 176);
         private readonly Color BaristaColour = Color.FromArgb(253, 154, 39);
@@ -90,13 +89,6 @@ namespace ChapeauUI
                 listViewOrders.Items.RemoveAt(lastSelectedIndex);
                 lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
 
-                //Check if the refrshed item belongs in the order list. 
-                if (showServed && lastSelectedItem.status == OrderStatus.Served)
-                {
-                    lastSelectedItem = null;
-                    return;
-                }
-
                 listViewOrders.Items.Add(CreateListViewItem(lastSelectedItem));
                 listViewOrders.Sort();
             }
@@ -171,20 +163,6 @@ namespace ChapeauUI
             commentLabel.Text = lastSelectedItem.comment.ToString();
             //tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
         }
-        private void DisplayServedButton()
-        {
-            //Changes the colour and text of the show served button depending on the state 
-            if (showServed)
-            {
-                showServedButton.BackColor = ServedColour;
-                showServedButton.Text = "Show Served Orders";
-            }
-            else
-            {
-                showServedButton.BackColor = Color.Red;
-                showServedButton.Text = "Hide Served Orders";
-            }
-        }
         private void UpdateSelectedItem(OrderStatus status)
         {
             //Gets called whenever a button click happens, updates the data and refreshes it.
@@ -232,9 +210,7 @@ namespace ChapeauUI
         }
         private void showServedButton_Click(object sender, EventArgs e)
         {
-            showServed = !showServed;
-            DisplayServedButton();
-            RefreshData();
+
         }
         private void logoutButton_Click(object sender, EventArgs e)
         {
@@ -242,6 +218,11 @@ namespace ChapeauUI
             LoginForm loginForm = new LoginForm();
             this.Close();
             loginForm.Show();
+        }
+
+        private void hideServedButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
