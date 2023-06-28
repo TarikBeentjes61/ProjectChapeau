@@ -11,17 +11,9 @@ namespace ChapeauService
         {
             menuItemDao = new MenuItemDao();
         }
-        public List<MenuItem> GetAll()
-        {
-            return menuItemDao.GetAll();
-        }
         public MenuItem GetById(int id) 
         { 
             return menuItemDao.GetById(id); 
-        }
-        public List<MenuItem> GetByMenuId(int menuId)
-        {
-            return menuItemDao.GetAllByMenuId(menuId);
         }
         public List<MenuItem> GetByItemType(ItemType itemType, int menuId)
         {

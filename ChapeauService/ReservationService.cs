@@ -20,13 +20,5 @@ namespace ChapeauService
         {
             return reservationDao.GetById(id);
         }
-        public void AddReservation()
-        {
-
-        }
-        public void RemoveReservation()
-        {
-
-        }
     }
 }

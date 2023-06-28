@@ -10,17 +10,9 @@ namespace ChapeauModel
     {
         public int orderItemId;
         public MenuItem menuItem;
-        public Order order = new Order();
-        //!!!!!!CHANGE THIS^^^^^^^^^^^^^^
-
+        public Order order;
         public int amount;
-        public string comment = "";
-        public OrderStatus status = OrderStatus.Preparation;
-
-        public void AddComment()
-        {
-
-        }
-
+        public string comment;
+        public OrderStatus status;
     }
 }

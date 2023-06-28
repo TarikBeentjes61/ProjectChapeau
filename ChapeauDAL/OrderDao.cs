@@ -11,19 +11,29 @@ namespace ChapeauDAL
     {
         public List<Order> GetAll()
         {
-            string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order]";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        public List<Order> GetAll(Role role, bool showServed)
-        {
-            string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] ORDER BY id DESC";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters), role, showServed);
+            string query = 
+                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
+                "T.id AS T_id, T.[status], " +
+                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
+                "FROM [Order] AS O " +
+                "JOIN [Table] AS T ON O.Table_id = T.id " +
+                "JOIN Employee AS E ON O.Employee_id = E.id " +
+                "JOIN Bill AS B ON O.Bill_id = B.id";
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public List<Order> GetAllByState(OrderStatus status)
         {
-            string query = "SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] WHERE status = @status";
+            string query = 
+                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
+                "T.id AS T_id, T.[status], " +
+                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
+                "FROM [Order] AS O " +
+                "JOIN [Table] AS T ON O.Table_id = T.id " +
+                "JOIN Employee AS E ON O.Employee_id = E.id " +
+                "JOIN Bill AS B ON O.Bill_id = B.id " +
+                "WHERE O.[status] = @status";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@status", (int)status),
@@ -32,7 +42,15 @@ namespace ChapeauDAL
         }
         public Order GetById(int id)
         {
-            string query = $"SELECT id, Table_id, Employee_id, Bill_id, dateTime, status FROM [Order] WHERE id = @id";
+            string query = "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
+                "T.id AS T_id, T.[status], " +
+                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
+                "FROM [Order] AS O " +
+                "JOIN [Table] AS T ON O.Table_id = T.id " +
+                "JOIN Employee AS E ON O.Employee_id = E.id " +
+                "JOIN Bill AS B ON O.Bill_id = B.id " +
+                "WHERE O.id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
@@ -54,48 +72,12 @@ namespace ChapeauDAL
             };
             return ExecuteInsertQuery(query, sqlParameters);
         }
-        private List<OrderItem> GetOrderItemsById(int orderId)
-        {
-            OrderItemDao orderItemDao = new OrderItemDao();
-            return orderItemDao.GetOrderItemsById(orderId);
-        }
-        private List<OrderItem> GetOrderItemsById(int orderId, Role role, bool showServed)
-        {
-            OrderItemDao orderItemDao = new OrderItemDao();
-            return orderItemDao.GetOrderItemsById(orderId, role, showServed);
-        }
         private List<Order> ReadTables(DataTable dataTable)
         {
             List<Order> orders = new List<Order>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Order order = new Order()
-                {
-                    table = (Table)row["Table"],
-                    employee = (Employee)row["Employee"],
-                    bill = (Bill)row["Bill"],
-                    date = (DateTime)row["dateTime"],
-                    status = (OrderStatus)row["status"],
-                    OrderItems = GetOrderItemsById((int)row["id"])
-                };
-                orders.Add(order);
-            }
-            return orders;
-        }
-        private List<Order> ReadTables(DataTable dataTable, Role role, bool showServed)
-        {
-            List<Order> orders= new List<Order>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                Order order = new Order()
-                {
-                    table = (Table)row["Table"],
-                    employee = (Employee)row["Employee"],
-                    bill = (Bill)row["Bill"],
-                    date = (DateTime)row["dateTime"],
-                    status = (OrderStatus)row["status"],
-                    OrderItems = GetOrderItemsById((int)row["id"], role, showServed)
-                };
+                Order order = CreateOrderFromRow(row);
                 orders.Add(order);
             }
             return orders;
@@ -103,28 +85,31 @@ namespace ChapeauDAL
         private Order ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            Order order = new Order()
-            {
-                table = (Table)row["Table"],
-                employee = (Employee)row["Employee"],
-                bill = (Bill)row["Bill"],
-                date = (DateTime)row["dateTime"],
-                status = (OrderStatus)row["status"]
-            };
-            return order;
+            return CreateOrderFromRow(row);
         }
-        private Order AddSingle(DataTable dataTable)
+        private static Order CreateOrderFromRow(DataRow row)
         {
-            DataRow row = dataTable.Rows[0];
-            Order order = new Order()
+            Table table = new Table()
             {
-                table = (Table)row["Table"],
-                employee = (Employee)row["Employee"],
-                bill = (Bill)row["Bill"],
+                tableId = (int)row["T_id"],
+                status = (TableStatus)row["status"]
+            };
+            Employee employee = new Employee()
+            {
+                employeeId = (int)row["E_id"],
+                name = (string)row["name"],
+                hash = (string)row["hash"],
+                salt = (string)row["salt"],
+                role = (Role)row["role"]
+            };
+            return new Order()
+            {
+                id = (int)row["O_id"],
+                table = table,
+                employee = employee,
                 date = (DateTime)row["dateTime"],
                 status = (OrderStatus)row["status"]
             };
-            return order;
         }
     }
 }

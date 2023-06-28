@@ -10,9 +10,7 @@ namespace ChapeauDAL
         public List<Menu> GetAll()
         {
             string query = "SELECT id, name FROM Menu";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public Menu GetById(int id)
         {
@@ -28,11 +26,7 @@ namespace ChapeauDAL
             List<Menu> menus = new List<Menu>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Menu menu = new Menu()
-                {
-                    menuId = (int)row["id"],
-                    name = (string)row["name"],
-                };
+                Menu menu = CreateMenuFromRow(row);
                 menu.SetMenu(GetMenuItems(menu.menuId));
                 menus.Add(menu);
             }
@@ -41,11 +35,7 @@ namespace ChapeauDAL
         private Menu ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            Menu menu = new Menu()
-            {
-                menuId = (int)row["id"],
-                name = (string)row["name"],
-            };
+            Menu menu = CreateMenuFromRow(row);
             menu.SetMenu(GetMenuItems(menu.menuId));
             return menu;
         }
@@ -54,5 +44,14 @@ namespace ChapeauDAL
             MenuItemDao menuItemDao = new MenuItemDao();
             return menuItemDao.GetAllByMenuId(menuId);
         }
+        private Menu CreateMenuFromRow(DataRow row)
+        {
+            return new Menu()
+            {
+                menuId = (int)row["id"],
+                name = (string)row["name"],
+            };
+        }
+
     }
 }

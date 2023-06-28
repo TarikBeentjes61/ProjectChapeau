@@ -6,9 +6,6 @@ namespace ChapeauModel
     public class Order
     {
         private List<OrderItem> orderItems;
-        //public int employeeId;
-        //public int tableId;
-        //public int billId;
         public Employee employee;
         public Table table;
         public Bill bill;
@@ -20,29 +17,16 @@ namespace ChapeauModel
         {
             orderItems = new List<OrderItem>();
         }
-
-        public List<OrderItem> OrderItems { get { return orderItems; } set { orderItems = value; } }
         
         public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
 
-        public void AddOrder(List<OrderItem> orderItems)
+        public void SetOrderItems(List<OrderItem> orderItems)
         {
-            Order order = new Order();
-            foreach (OrderItem o in orderItems)
-            {
-                order.OrderItems.Add(o);
-            }
             this.orderItems = orderItems;
         }
-
-        public void StartPreparing()
+        public List<OrderItem> GetOrderItems()
         {
-
-        }
-
-        public void MarkAsReady()
-        {
-
+            return orderItems;
         }
     }
 }

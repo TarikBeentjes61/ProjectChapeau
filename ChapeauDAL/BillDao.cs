@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Collections;
 
 namespace ChapeauDAL
 {
@@ -11,7 +10,7 @@ namespace ChapeauDAL
     {
         public List<Bill> GetAll()
         {
-            string query =
+            string query = 
                 "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
@@ -19,18 +18,18 @@ namespace ChapeauDAL
                 "JOIN Employee AS E ON B.Employee_id = E.id " +
                 "JOIN [Table] AS T ON B.Table_id = T.id";
             return ReadTables(ExecuteSelectQuery(query));
-
         }
         public Bill GetById(int id)
         {
-            string query =
-                            $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
-                            "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
-                            "T.id AS T_id, T.[status] " +
-                            "FROM Bill AS B " +
-                            "JOIN Employee AS E ON B.Employee_id = E.id " +
-                            "JOIN [Table] AS T ON B.Table_id = T.id " +
-                            "WHERE B.id = @id"; SqlParameter[] sqlParameters = new SqlParameter[]
+            string query = 
+                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
+                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Bill AS B " +
+                "JOIN Employee AS E ON B.Employee_id = E.id " +
+                "JOIN [Table] AS T ON B.Table_id = T.id " +
+                "WHERE B.id = @id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
              };
@@ -56,15 +55,7 @@ namespace ChapeauDAL
             List<Bill> bills = new List<Bill>();
             foreach (DataRow row in dataTable.Rows)
             {
-                Bill bill = new Bill()
-                {
-                    tableId = (int)row["id"],
-                    employeeId = (int)row["Employee_id"],
-                    comment = (string)row["comment"],
-                    paymentMethod = (PaymentMethod)row["paymentMethod"],
-                    tip = (int)row["tip"],
-                    payed = (bool)row["payed"]
-                };
+                Bill bill = CreateBillFromRow(row);
                 bills.Add(bill);
             }
             return bills;
@@ -72,16 +63,33 @@ namespace ChapeauDAL
         private Bill ReadSingle(DataTable dataTable)
         {
             DataRow row = dataTable.Rows[0];
-            Bill bill = new Bill()
+            Bill bill = CreateBillFromRow(row);
+            return bill;
+        }
+
+        private Bill CreateBillFromRow(DataRow row)
+        {
+            Table table = new Table()
             {
-                tableId = (int)row["id"],
-                employeeId = (int)row["Employee_id"],
+                tableId = (int)row["T_id"],
+                status = (TableStatus)row["status"]
+            };
+            Employee employee_ = new Employee()
+            {
+                employeeId = (int)row["E_id"],
+                name = (string)row["name"],
+                hash = (string)row["hash"],
+                salt = (string)row["salt"],
+                role = (Role)row["role"]
+            };
+            return new Bill()
+            {
+                table = table,
+                employee = employee_,
                 comment = (string)row["comment"],
                 paymentMethod = (PaymentMethod)row["paymentMethod"],
                 tip = (int)row["tip"],
-                payed = (bool)row["payed"]
             };
-            return bill;
         }
     }
 }

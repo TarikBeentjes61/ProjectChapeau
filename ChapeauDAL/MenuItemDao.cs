@@ -8,15 +8,14 @@ namespace ChapeauDAL
 {
     public class MenuItemDao : BaseDao
     {
-        public List<MenuItem> GetAll()
-        {
-            string query = "SELECT id, Menu_id, stock, priceExc, itemName, tax, itemType FROM MenuItem";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
         public MenuItem GetById(int id)
         {
-            string query = $"SELECT id, Menu_id, stock, priceExc, itemName, tax, itemType FROM MenuItem WHERE id = @id";
+            string query = 
+                "SELECT MI.id AS MI_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax, " +
+                "M.id AS M_id, M.[name] " +
+                "FROM MenuItem AS MI " +
+                "JOIN Menu AS M ON MI.Menu_id = M.id " +
+                "WHERE MI_id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", id ),
@@ -34,7 +33,11 @@ namespace ChapeauDAL
         }
         public List<MenuItem> GetByItemType(ItemType itemType, int menuId)
         {
-            string query = $"SELECT id, Menu_id, stock, priceExc, itemName, tax, itemType FROM MenuItem WHERE itemType = @itemType AND Menu_id = @menuId";
+            string query = "SELECT MI.id AS MI_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax, " +
+                "M.id AS M_id, M.[name] " +
+                "FROM MenuItem AS MI " +
+                "JOIN Menu AS M ON MI.Menu_id = M.id " +
+                "WHERE MI_itemType = @itemType AND M_id = @menuId";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@itemType", Convert.ToInt32(itemType)),
@@ -47,17 +50,7 @@ namespace ChapeauDAL
             List<MenuItem> menuItems = new List<MenuItem>();
             foreach (DataRow row in dataTable.Rows)
             {
-                MenuItem menuItem = new MenuItem()
-                {
-                    menuItemId = (int)row["id"],
-                    menuId = (int)row["Menu_id"],
-                    stock = (int)row["stock"],
-                    price = Convert.ToDouble(row["priceExc"]),
-                    itemName = (string)row["itemName"],
-                    tax = Convert.ToDouble(row["tax"]),
-                    itemType = (ItemType)row["itemType"],
-                };
-
+                MenuItem menuItem = CreateMenuItemFromRow(row);
                 menuItems.Add(menuItem);
             }
             return menuItems;
@@ -67,19 +60,27 @@ namespace ChapeauDAL
             DataRow row = dataTable.Rows[0];
             if (dataTable.Rows.Count > 0)
             {
-                MenuItem menuItem = new MenuItem()
-                {
-                    menuItemId = (int)row["id"],
-                    menuId = (int)row["Menu_id"],
-                    stock = (int)row["stock"],
-                    price = Convert.ToDouble(row["priceExc"]),
-                    itemName = (string)row["itemName"],
-                    tax = Convert.ToDouble(row["tax"]),
-                    itemType = (ItemType)row["itemType"],
-                };
-                return menuItem;
+                return CreateMenuItemFromRow(row);
             };
             return null;
+        }
+        private MenuItem CreateMenuItemFromRow(DataRow row)
+        {
+            Menu menu_ = new Menu()
+            {
+                menuId = (int)row["M_id"],
+                name = (string)row["name"]
+            };
+            return new MenuItem()
+            {
+                menuItemId = (int)row["id"],
+                menu = menu_,
+                stock = (int)row["stock"],
+                price = Convert.ToDouble(row["priceExc"]),
+                itemName = (string)row["itemName"],
+                tax = Convert.ToDouble(row["tax"]),
+                itemType = (ItemType)row["itemType"],
+            };
         }
     }
 }

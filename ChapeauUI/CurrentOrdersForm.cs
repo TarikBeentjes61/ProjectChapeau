@@ -14,7 +14,6 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private Employee loggedInEmployee;
         private bool showServed = true;
         //Create some colours from RGB values for later use
         private readonly Color ServedColour = Color.FromArgb(128, 210, 176);
@@ -26,10 +25,9 @@ namespace ChapeauUI
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
-            loggedInEmployee = employee;
-            ChangeHeaderLabel();
-            DisplayLogoutButton();
-            ChangePanelColours();
+            ChangeHeaderLabel(employee);
+            DisplayLogoutButton(employee);
+            ChangePanelColours(employee);
             CreateTimer(60); //Takes in seconds which are converted to milliseconds
             RefreshData();
         }
@@ -41,22 +39,22 @@ namespace ChapeauUI
             timer.Tick += new EventHandler(Timer_Tick); //Takes in the event that needs to be called when time expires
             timer.Start();
         }
-        private void ChangeHeaderLabel()
+        private void ChangeHeaderLabel(Employee employee)
         {
             //Main header name changes depending on the role from the logged in user
-            if (loggedInEmployee.role == Role.Barista)
+            if (employee.role == Role.Barista)
                 mainLabel.Text = "Bar Orders";
             else
                 mainLabel.Text = "Kitchen Orders";
         }
-        private void DisplayLogoutButton()
+        private void DisplayLogoutButton(Employee employee)
         {
-            logoutButton.Text = loggedInEmployee.name;
+            logoutButton.Text = employee.name;
         }
-        private void ChangePanelColours()
+        private void ChangePanelColours(Employee employee)
         {
             Color panelColour;
-            if (loggedInEmployee.role == Role.Chef)
+            if (employee.role == Role.Chef)
                 panelColour = ChefColour;
             else
                 panelColour = BaristaColour;
@@ -72,7 +70,7 @@ namespace ChapeauUI
             try
             {
                 //Refreshed all the loaded data from list and the selected item
-                DisplayOrders(GetAllOrders());
+                DisplayOrders(GetAllOrderItems());
                 if (lastSelectedItem != null)
                 {
                     lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
@@ -117,34 +115,26 @@ namespace ChapeauUI
             OrderService orderService = new OrderService();
             return orderService.GetById(id);
         }
-        private List<Order> GetAllOrders()
+        private List<OrderItem> GetAllOrderItems()
         {
             //Gets all the orders depending on the current role.
             //Chef only gets items that are from menu 1 or 2
             //Barista only gets items that are from menu 3
-            OrderService orderService = new OrderService();
-            return orderService.GetAll(loggedInEmployee.role, showServed);
+            OrderItemService orderItemService = new OrderItemService();
+            return orderItemService.GetOrderItemsByIdAndRole(1, Role.Barista);
         }
         private OrderItem GetOrderItemById(int id)
         {
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
         }
-        private MenuItem GetMenuItem(int id)
-        {
-            MenuItemService menuItemService = new MenuItemService();
-            return menuItemService.GetById(id);
-        }
-        private void DisplayOrders(List<Order> orders)
+        private void DisplayOrders(List<OrderItem> orderItems)
         {
             //Loads the orders for the given list
             listViewOrders.Items.Clear();
-            foreach (Order order in orders)
+            foreach (OrderItem item in orderItems) //Loop through all of the items from the order
             {
-                foreach (OrderItem item in order.OrderItems) //Loop through all of the items from the order
-                {
-                    listViewOrders.Items.Add(CreateListViewItem(item));
-                }
+                listViewOrders.Items.Add(CreateListViewItem(item));
             }
         }
         private ListViewItem CreateListViewItem(OrderItem item)
@@ -154,10 +144,9 @@ namespace ChapeauUI
             li.Tag = item;
             li.SubItems.Add(item.order.id.ToString());
             li.SubItems.Add(item.amount.ToString());
-            li.SubItems.Add(GetMenuItem(item.menuItem.menuItemId).itemName);
+            li.SubItems.Add(item.menuItem.itemName);
             li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
             return li;
-
         }
         private Color GetColourByState(OrderStatus status)
         {
@@ -180,7 +169,7 @@ namespace ChapeauUI
             selectedOrderIdLabel.Text = lastSelectedItem.orderItemId.ToString();
             selectedOrderStatusLabel.Text = lastSelectedItem.status.ToString();
             commentLabel.Text = lastSelectedItem.comment.ToString();
-            tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
+            //tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
         }
         private void DisplayServedButton()
         {

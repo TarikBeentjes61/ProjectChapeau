@@ -16,10 +16,6 @@ namespace ChapeauService
         {
             return tableDao.GetAll();
         }
-        public Table GetById(int id)
-        {
-            return tableDao.GetById(id);
-        }
         public void UpdateById(int id, int status)
         {
             tableDao.UpdateById(id, status);
