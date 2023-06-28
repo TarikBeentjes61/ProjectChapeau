@@ -17,11 +17,13 @@ namespace ChapeauUI
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
+            logoutButton.Tag = employee;
             servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
             CreateTimer(60); //Takes in seconds which are converted to milliseconds
             RefreshData(employee);
+            //this.Show();
         }
         private void CreateTimer(int seconds)
         {
@@ -49,7 +51,7 @@ namespace ChapeauUI
         }
         private OrderItem GetSelectedOrderItem()
         {
-            if(listViewOrders.SelectedItems.Count > 0)
+            if (listViewOrders.SelectedItems.Count > 0)
                 return (OrderItem)listViewOrders.SelectedItems[0].Tag;
             return new OrderItem();
         }
@@ -67,7 +69,6 @@ namespace ChapeauUI
                 OrderItem item = GetSelectedOrderItem();
                 listViewOrders.Items.RemoveAt(GetSelectedOrderItemIndex());
                 listViewOrders.Items.Add(CreateListViewItem(item));
-                listViewOrders.Sort();
             }
             catch (Exception e)
             {
@@ -82,8 +83,6 @@ namespace ChapeauUI
         private List<OrderItem> GetAllOrderItems(Employee employee)
         {
             //Gets all the orders depending on the current role.
-            //Chef only gets items that are from menu 1 or 2
-            //Barista only gets items that are from menu 3
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetOrderItemsByRole(employee.role);
         }
@@ -91,7 +90,6 @@ namespace ChapeauUI
         {
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
-
         }
         private void DisplayOrders(List<OrderItem> orderItems)
         {
@@ -105,9 +103,9 @@ namespace ChapeauUI
         private ListViewItem CreateListViewItem(OrderItem item)
         {
             //Creates the list item and fills it with orderitem data
-            ListViewItem li = new ListViewItem(item.orderItemId.ToString());
+            ListViewItem li = new ListViewItem(item.order.WaitingTime.ToString("hh\\:mm"));
             li.Tag = item;
-            li.SubItems.Add(item.order.id.ToString());
+            li.SubItems.Add(item.orderItemId.ToString());
             li.SubItems.Add(item.amount.ToString());
             li.SubItems.Add(item.menuItem.itemName);
             li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
@@ -159,7 +157,8 @@ namespace ChapeauUI
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            //RefreshData(logoutButton.Tag);
+            Employee employee = (Employee)logoutButton.Tag;
+            RefreshData(employee);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)

@@ -154,7 +154,6 @@
             listViewOrders.Margin = new Padding(3, 2, 3, 2);
             listViewOrders.Name = "listViewOrders";
             listViewOrders.Size = new Size(686, 375);
-            listViewOrders.Sorting = SortOrder.Ascending;
             listViewOrders.TabIndex = 3;
             listViewOrders.TileSize = new Size(40, 40);
             listViewOrders.UseCompatibleStateImageBehavior = false;
@@ -694,9 +693,9 @@
             servedOrdersPanel.Controls.Add(panel3);
             servedOrdersPanel.Controls.Add(panel2);
             servedOrdersPanel.Controls.Add(listView1);
-            servedOrdersPanel.Location = new Point(275, 133);
+            servedOrdersPanel.Location = new Point(277, 140);
             servedOrdersPanel.Name = "servedOrdersPanel";
-            servedOrdersPanel.Size = new Size(687, 451);
+            servedOrdersPanel.Size = new Size(741, 451);
             servedOrdersPanel.TabIndex = 13;
             servedOrdersPanel.Visible = false;
             // 
@@ -715,7 +714,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(1201, 574);
+            ClientSize = new Size(1201, 1067);
             Controls.Add(pictureBox1);
             Controls.Add(showServedButton);
             Controls.Add(descriptionPanel);
