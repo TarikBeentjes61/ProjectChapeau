@@ -10,7 +10,8 @@ namespace ChapeauDAL
     {
         public List<Bill> GetAll()
         {
-            string query = "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed" +
+            string query = 
+                "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
                 "FROM Bill AS B " +
@@ -20,7 +21,8 @@ namespace ChapeauDAL
         }
         public Bill GetById(int id)
         {
-            string query = $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed" +
+            string query = 
+                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
                 "FROM Bill AS B " +

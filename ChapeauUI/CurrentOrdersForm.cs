@@ -121,17 +121,12 @@ namespace ChapeauUI
             //Chef only gets items that are from menu 1 or 2
             //Barista only gets items that are from menu 3
             OrderItemService orderItemService = new OrderItemService();
-            return orderItemService.GetAll();
+            return orderItemService.GetOrderItemsByIdAndRole(1, Role.Barista);
         }
         private OrderItem GetOrderItemById(int id)
         {
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
-        }
-        private MenuItem GetMenuItem(int id)
-        {
-            MenuItemService menuItemService = new MenuItemService();
-            return menuItemService.GetById(id);
         }
         private void DisplayOrders(List<OrderItem> orderItems)
         {
@@ -149,7 +144,7 @@ namespace ChapeauUI
             li.Tag = item;
             li.SubItems.Add(item.order.id.ToString());
             li.SubItems.Add(item.amount.ToString());
-            li.SubItems.Add(GetMenuItem(item.menuItem.menuItemId).itemName);
+            li.SubItems.Add(item.menuItem.itemName);
             li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
             return li;
         }
@@ -174,7 +169,7 @@ namespace ChapeauUI
             selectedOrderIdLabel.Text = lastSelectedItem.orderItemId.ToString();
             selectedOrderStatusLabel.Text = lastSelectedItem.status.ToString();
             commentLabel.Text = lastSelectedItem.comment.ToString();
-            tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
+            //tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
         }
         private void DisplayServedButton()
         {

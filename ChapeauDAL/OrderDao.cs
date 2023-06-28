@@ -11,7 +11,8 @@ namespace ChapeauDAL
     {
         public List<Order> GetAll()
         {
-            string query = "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
+            string query = 
+                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
                 "T.id AS T_id, T.[status], " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
@@ -23,7 +24,8 @@ namespace ChapeauDAL
         }
         public List<Order> GetAllByState(OrderStatus status)
         {
-            string query = "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
+            string query = 
+                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
                 "T.id AS T_id, T.[status], " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
