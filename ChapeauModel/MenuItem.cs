@@ -9,6 +9,5 @@
         public double price;
         public double tax;
         public ItemType itemType;
-
     }
 }

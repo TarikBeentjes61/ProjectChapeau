@@ -17,7 +17,7 @@ namespace ChapeauUI
         Table table;
         int tableId;
 
-        public CreateOrderForm(Table table/*int tableId*/, Employee employee)
+        public CreateOrderForm(Table table, Employee employee)
         {
             InitializeComponent();
 
@@ -378,10 +378,10 @@ namespace ChapeauUI
 
         //METHODS
         //Method to fill listview with menuItems
-        private void FillListviewMenuItems(System.Windows.Forms.ListView listView, ItemType itemType, int menuId/*MenuItem menu*/)
+        private void FillListviewMenuItems(System.Windows.Forms.ListView listView, ItemType itemType, int menuId)
         {
             MenuItemService menuItemService = new MenuItemService();
-            menu.MenuItems = menuItemService.GetByItemType(itemType, menuId/*menu.menuId*/);
+            menu.MenuItems = menuItemService.GetByItemType(itemType,/*menu.*/menuId);
 
             listView.Clear();
             listView.View = View.Details;
