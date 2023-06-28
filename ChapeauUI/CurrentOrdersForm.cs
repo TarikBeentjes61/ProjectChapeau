@@ -14,20 +14,14 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private bool showServed = true;
-        //Create some colours from RGB values for later use
-        private readonly Color ServedColour = Color.FromArgb(128, 210, 176);
-        private readonly Color BaristaColour = Color.FromArgb(253, 154, 39);
-        private readonly Color ChefColour = Color.FromArgb(255, 179, 71);
-
         private OrderItem? lastSelectedItem; //Keep track of the last selected item
         private int lastSelectedIndex;
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
+            servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
-            ChangePanelColours(employee);
             CreateTimer(60); //Takes in seconds which are converted to milliseconds
             RefreshData();
         }
@@ -51,20 +45,6 @@ namespace ChapeauUI
         {
             logoutButton.Text = employee.name;
         }
-        private void ChangePanelColours(Employee employee)
-        {
-            Color panelColour;
-            if (employee.role == Role.Chef)
-                panelColour = ChefColour;
-            else
-                panelColour = BaristaColour;
-
-            //Loop through all the panels of the form and change the colour.
-            foreach (Panel pnl in this.Controls.OfType<Panel>())
-            {
-                pnl.BackColor = panelColour;
-            }
-        }
         private void RefreshData()
         {
             try
@@ -74,13 +54,25 @@ namespace ChapeauUI
                 if (lastSelectedItem != null)
                 {
                     lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-                    DisplaySelectedItem();
+                    DisplaySelectedItem(GetSelectedOrderItem());
                 }
             }
             catch (Exception e)
             {
                 ShowErrorMessageBox(e);
             }
+        }
+        private OrderItem? GetSelectedOrderItem()
+        {
+            if(listViewOrders.SelectedItems[0] != null)
+                return (OrderItem)listViewOrders.SelectedItems[0].Tag;
+            return null;
+        }
+        private int GetSelectedOrderItemIndex()
+        {
+            if (listViewOrders.SelectedItems[0] != null)
+                return listViewOrders.SelectedItems[0].Index;
+            return 0;
         }
         private void RefreshSingle()
         {
@@ -89,13 +81,6 @@ namespace ChapeauUI
                 //Remove the changed item and fetch the new one
                 listViewOrders.Items.RemoveAt(lastSelectedIndex);
                 lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-
-                //Check if the refrshed item belongs in the order list. 
-                if (showServed && lastSelectedItem.status == OrderStatus.Served)
-                {
-                    lastSelectedItem = null;
-                    return;
-                }
 
                 listViewOrders.Items.Add(CreateListViewItem(lastSelectedItem));
                 listViewOrders.Sort();
@@ -109,11 +94,6 @@ namespace ChapeauUI
         {
             //Display a message box whenever something goes wrong like loading data
             MessageBox.Show("Something went wrong while loading the data " + e.Message);
-        }
-        private Order GetOrderById(int id)
-        {
-            OrderService orderService = new OrderService();
-            return orderService.GetById(id);
         }
         private List<OrderItem> GetAllOrderItems()
         {
@@ -156,34 +136,18 @@ namespace ChapeauUI
                 case OrderStatus.Preparation:
                     return Color.White;
                 case OrderStatus.Prepared:
-                    return ChefColour;
-                case OrderStatus.Served:
-                    return ServedColour;
+                    return Color.Orange;
                 default:
                     return Color.White;
             }
         }
-        private void DisplaySelectedItem()
+        private void DisplaySelectedItem(OrderItem selectedItem)
         {
             //Fills all the labels with data from the last selected item
-            selectedOrderIdLabel.Text = lastSelectedItem.orderItemId.ToString();
-            selectedOrderStatusLabel.Text = lastSelectedItem.status.ToString();
-            commentLabel.Text = lastSelectedItem.comment.ToString();
-            //tableLabel.Text = GetOrderById(lastSelectedItem.order.id).table.tableId.ToString();
-        }
-        private void DisplayServedButton()
-        {
-            //Changes the colour and text of the show served button depending on the state 
-            if (showServed)
-            {
-                showServedButton.BackColor = ServedColour;
-                showServedButton.Text = "Show Served Orders";
-            }
-            else
-            {
-                showServedButton.BackColor = Color.Red;
-                showServedButton.Text = "Hide Served Orders";
-            }
+            selectedOrderIdLabel.Text = selectedItem.orderItemId.ToString();
+            selectedOrderStatusLabel.Text = selectedItem.status.ToString();
+            commentLabel.Text = selectedItem.comment.ToString();
+            tableLabel.Text = selectedItem.order.table.tableId.ToString();
         }
         private void UpdateSelectedItem(OrderStatus status)
         {
@@ -203,9 +167,7 @@ namespace ChapeauUI
                 return;
             try
             {
-                lastSelectedItem = (OrderItem)e.Item.Tag;
-                lastSelectedIndex = e.ItemIndex;
-                DisplaySelectedItem();
+                DisplaySelectedItem((OrderItem)e.Item.Tag);
             }
             catch (Exception ex)
             {
@@ -232,9 +194,14 @@ namespace ChapeauUI
         }
         private void showServedButton_Click(object sender, EventArgs e)
         {
-            showServed = !showServed;
-            DisplayServedButton();
-            RefreshData();
+            DisplayServedOrders(true);
+        }
+        public void DisplayServedOrders(bool show)
+        {
+            if (show)
+                servedOrdersPanel.Show();
+            else
+                servedOrdersPanel.Hide();
         }
         private void logoutButton_Click(object sender, EventArgs e)
         {
@@ -242,6 +209,11 @@ namespace ChapeauUI
             LoginForm loginForm = new LoginForm();
             this.Close();
             loginForm.Show();
+        }
+
+        private void hideServedButton_Click(object sender, EventArgs e)
+        {
+            DisplayServedOrders(false);
         }
     }
 }
