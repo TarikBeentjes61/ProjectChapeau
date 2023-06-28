@@ -33,7 +33,8 @@ namespace ChapeauDAL
         }
         public List<MenuItem> GetByItemType(ItemType itemType, int menuId)
         {
-            string query = "SELECT MI.id AS MI_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax, " +
+            string query = 
+                "SELECT MI.id AS MI_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax, " +
                 "M.id AS M_id, M.[name] " +
                 "FROM MenuItem AS MI " +
                 "JOIN Menu AS M ON MI.Menu_id = M.id " +
