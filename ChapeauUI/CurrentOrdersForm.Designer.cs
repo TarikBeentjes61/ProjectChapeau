@@ -687,16 +687,18 @@
             // 
             // servedOrdersPanel
             // 
+            servedOrdersPanel.BorderStyle = BorderStyle.FixedSingle;
             servedOrdersPanel.Controls.Add(hideServedButton);
             servedOrdersPanel.Controls.Add(panel5);
             servedOrdersPanel.Controls.Add(panel4);
             servedOrdersPanel.Controls.Add(panel3);
             servedOrdersPanel.Controls.Add(panel2);
             servedOrdersPanel.Controls.Add(listView1);
-            servedOrdersPanel.Location = new Point(12, 604);
+            servedOrdersPanel.Location = new Point(275, 133);
             servedOrdersPanel.Name = "servedOrdersPanel";
             servedOrdersPanel.Size = new Size(687, 451);
             servedOrdersPanel.TabIndex = 13;
+            servedOrdersPanel.Visible = false;
             // 
             // hideServedButton
             // 
@@ -713,8 +715,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(1692, 1067);
-            Controls.Add(servedOrdersPanel);
+            ClientSize = new Size(1201, 574);
             Controls.Add(pictureBox1);
             Controls.Add(showServedButton);
             Controls.Add(descriptionPanel);
@@ -730,6 +731,7 @@
             Controls.Add(logoutButton);
             Controls.Add(mainHeaderPanel);
             Controls.Add(panel1);
+            Controls.Add(servedOrdersPanel);
             Name = "CurrentOrdersForm";
             Text = "Current Orders";
             mainHeaderPanel.ResumeLayout(false);
