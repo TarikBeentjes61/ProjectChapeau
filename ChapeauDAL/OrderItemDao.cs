@@ -13,9 +13,8 @@ namespace ChapeauDAL
     {
         public List<OrderItem> GetAll()
         {
-            string query = "SELECT OI.id AS OI_id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status],MI.id AS MI_id, MI.Menu_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax,O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status] FROM OrderItem AS OIJOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id JOIN [Order] AS O ON OI.order_id = O.id ";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            string query = "SELECT OI.id AS OI_id, OI.Order_id, OI.MenuItem_id, OI.amount, OI.comment, OI.[status],MI.id AS MI_id, MI.Menu_id, MI.stock, MI.priceExc, MI.itemName, MI.itemType, MI.tax,O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status],M.id AS M_id, M.[name],T.id AS T_id, T.[status],E.id AS E_id, E.[name], E.[hash], E.salt, E.[role] FROM OrderItem AS OI JOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id JOIN [Order] AS O ON OI.order_id = O.id OIN [Menu] AS M ON MI.Menu_id = M.id vJOIN [Table] AS T ON O.Table_id = T.id JOIN [Employee] AS E ON O.Employee_id = E.id ";
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public OrderItem GetById(int id)
         {
@@ -96,22 +95,39 @@ namespace ChapeauDAL
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach (DataRow row in dataTable.Rows)
             {
-                
+                Menu menu = new Menu()
+                {
+                    menuId = (int)row["id"],
+                    name = (string)row["name"],
+                };
                 MenuItem menuItem = new MenuItem()
                 {
                     menuItemId = (int)row["MI_id"],
-                    menuId = (int)row["Menu_id"],
+                    menu = menu,
                     stock = (int)row["stock"],
                     price = Convert.ToDouble(row["priceExc"]),
                     itemName = (string)row["itemName"],
                     tax = Convert.ToDouble(row["tax"]),
                     itemType = (ItemType)row["itemType"],
                 };
+                Table table = new Table()
+                {
+                    tableId = (int)row["id"],
+                    status = (TableStatus)row["status"]
+                };
+                Employee employee = new Employee()
+                {
+                    employeeId = (int)row["id"],
+                    name = (string)row["name"],
+                    hash = (string)row["hash"],
+                    salt = (string)row["salt"],
+                    role = (Role)row["role"]
+                };
                 Order order = new Order()
                 {
                     id = (int)row["O_id"],
-                    table = (Table)row["Table"],
-                    employee = (Employee)row["Employee"],
+                    table = table,
+                    employee = employee,
                     bill = (Bill)row["Bill"],
                     date = (DateTime)row["dateTime"],
                     status = (OrderStatus)row["status"]
