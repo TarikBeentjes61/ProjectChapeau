@@ -16,9 +16,9 @@ namespace ChapeauService
         {
             return orderItemDao.GetAll();
         }
-        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        public List<OrderItem> GetOrderItemsByRole(Role role)
         {
-            return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
+            return orderItemDao.GetOrderItemsByRole(role);
         }
         public OrderItem GetById(int id)
         {

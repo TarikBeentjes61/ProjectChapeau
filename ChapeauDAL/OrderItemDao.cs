@@ -42,7 +42,7 @@ namespace ChapeauDAL
 
         public List<OrderItem> GetByOrderId(int orderId)
         {
-            string query = BaseQuery + "WHERE O.id = @id";
+            string query = BaseQuery + "WHERE O.id = @Order_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Order_id", orderId ),
@@ -73,9 +73,9 @@ namespace ChapeauDAL
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         
-        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        public List<OrderItem> GetOrderItemsByRole(Role role)
         {
-            StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
+            StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id");
             if (role == Role.Chef)
             {
                 query.Append("IN (1,2) ");
@@ -84,11 +84,8 @@ namespace ChapeauDAL
             {
                 query.Append("= 3 ");
             }
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@orderId", orderId),
-             };
-            return ReadTables(ExecuteSelectQuery(query.ToString(), sqlParameters));
+            query.Append("AND OI.[status] != 2");
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
         }
         
         public void UpdateStatusById (int id, OrderStatus status)

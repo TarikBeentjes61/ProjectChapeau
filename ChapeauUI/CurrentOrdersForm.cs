@@ -14,8 +14,6 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private OrderItem? lastSelectedItem; //Keep track of the last selected item
-        private int lastSelectedIndex;
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
@@ -23,9 +21,8 @@ namespace ChapeauUI
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
             CreateTimer(60); //Takes in seconds which are converted to milliseconds
-            RefreshData();
+            RefreshData(employee);
         }
-
         private void CreateTimer(int seconds)
         {
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -45,32 +42,20 @@ namespace ChapeauUI
         {
             logoutButton.Text = employee.name;
         }
-        private void RefreshData()
+        private void RefreshData(Employee employee)
         {
-            try
-            {
-                //Refreshed all the loaded data from list and the selected item
-                DisplayOrders(GetAllOrderItems());
-                if (lastSelectedItem != null)
-                {
-                    lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-                    DisplaySelectedItem(GetSelectedOrderItem());
-                }
-            }
-            catch (Exception e)
-            {
-                ShowErrorMessageBox(e);
-            }
+            //Refreshed all the loaded data from list and the selected item
+            DisplayOrders(GetAllOrderItems(employee));
         }
-        private OrderItem? GetSelectedOrderItem()
+        private OrderItem GetSelectedOrderItem()
         {
-            if(listViewOrders.SelectedItems[0] != null)
+            if(listViewOrders.SelectedItems.Count > 0)
                 return (OrderItem)listViewOrders.SelectedItems[0].Tag;
-            return null;
+            return new OrderItem();
         }
         private int GetSelectedOrderItemIndex()
         {
-            if (listViewOrders.SelectedItems[0] != null)
+            if (listViewOrders.SelectedItems.Count > 0)
                 return listViewOrders.SelectedItems[0].Index;
             return 0;
         }
@@ -79,10 +64,9 @@ namespace ChapeauUI
             try
             {
                 //Remove the changed item and fetch the new one
-                listViewOrders.Items.RemoveAt(lastSelectedIndex);
-                lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-
-                listViewOrders.Items.Add(CreateListViewItem(lastSelectedItem));
+                OrderItem item = GetSelectedOrderItem();
+                listViewOrders.Items.RemoveAt(GetSelectedOrderItemIndex());
+                listViewOrders.Items.Add(CreateListViewItem(item));
                 listViewOrders.Sort();
             }
             catch (Exception e)
@@ -95,18 +79,19 @@ namespace ChapeauUI
             //Display a message box whenever something goes wrong like loading data
             MessageBox.Show("Something went wrong while loading the data " + e.Message);
         }
-        private List<OrderItem> GetAllOrderItems()
+        private List<OrderItem> GetAllOrderItems(Employee employee)
         {
             //Gets all the orders depending on the current role.
             //Chef only gets items that are from menu 1 or 2
             //Barista only gets items that are from menu 3
             OrderItemService orderItemService = new OrderItemService();
-            return orderItemService.GetOrderItemsByIdAndRole(1, Role.Barista);
+            return orderItemService.GetOrderItemsByRole(employee.role);
         }
         private OrderItem GetOrderItemById(int id)
         {
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
+
         }
         private void DisplayOrders(List<OrderItem> orderItems)
         {
@@ -153,12 +138,9 @@ namespace ChapeauUI
         {
             //Gets called whenever a button click happens, updates the data and refreshes it.
             //The selected item changes it status depending on the button pressed.
-            if (lastSelectedItem != null)
-            {
-                OrderItemService orderItemService = new OrderItemService();
-                orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
-                RefreshSingle();
-            }
+            OrderItemService orderItemService = new OrderItemService();
+            orderItemService.UpdateStatusById(GetSelectedOrderItem().orderItemId, status);
+            RefreshSingle();
         }
         private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
@@ -177,7 +159,7 @@ namespace ChapeauUI
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            RefreshData();
+            //RefreshData(logoutButton.Tag);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
@@ -210,7 +192,6 @@ namespace ChapeauUI
             this.Close();
             loginForm.Show();
         }
-
         private void hideServedButton_Click(object sender, EventArgs e)
         {
             DisplayServedOrders(false);
