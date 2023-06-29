@@ -72,26 +72,31 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        
-        public List<OrderItem> GetOrderItemsByRole(Role role)
+        private string UpdateQueryByRole(Role role)
         {
-            StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
             if (role == Role.Chef)
             {
-                query.Append("IN (1,2) ");
+                return ("IN (1,2) ");
             }
-            else if (role == Role.Barista) 
-            {
-                query.Append("= 3 ");
-            }
-            query.Append
-                (
-                    "AND OI.[status] != 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
-                    "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC"
-                );
+            return ("= 3 ");
+        }
+        public List<OrderItem> GetOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] != 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
             return ReadTables(ExecuteSelectQuery(query.ToString()));
         }
-        
+        public List<OrderItem> GetServedOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] = 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
+        }
+
         public void UpdateStatusById (int id, OrderStatus status)
         {
             string query = $"UPDATE OrderItem SET [status] = @status WHERE id = @id";
