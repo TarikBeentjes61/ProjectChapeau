@@ -17,6 +17,7 @@ namespace ChapeauUI
         double totalPrice = 0;
         Employee employee;
         Table table;
+        Bill bill = new Bill();
         int tableId;
 
         public CreateOrderForm(Table table, Employee employee)
@@ -433,14 +434,14 @@ namespace ChapeauUI
         private void AddItemsToOrderListview(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
             ListViewEditor listviewEditor = new ListViewEditor();
-            string value = "";
+            string value;
+            OrderItem orderItem = new OrderItem();
 
             foreach (ListViewItem selectedItem in listView.SelectedItems)
             {
                 value = selectedItem.SubItems[0].Text;
+                orderItem = listviewEditor.LoadListview(value, orderItems);
             }
-
-            OrderItem orderItem = listviewEditor.LoadListview(value, orderItems);
 
             if (orderItem.amount == 1)
             {
@@ -470,7 +471,7 @@ namespace ChapeauUI
         {
             OrderService orderService = new OrderService();
             OrderItemService orderItemService = new OrderItemService();
-            int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(tableId, employee.employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -510,16 +511,19 @@ namespace ChapeauUI
                 listViewOrderOverview.Items.Add(item);
             }
 
-            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId);
+            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId, bill.billId);
             foreach (OrderItem o in orderItems)
             {
-                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
+                //if (bill.billId == billId)
+                //{
+                    MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
-                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
+                    ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
 
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(o.amount.ToString());
-                listViewOrderOverview.Items.Add(item);
+                    item.SubItems.Add(menuItem.itemName);
+                    item.SubItems.Add(o.amount.ToString());
+                    listViewOrderOverview.Items.Add(item);
+                //}
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();

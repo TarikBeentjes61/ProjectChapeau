@@ -39,13 +39,13 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetByTableId(int tableId/*, OrderStatus status*/)
+        public List<OrderItem> GetByTableId(int tableId, int billId)
         {
             string query = BaseQuery + "WHERE T.Id = @Table_Id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@Table_Id", tableId ),
-                //new SqlParameter("@O.[Status]", status),
+                new SqlParameter("@Table_Id", tableId),
+                new SqlParameter("Bill_id",billId),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -58,7 +58,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
@@ -81,7 +80,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        
         public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
         {
             StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
@@ -99,7 +97,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query.ToString(), sqlParameters));
         }
-        
         public void UpdateStatusById (int id, OrderStatus status)
         {
             string query = $"UPDATE OrderItem SET [status] = @status WHERE id = @id";

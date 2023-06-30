@@ -86,6 +86,7 @@ namespace ChapeauDAL
             {
                 table = table,
                 employee = employee_,
+                billId = (int)row["B_id"],
                 comment = (string)row["comment"],
                 paymentMethod = (PaymentMethod)row["paymentMethod"],
                 tip = (int)row["tip"],

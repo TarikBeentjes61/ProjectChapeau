@@ -57,7 +57,15 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-
+        public Order GetBillByTableId(int tableId)
+        {
+            string query = "SELECT Bill_id FROM [Bill] WHERE Table_id = tableId AND ";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@Table_id", tableId ),
+             };
+            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+        }
         public int AddOrder(int tableId, int employeeId, int billId, DateTime dateTime, OrderStatus status)
         {
             string query = "INSERT INTO [Order] OUTPUT INSERTED.id VALUES (@Table_id, @Employee_id, @Bill_id, @dateTime, @status)";

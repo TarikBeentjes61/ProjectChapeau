@@ -20,9 +20,9 @@ namespace ChapeauService
         {
             return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
         }
-        public List<OrderItem> GetByTableId(int tableId)
+        public List<OrderItem> GetByTableId(int tableId, int billId)
         {
-            return orderItemDao.GetByTableId(tableId);
+            return orderItemDao.GetByTableId(tableId, billId);
         }
         public OrderItem GetById(int id)
         {
