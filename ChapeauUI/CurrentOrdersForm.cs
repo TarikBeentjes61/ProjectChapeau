@@ -21,6 +21,7 @@ namespace ChapeauUI
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
             DisplayOrders(GetAllOrderItems(employee), listViewOrders);
+            this.Tag = employee;
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -32,7 +33,6 @@ namespace ChapeauUI
         }
         private void DisplayLogoutButton(Employee employee)
         {
-            logoutButton.Tag = employee;
             logoutButton.Text = employee.name;
         }
         private OrderItem? GetSelectedOrderItem()
@@ -128,7 +128,7 @@ namespace ChapeauUI
         }
         public void DisplayServedOrders(bool show)
         {
-            DisplayOrders(GetAllServedOrderItems((Employee)logoutButton.Tag), servedOrderListview);
+            DisplayOrders(GetAllServedOrderItems((Employee)this.Tag), servedOrderListview);
             if (show)
                 servedOrdersPanel.Show();
             else
@@ -165,7 +165,7 @@ namespace ChapeauUI
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            DisplayOrders(GetAllOrderItems((Employee)logoutButton.Tag), listViewOrders);
+            DisplayOrders(GetAllOrderItems((Employee)this.Tag), listViewOrders);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
