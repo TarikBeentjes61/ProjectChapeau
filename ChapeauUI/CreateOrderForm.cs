@@ -19,6 +19,7 @@ namespace ChapeauUI
         Table table;
         Bill bill = new Bill();
         int tableId;
+        int billId;
 
         public CreateOrderForm(Table table, Employee employee)
         {
@@ -470,7 +471,20 @@ namespace ChapeauUI
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
             OrderService orderService = new OrderService();
+            BillService billService = new BillService();
             OrderItemService orderItemService = new OrderItemService();
+
+            bill = billService.GetBillByTableId(tableId);
+
+            if(bill == null)
+            {
+                bill = new Bill();
+            }
+            else
+            {
+                billId = bill.billId;
+            }
+
             int orderId = orderService.AddOrder(tableId, employee.employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
@@ -511,7 +525,7 @@ namespace ChapeauUI
                 listViewOrderOverview.Items.Add(item);
             }
 
-            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId, bill.billId);
+            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId, billId);
             foreach (OrderItem o in orderItems)
             {
                 //if (bill.billId == billId)

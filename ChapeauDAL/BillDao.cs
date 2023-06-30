@@ -35,8 +35,20 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
+        public int CreateBill(string comment, int paymentMethod, double tip, int payed)
+        {
+            string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@comment, @paymentMethod, @tip, @payed)";
 
-        public void UpdateBill(int id, string comment, int paymentMethod, double tip, double payed)
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                new SqlParameter("@comment", comment ),
+                new SqlParameter("@paymentMethod", paymentMethod ),
+                new SqlParameter("@tip", tip ),
+                new SqlParameter("@payed", payed ),
+            };
+            return ExecuteInsertQuery(query, sqlParameters);
+        }
+        public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed)
         {
             string query = $"UPDATE BILL SET [comment] = @comment, [paymentMethod] = @paymentMethod, [tip] = @tip, [payed] = @payed WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
@@ -49,7 +61,22 @@ namespace ChapeauDAL
              };
             ExecuteEditQuery(query, sqlParameters);
         }
-
+        public Bill GetBillByTableId(int tableId)
+        {
+            string query =
+                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
+                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Bill AS B " +
+                "JOIN Employee AS E ON B.Employee_id = E.id " +
+                "JOIN [Table] AS T ON B.Table_id = T.id " +
+                "WHERE T.id = @Table_id AND payed = 0";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@Table_id", tableId),
+             };
+            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
+        }
         private List<Bill> ReadTables(DataTable dataTable)
         {
             List<Bill> bills = new List<Bill>();
@@ -62,6 +89,11 @@ namespace ChapeauDAL
         }
         private Bill ReadSingle(DataTable dataTable)
         {
+            if (dataTable.Rows.Count == 0)
+            {
+                return null;
+            }
+
             DataRow row = dataTable.Rows[0];
             Bill bill = CreateBillFromRow(row);
             return bill;
