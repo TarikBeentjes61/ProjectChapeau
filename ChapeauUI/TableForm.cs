@@ -162,6 +162,7 @@ namespace ChapeauUI
             table.tableId = int.Parse(clicked.Tag.ToString());
             this.Close();
             CreateOrderForm createOrderForm = new CreateOrderForm(table, employee);
+            createOrderForm.ShowOrder();
             createOrderForm.Show();
         }
         //Clicking the picture will logout

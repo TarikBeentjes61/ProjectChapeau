@@ -39,7 +39,16 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-
+        public List<OrderItem> GetByTableId(int tableId/*, OrderStatus status*/)
+        {
+            string query = BaseQuery + "WHERE T.Id = @Table_Id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@Table_Id", tableId ),
+                //new SqlParameter("@O.[Status]", status),
+             };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
         public List<OrderItem> GetByOrderId(int orderId)
         {
             string query = BaseQuery + "WHERE O.id = @id";

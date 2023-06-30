@@ -20,6 +20,10 @@ namespace ChapeauService
         {
             return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
         }
+        public List<OrderItem> GetByTableId(int tableId)
+        {
+            return orderItemDao.GetByTableId(tableId);
+        }
         public OrderItem GetById(int id)
         {
             return orderItemDao.GetById(id);

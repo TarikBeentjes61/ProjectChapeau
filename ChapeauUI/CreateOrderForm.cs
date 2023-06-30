@@ -11,6 +11,8 @@ namespace ChapeauUI
     {
         Order order = new Order();
         ChapeauModel.Menu menu = new ChapeauModel.Menu();
+        MenuItemService menuItemService = new MenuItemService();
+        OrderItemService orderItemService = new OrderItemService();
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
         Employee employee;
@@ -22,7 +24,7 @@ namespace ChapeauUI
             InitializeComponent();
 
             this.employee = employee;
-            this.tableId = table.tableId;
+            tableId = table.tableId;
 
             //NAME EMPLOYEE
             EmployeeLabels(employee);
@@ -41,51 +43,51 @@ namespace ChapeauUI
 
             //Show this panel
             pnlOrderOverview.Show();
+
+            //LUNCH
+            //Starters listview
+            FillListviewMenuItems(listViewStartersLunch, ItemType.Starters, 1);
+
+            //Mains listview
+            FillListviewMenuItems(listViewMainsLunch, ItemType.Mains, 1);
+
+            //Deserts listview
+            FillListviewMenuItems(listViewDesertsLunch, ItemType.Deserts, 1);
+
+            //DINNER
+            //Starters listview
+            FillListviewMenuItems(listViewStartersDinner, ItemType.Starters, 2);
+
+            //Entres listview
+            FillListviewMenuItems(listViewEntresDinner, ItemType.Entres, 2);
+
+            //Mains listview
+            FillListviewMenuItems(listViewMainsDinner, ItemType.Mains, 2);
+
+            //Deserts listview
+            FillListviewMenuItems(listViewDesertsDinner, ItemType.Deserts, 2);
+
+            //DRINKS
+            //Soft drinks listview
+            FillListviewMenuItems(listViewSoftDrinks, ItemType.SoftDrinks, 3);
+
+            //Beers listview
+            FillListviewMenuItems(listViewBeers, ItemType.Beers, 3);
+
+            //wines listview
+            FillListviewMenuItems(listViewWines, ItemType.Wines, 3);
+
+            //Spirits listview
+            FillListviewMenuItems(listViewSpirits, ItemType.Spirits, 3);
+
+            //Hot drinks listview
+            FillListviewMenuItems(listViewHotDrinks, ItemType.HotDrinks, 3);
         }
 
         private void CreateOrderForm_Load(object sender, EventArgs e)
         {
             try
             {
-                //LUNCH
-                //Starters listview
-                FillListviewMenuItems(listViewStartersLunch, ItemType.Starters, 1);
-
-                //Mains listview
-                FillListviewMenuItems(listViewMainsLunch, ItemType.Mains, 1);
-
-                //Deserts listview
-                FillListviewMenuItems(listViewDesertsLunch, ItemType.Deserts, 1);
-
-                //DINNER
-                //Starters listview
-                FillListviewMenuItems(listViewStartersDinner, ItemType.Starters, 2);
-
-                //Entres listview
-                FillListviewMenuItems(listViewEntresDinner, ItemType.Entres, 2);
-
-                //Mains listview
-                FillListviewMenuItems(listViewMainsDinner, ItemType.Mains, 2);
-
-                //Deserts listview
-                FillListviewMenuItems(listViewDesertsDinner, ItemType.Deserts, 2);
-
-                //DRINKS
-                //Soft drinks listview
-                FillListviewMenuItems(listViewSoftDrinks, ItemType.SoftDrinks, 3);
-
-                //Beers listview
-                FillListviewMenuItems(listViewBeers, ItemType.Beers, 3);
-
-                //wines listview
-                FillListviewMenuItems(listViewWines, ItemType.Wines, 3);
-
-                //Spirits listview
-                FillListviewMenuItems(listViewSpirits, ItemType.Spirits, 3);
-
-                //Hot drinks listview
-                FillListviewMenuItems(listViewHotDrinks, ItemType.HotDrinks, 3);
-
                 //ORDER LUNCH PANEL
                 FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
 
@@ -295,14 +297,16 @@ namespace ChapeauUI
         //Add and show order
         private void btnAddLunch_Click(object sender, EventArgs e)
         {
-            AddAndShowOrder(listViewOrderLunch);
+            AddOrder(listViewOrderLunch);
+            ShowOrder();
             pnlCreateOrderLunch.Hide();
             pnlOrderOverview.Show();
             CreateOrderForm_Load(sender, e);
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
-            AddAndShowOrder(listViewOrderDinner);
+            AddOrder(listViewOrderDinner);
+            ShowOrder();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
             CreateOrderForm_Load(sender, e);
@@ -310,7 +314,8 @@ namespace ChapeauUI
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
         {
-            AddAndShowOrder(listViewOrderDrinks);
+            AddOrder(listViewOrderDrinks);
+            ShowOrder();
             pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
             CreateOrderForm_Load(sender, e);
@@ -460,13 +465,11 @@ namespace ChapeauUI
             }
         }
 
-        //Add and show order
-        private void AddAndShowOrder(System.Windows.Forms.ListView listView)
+        //Add order
+        private void AddOrder(System.Windows.Forms.ListView listView)
         {
-            OrderItem orderItem = new OrderItem();
             OrderService orderService = new OrderService();
             OrderItemService orderItemService = new OrderItemService();
-            MenuItemService menuItemService = new MenuItemService();
             int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
@@ -484,9 +487,11 @@ namespace ChapeauUI
                 o.order.id = orderId;
                 orderItemService.AddOrderItems(orderId, o.menuItem.menuItemId, o.amount, o.comment, o.status);
             }
-
-            order.SetOrderItems(orderItemService.GetByOrderId(orderId));//FIX THIS IN THE DAO
-
+            listView.Clear();
+        }
+        //Show order
+        public void ShowOrder()
+        {
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
 
@@ -505,9 +510,20 @@ namespace ChapeauUI
                 listViewOrderOverview.Items.Add(item);
             }
 
+            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId);
+            foreach (OrderItem o in orderItems)
+            {
+                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
+
+                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
+
+                item.SubItems.Add(menuItem.itemName);
+                item.SubItems.Add(o.amount.ToString());
+                listViewOrderOverview.Items.Add(item);
+            }
+
             lblTotal.Text = "Total: " + totalPrice.ToString();
             btnPay.Enabled = true;
-            listView.Clear();
         }
 
         //Hide panels

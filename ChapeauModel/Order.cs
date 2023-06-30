@@ -19,11 +19,6 @@ namespace ChapeauModel
         }
         
         public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
-
-        public void SetOrderItems(List<OrderItem> orderItems)
-        {
-            this.orderItems = orderItems;
-        }
         public List<OrderItem> GetOrderItems()
         {
             return orderItems;
