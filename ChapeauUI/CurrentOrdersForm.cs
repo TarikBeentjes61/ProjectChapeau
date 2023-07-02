@@ -14,6 +14,7 @@ namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
+        private Employee loggedInEmployee;
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace ChapeauUI
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
             DisplayOrders(GetAllOrderItems(employee), listViewOrders);
-            this.Tag = employee;
+            loggedInEmployee = employee;
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -128,7 +129,7 @@ namespace ChapeauUI
         }
         public void DisplayServedOrders(bool show)
         {
-            DisplayOrders(GetAllServedOrderItems((Employee)this.Tag), servedOrderListview);
+            DisplayOrders(GetAllServedOrderItems(loggedInEmployee), servedOrderListview);
             if (show)
                 servedOrdersPanel.Show();
             else
@@ -147,7 +148,7 @@ namespace ChapeauUI
                 RefreshSingle();
             }
         }
-        private void EnableBackgroundControls(bool state)
+        private void ChangeStateBackgroundControls(bool state)
         {
             listViewOrders.Enabled = state;
             ServedButton.Enabled = state;
@@ -165,7 +166,7 @@ namespace ChapeauUI
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            DisplayOrders(GetAllOrderItems((Employee)this.Tag), listViewOrders);
+            DisplayOrders(GetAllOrderItems(loggedInEmployee), listViewOrders);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
@@ -190,12 +191,12 @@ namespace ChapeauUI
         private void showServedButton_Click(object sender, EventArgs e)
         {
             DisplayServedOrders(true);
-            EnableBackgroundControls(false);
+            ChangeStateBackgroundControls(false);
         }
         private void hideServedButton_Click(object sender, EventArgs e)
         {
             DisplayServedOrders(false);
-            EnableBackgroundControls(true);
+            ChangeStateBackgroundControls(true);
         }
     }
 }
