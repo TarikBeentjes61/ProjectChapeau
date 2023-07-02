@@ -27,56 +27,37 @@ namespace ChapeauUI
         private double totalTip = 0;
         private string comment = "";
         private double orderTotalPrice = 0;
-
-        int tableId;
-        Table table;
         Employee employee;
+        Table table;
+        Bill bill = new Bill();
+        Order order = new Order();
+        int tableId;
 
         public BillViewForm(Table table, Employee employee)
         {
-            this.tableId = table.tableId;
+            this.table = table;
+            //this.table.tableId = table.tableId;
+            //this.tableId = table.tableId;
             this.employee = employee;
             InitializeComponent();
-            pnlAddComment.Hide();
-            pnlBillPayment.Hide();
-            pnlBillSettled.Hide();
-            pnlBillView.Show();
-
+            showPanel(pnlBillView, pnlBillSettled, pnlAddComment, pnlBillPayment, pnlSplitBill);
+  
             OrderItemService orderItemService = new OrderItemService();
             List<OrderItem> orderItems = orderItemService.GetAll();
-
+            //ShowBillListView(listViewBillOverview);
             listViewBillOverview.Clear();
+            listViewBillOverview.View = View.Details; // Specify that each item appears on a separate line.
 
-            // Specify that each item appears on a separate line.
-            listViewBillOverview.View = View.Details;
+            listViewBillOverview.Columns.Add("Amount", 80);
+            listViewBillOverview.Columns.Add("Name", 200);
+            listViewBillOverview.Columns.Add("Price", 60);
 
-            // Declare and construct the ColumnHeader objects.
-            ColumnHeader amount, name, price;
-            amount = new ColumnHeader();
-            name = new ColumnHeader();
-            price = new ColumnHeader();
-
-            amount.Text = "Amount";
-            amount.Width = 80;
-
-            name.Text = "Name";
-            name.Width = 200;
-
-            price.Text = "Price";
-            price.Width = 60;
-
-            listViewBillOverview.Columns.Add(amount);
-            listViewBillOverview.Columns.Add(name);
-            listViewBillOverview.Columns.Add(price);
-
-            //labelOrderPrice
             double totalVat = 0;
-
             double calVat = 0;
             double calPrice = 0;
             double calTotalVat = 0;
 
-            Bill bill = new Bill();
+
             MenuItemService menuItemService = new MenuItemService();
 
             foreach (OrderItem order in orderItems)
@@ -105,32 +86,68 @@ namespace ChapeauUI
             labelFinalVAT.Text = "€" + totalVat.ToString("F");
         }
 
+        public void ShowBillListView(System.Windows.Forms.ListView listView)
+        {
+            OrderItem orderItem = new OrderItem();
+            OrderService orderService = new OrderService();
+            OrderItemService orderItemService = new OrderItemService();
+            MenuItemService menuItemService = new MenuItemService();
+            //int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
+
+            listViewBillOverview.Clear();
+            listViewBillOverview.View = View.Details;
+
+            listViewBillOverview.Columns.Add("Amount", 80);
+            listViewBillOverview.Columns.Add("Name", 200);
+            listViewBillOverview.Columns.Add("Price", 60);
+
+            //foreach (OrderItem o in order.GetOrderItems())
+            //{
+            //    MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
+
+            //    orderTotalPrice += menuItem.price;
+            //    o.order.id = orderId;
+            //    orderItemService.AddOrderItems(orderId, o.menuItem.menuItemId, o.amount, o.comment, o.status);
+            //}
+        }
 
         private void btnProceedToPayment_Click(object sender, EventArgs e)
         {
-            //if none button has been clicked:
-            if (!buttonClicked)
+            if (!buttonClicked) //if none button has been clicked:
             {
                 MessageBox.Show("No paymethod has been selected, please select one.");
             } else
             {
-                //Hide all panels, except Payment
-                pnlAddComment.Hide();
-                pnlBillSettled.Hide();
-                pnlBillView.Hide();
-                pnlBillPayment.Show();
-                pnlBillPayment.Location = new Point(12, 83);
+                showPanel(pnlBillPayment, pnlBillSettled, pnlAddComment, pnlBillView, pnlSplitBill);
+            }
+        }
+
+        private void btnSplit_Click(object sender, EventArgs e)
+        {
+            if (!buttonClicked) //if none button has been clicked:
+            {
+                MessageBox.Show("No paymethod has been selected, please select one.");
+            }
+            else
+            {
+                showPanel(pnlSplitBill, pnlBillSettled, pnlAddComment, pnlBillView, pnlBillPayment);
             }
         }
 
         private void btnBackPayment_Click(object sender, EventArgs e)
         {
-            //Hide all panels, except BillView
-            pnlAddComment.Hide();
-            pnlBillPayment.Hide();
-            pnlBillSettled.Hide();
-            pnlBillView.Show();
-            pnlBillPayment.Location = new Point(12, 83);
+            showPanel(pnlBillView, pnlBillSettled, pnlAddComment, pnlBillPayment, pnlSplitBill);
+        }
+
+        private void btnBackPaymentFromSplit_Click(object sender, EventArgs e)
+        {
+            showPanel(pnlBillView, pnlBillSettled, pnlAddComment, pnlBillPayment, pnlSplitBill);
+        }
+
+        private void button2_Click(object sender, EventArgs e) //btnProceedSplitting
+        {
+            string inputSplit = txtBoxAmountPeopleSplitting.Text;
+
         }
 
         private void btnSetPrices_Click(object sender, EventArgs e)
@@ -141,9 +158,6 @@ namespace ChapeauUI
             } else
             {
                 double input = double.Parse(txtBoxAmountPaid.Text);
-                //double totalOrderPrice = Convert.ToDouble(labelOrderPricePayment.Text);
-                //double totalOrderPrice = double.Parse(labelOrderPricePayment.Text);
-                //double changePrice = 0;
 
                 if (input < doubleOrderPrice)
                 {
@@ -219,70 +233,45 @@ namespace ChapeauUI
             }
             else
             {
-                //Hide all panels, except Comment
-                pnlBillPayment.Hide();
-                pnlBillSettled.Hide();
-                pnlBillView.Hide();
-                pnlAddComment.Show();
-                pnlAddComment.Location = new Point(12, 83);
+                showPanel(pnlAddComment, pnlBillSettled, pnlBillView, pnlBillPayment, pnlSplitBill);
                 labelChangeFinal.Text = "€" + changePrice.ToString("F");
             }
-
-
-            //tip en change required
         }
 
         private void btnBackComment_Click(object sender, EventArgs e)
         {
-            //Hide all panels, except Payment
-            pnlAddComment.Hide();
-            pnlBillSettled.Hide();
-            pnlBillView.Hide();
-            pnlBillPayment.Show();
-            pnlBillPayment.Location = new Point(12, 83);
-
+            showPanel(pnlBillPayment, pnlBillSettled, pnlBillView, pnlAddComment, pnlSplitBill);
         }
 
         private void btnDebit_Click(object sender, EventArgs e)
         {
-            btnVisa.Select();
-            btnVisa.BackColor = Color.White;
-            btnCash.BackColor = Color.White;
-            btnDebit.BackColor = Color.FromArgb(255, 179, 71);
+            btnChangeBackColor(btnDebit, btnCash, btnVisa);
             buttonClicked = true;
             paymentMethode = PaymentMethod.Pin;
-            //255; 179; 71
         }
 
         private void btnVisa_Click(object sender, EventArgs e)
         {
-            btnDebit.BackColor = Color.White;
-            btnCash.BackColor = Color.White;
-            btnVisa.BackColor = Color.FromArgb(255, 179, 71);
+            btnChangeBackColor(btnVisa, btnCash, btnDebit);
             buttonClicked = true;
             paymentMethode = PaymentMethod.CreditCard;
-
         }
 
         private void btnCash_Click(object sender, EventArgs e)
         {
-            btnDebit.BackColor = Color.White;
-            btnVisa.BackColor = Color.White;
-            btnCash.BackColor = Color.FromArgb(255, 179, 71);
+            btnChangeBackColor(btnCash, btnVisa, btnDebit);
             buttonClicked = true;
             paymentMethode = PaymentMethod.Cash;
-
         }
 
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
         {
             Hide();
-            //CreateOrderForm orderForm = new CreateOrderForm(table, employee);
-            //orderForm.Show();
-
+            CreateOrderForm orderForm = new CreateOrderForm(table, employee);
+            orderForm.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) 
         {
             if(labelCustomerComment.Text == "")
             {
@@ -291,15 +280,11 @@ namespace ChapeauUI
             } else
             {
                 labelCommendSaved.Show();
-                labelCommendSaved.ForeColor = Color.FromArgb(138, 210, 176);
-                labelCommendSaved.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-                labelCommendSaved.Text = "COMMENT HAS BEEN SAVED";
+                labelCommendSavedChange();
 
                 comment = labelCustomerComment.Text;
-            }            
+            }
         }
-
-
 
         private void btnFinishPayment_Click(object sender, EventArgs e)
         {
@@ -316,22 +301,38 @@ namespace ChapeauUI
 
         private void btnContinueWithPayment_Click(object sender, EventArgs e)
         {
-                //Hide all panels, except Payment
-                pnlAddComment.Hide();
-                pnlBillView.Hide();
-                pnlBillPayment.Hide();
-                pnlBillSettled.Show();
-                pnlBillSettled.Location = new Point(12, 83);
+            showPanel(pnlBillSettled, pnlBillPayment, pnlBillView, pnlAddComment, pnlSplitBill);
 
         }
 
         private void btnBackBillSettled_Click(object sender, EventArgs e)
         {
-            pnlBillView.Hide();
-            pnlBillPayment.Hide();
-            pnlBillSettled.Hide();
-            pnlAddComment.Show();
-            pnlAddComment.Location = new Point(12, 83);
+            showPanel(pnlAddComment, pnlBillSettled, pnlBillView, pnlBillPayment, pnlSplitBill);
+        }
+
+        //Methodes verkorten
+        private void btnChangeBackColor(System.Windows.Forms.Button btn1, System.Windows.Forms.Button btn2, System.Windows.Forms.Button btn3) //Knoppen Cash, Debit, Visa Backcolor veranderen
+        {
+            btn1.BackColor = Color.FromArgb(255, 179, 71);
+            btn2.BackColor = Color.White;
+            btn3.BackColor = Color.White;
+        }
+        private void labelCommendSavedChange()
+        {
+            labelCommendSaved.ForeColor = Color.FromArgb(138, 210, 176);
+            labelCommendSaved.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            labelCommendSaved.Text = "COMMENT HAS BEEN SAVED";
+        }
+
+        private void showPanel(System.Windows.Forms.Panel panel1, System.Windows.Forms.Panel panel2, System.Windows.Forms.Panel panel3, System.Windows.Forms.Panel panel4, System.Windows.Forms.Panel panel5)
+        {
+            panel1.Show();
+            panel1.Location = new Point(12, 83);
+
+            panel2.Hide();
+            panel3.Hide();
+            panel4.Hide();
+            panel5.Hide();
         }
     }
 }

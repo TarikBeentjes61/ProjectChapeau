@@ -70,6 +70,7 @@
             this.labelOrderPricePaymentText = new System.Windows.Forms.Label();
             this.labelPayment = new System.Windows.Forms.Label();
             this.pnlBillView = new System.Windows.Forms.Panel();
+            this.btnSplit = new System.Windows.Forms.Button();
             this.btnBackOrderOverview = new System.Windows.Forms.Button();
             this.labelBill = new System.Windows.Forms.Label();
             this.labelChoosePayment = new System.Windows.Forms.Label();
@@ -84,11 +85,18 @@
             this.labelOrderPriceText = new System.Windows.Forms.Label();
             this.labelVATText = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pnlSplitBill = new System.Windows.Forms.Panel();
+            this.txtBoxAmountPeopleSplitting = new System.Windows.Forms.TextBox();
+            this.btnBackPaymentFromSplit = new System.Windows.Forms.Button();
+            this.labelBillSpitting = new System.Windows.Forms.Label();
+            this.btnProceedSplitting = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnlBillSettled.SuspendLayout();
             this.pnlAddComment.SuspendLayout();
             this.pnlBillPayment.SuspendLayout();
             this.pnlBillView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlSplitBill.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlBillSettled
@@ -510,6 +518,7 @@
             // 
             // pnlBillView
             // 
+            this.pnlBillView.Controls.Add(this.btnSplit);
             this.pnlBillView.Controls.Add(this.btnBackOrderOverview);
             this.pnlBillView.Controls.Add(this.labelBill);
             this.pnlBillView.Controls.Add(this.labelChoosePayment);
@@ -526,6 +535,18 @@
             this.pnlBillView.Name = "pnlBillView";
             this.pnlBillView.Size = new System.Drawing.Size(372, 555);
             this.pnlBillView.TabIndex = 43;
+            // 
+            // btnSplit
+            // 
+            this.btnSplit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnSplit.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSplit.Location = new System.Drawing.Point(275, 495);
+            this.btnSplit.Name = "btnSplit";
+            this.btnSplit.Size = new System.Drawing.Size(97, 55);
+            this.btnSplit.TabIndex = 39;
+            this.btnSplit.Text = "SPLIT";
+            this.btnSplit.UseVisualStyleBackColor = false;
+            this.btnSplit.Click += new System.EventHandler(this.btnSplit_Click);
             // 
             // btnBackOrderOverview
             // 
@@ -564,7 +585,7 @@
             this.btnProceedToPayment.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnProceedToPayment.Location = new System.Drawing.Point(3, 495);
             this.btnProceedToPayment.Name = "btnProceedToPayment";
-            this.btnProceedToPayment.Size = new System.Drawing.Size(366, 55);
+            this.btnProceedToPayment.Size = new System.Drawing.Size(275, 55);
             this.btnProceedToPayment.TabIndex = 2;
             this.btnProceedToPayment.Text = "PROCEED TO PAYMENT";
             this.btnProceedToPayment.UseVisualStyleBackColor = false;
@@ -661,12 +682,77 @@
             this.pictureBox1.TabIndex = 47;
             this.pictureBox1.TabStop = false;
             // 
+            // pnlSplitBill
+            // 
+            this.pnlSplitBill.Controls.Add(this.txtBoxAmountPeopleSplitting);
+            this.pnlSplitBill.Controls.Add(this.btnBackPaymentFromSplit);
+            this.pnlSplitBill.Controls.Add(this.labelBillSpitting);
+            this.pnlSplitBill.Controls.Add(this.btnProceedSplitting);
+            this.pnlSplitBill.Controls.Add(this.label5);
+            this.pnlSplitBill.Location = new System.Drawing.Point(12, 642);
+            this.pnlSplitBill.Name = "pnlSplitBill";
+            this.pnlSplitBill.Size = new System.Drawing.Size(372, 555);
+            this.pnlSplitBill.TabIndex = 44;
+            // 
+            // txtBoxAmountPeopleSplitting
+            // 
+            this.txtBoxAmountPeopleSplitting.Location = new System.Drawing.Point(87, 219);
+            this.txtBoxAmountPeopleSplitting.Name = "txtBoxAmountPeopleSplitting";
+            this.txtBoxAmountPeopleSplitting.Size = new System.Drawing.Size(181, 27);
+            this.txtBoxAmountPeopleSplitting.TabIndex = 39;
+            // 
+            // btnBackPaymentFromSplit
+            // 
+            this.btnBackPaymentFromSplit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(179)))), ((int)(((byte)(71)))));
+            this.btnBackPaymentFromSplit.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBackPaymentFromSplit.Location = new System.Drawing.Point(272, 0);
+            this.btnBackPaymentFromSplit.Name = "btnBackPaymentFromSplit";
+            this.btnBackPaymentFromSplit.Size = new System.Drawing.Size(100, 36);
+            this.btnBackPaymentFromSplit.TabIndex = 38;
+            this.btnBackPaymentFromSplit.Text = "BACK";
+            this.btnBackPaymentFromSplit.UseVisualStyleBackColor = false;
+            this.btnBackPaymentFromSplit.Click += new System.EventHandler(this.btnBackPaymentFromSplit_Click);
+            // 
+            // labelBillSpitting
+            // 
+            this.labelBillSpitting.AutoSize = true;
+            this.labelBillSpitting.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelBillSpitting.Location = new System.Drawing.Point(13, 0);
+            this.labelBillSpitting.Name = "labelBillSpitting";
+            this.labelBillSpitting.Size = new System.Drawing.Size(144, 35);
+            this.labelBillSpitting.TabIndex = 0;
+            this.labelBillSpitting.Text = " BILL SPLIT";
+            // 
+            // btnProceedSplitting
+            // 
+            this.btnProceedSplitting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
+            this.btnProceedSplitting.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnProceedSplitting.Location = new System.Drawing.Point(3, 495);
+            this.btnProceedSplitting.Name = "btnProceedSplitting";
+            this.btnProceedSplitting.Size = new System.Drawing.Size(366, 55);
+            this.btnProceedSplitting.TabIndex = 2;
+            this.btnProceedSplitting.Text = "PROCEED WITH SPLITTING";
+            this.btnProceedSplitting.UseVisualStyleBackColor = false;
+            this.btnProceedSplitting.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(210)))), ((int)(((byte)(176)))));
+            this.label5.Location = new System.Drawing.Point(23, 173);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(322, 31);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Amount people for splitting:";
+            // 
             // BillViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1924, 773);
+            this.ClientSize = new System.Drawing.Size(1924, 1055);
+            this.Controls.Add(this.pnlSplitBill);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pnlBillSettled);
             this.Controls.Add(this.pnlAddComment);
@@ -683,6 +769,8 @@
             this.pnlBillView.ResumeLayout(false);
             this.pnlBillView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlSplitBill.ResumeLayout(false);
+            this.pnlSplitBill.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -744,5 +832,12 @@
         private Button btnFinishPayment;
         private Button btnBackBillSettled;
         private Button btnContinueWithPayment;
+        private Button btnSplit;
+        private Panel pnlSplitBill;
+        private TextBox txtBoxAmountPeopleSplitting;
+        private Button btnBackPaymentFromSplit;
+        private Label labelBillSpitting;
+        private Button btnProceedSplitting;
+        private Label label5;
     }
 }

@@ -45,7 +45,7 @@ namespace ChapeauDAL
             string query = BaseQuery + "WHERE O.id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@Order_id", orderId ),
+                new SqlParameter("@id", orderId ),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
