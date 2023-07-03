@@ -5,11 +5,13 @@ namespace ChapeauModel
     public class Bill
     {
         List<Order> orders;
+        public int billId;
         public Table table;
         public Employee employee;
         public string comment;
         public PaymentMethod paymentMethod;
         public int tip;
+        public int payed;
 
         public Bill()
         {

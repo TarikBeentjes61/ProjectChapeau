@@ -1,4 +1,4 @@
-﻿using ChapeauModel;
+using ChapeauModel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -39,7 +39,16 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-
+        public List<OrderItem> GetByTableId(int tableId, int billId)
+        {
+            string query = BaseQuery + "WHERE T.Id = @Table_Id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@Table_Id", tableId),
+                new SqlParameter("Bill_id",billId),
+             };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
         public List<OrderItem> GetByOrderId(int orderId)
         {
             string query = BaseQuery + "WHERE O.id = @Order_id";
@@ -49,7 +58,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
@@ -72,7 +80,7 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        private string UpdateQueryByRole(Role role)
+        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
         {
             if (role == Role.Chef)
             {
@@ -80,23 +88,6 @@ namespace ChapeauDAL
             }
             return ("= 3 ");
         }
-        public List<OrderItem> GetOrderItemsByRole(Role role)
-        {
-            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
-            query +=
-                "AND OI.[status] != 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
-                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
-            return ReadTables(ExecuteSelectQuery(query.ToString()));
-        }
-        public List<OrderItem> GetServedOrderItemsByRole(Role role)
-        {
-            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
-            query +=
-                "AND OI.[status] = 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
-                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
-            return ReadTables(ExecuteSelectQuery(query.ToString()));
-        }
-
         public void UpdateStatusById (int id, OrderStatus status)
         {
             string query = $"UPDATE OrderItem SET [status] = @status WHERE id = @id";

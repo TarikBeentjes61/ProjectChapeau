@@ -29,7 +29,7 @@ namespace ChapeauUI
         private double orderTotalPrice = 0;
 
         int tableId;
-        Table table;
+        Table table = new Table();
         Employee employee;
 
         public BillViewForm(Table table, Employee employee)
