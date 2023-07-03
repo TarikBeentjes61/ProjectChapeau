@@ -14,7 +14,7 @@ namespace ChapeauDAL
             string query = 
                 "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
                 "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
                 "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
                 "FROM [Order] AS O " +
                 "JOIN [Table] AS T ON O.Table_id = T.id " +
@@ -27,7 +27,7 @@ namespace ChapeauDAL
             string query = 
                 "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
                 "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
                 "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
                 "FROM [Order] AS O " +
                 "JOIN [Table] AS T ON O.Table_id = T.id " +
@@ -44,7 +44,7 @@ namespace ChapeauDAL
         {
             string query = "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
                 "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
                 "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
                 "FROM [Order] AS O " +
                 "JOIN [Table] AS T ON O.Table_id = T.id " +
@@ -96,6 +96,7 @@ namespace ChapeauDAL
             Employee employee = new Employee()
             {
                 employeeId = (int)row["E_id"],
+                username = (string)row["username"],
                 name = (string)row["name"],
                 hash = (string)row["hash"],
                 salt = (string)row["salt"],
