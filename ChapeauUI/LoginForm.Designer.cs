@@ -63,9 +63,9 @@
             label1.BackColor = Color.White;
             label1.Location = new Point(89, 258);
             label1.Name = "label1";
-            label1.Size = new Size(60, 20);
+            label1.Size = new Size(78, 20);
             label1.TabIndex = 5;
-            label1.Text = "User ID:";
+            label1.Text = "Username:";
             // 
             // label2
             // 

@@ -34,7 +34,6 @@ namespace ChapeauUI
             foreach (Table table in tables)
             {
                 Button button = btnCreate(table, tableNumber);
-                btnStyle(button);
                 button.Click += TableButton_Click;
                 flpnlTables.Controls.Add(button);
                 tableNumber++;
@@ -47,6 +46,7 @@ namespace ChapeauUI
             button.Name = $"btnTable{tableNumber}";
             button.Text = $"{tableNumber}";
             button.Tag = table;
+            btnStyle(button);
             return button;
         }
         private static void btnStyle(Button button)
@@ -107,10 +107,7 @@ namespace ChapeauUI
         //Button to see a table status to free
         private void btnFree_Click(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            Table table = (Table)clickedButton.Tag;
-            TableService tableService = new TableService();
-            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Free));
+            Table table = btnStatusClick(sender, TableStatus.Free);
             btnUpdate(TableStatus.Free);
             btnTableControle(btnFree, FlatStyle.Standard, false, table);
             btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
@@ -119,10 +116,7 @@ namespace ChapeauUI
         //Button to see a table status to occupied
         private void btnOccupied_Click(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            Table table = (Table)clickedButton.Tag;
-            TableService tableService = new TableService();
-            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Occupied));
+            Table table = btnStatusClick(sender, TableStatus.Occupied);
             btnUpdate(TableStatus.Occupied);
             btnTableControle(btnFree, FlatStyle.Popup, true, table);
             btnTableControle(btnOccupied, FlatStyle.Standard, false, table);
@@ -131,10 +125,7 @@ namespace ChapeauUI
         //Button to see a table status to reserved
         private void btnReserved_Click(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            Table table = (Table)clickedButton.Tag;
-            TableService tableService = new TableService();
-            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Reserved));
+            Table table = btnStatusClick(sender, TableStatus.Reserved);
             btnUpdate(TableStatus.Reserved);
             btnTableControle(btnFree, FlatStyle.Popup, true, table);
             btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
@@ -169,6 +160,15 @@ namespace ChapeauUI
             Table table = (Table)lastClickedTable.Tag;
             table.status = status;
             btnStyle(lastClickedTable);
+        }
+        //Send an update of the status to the database 
+        private static Table btnStatusClick(object sender, TableStatus status)
+        {
+            Button clickedButton = (Button)sender;
+            Table table = (Table)clickedButton.Tag;
+            TableService tableService = new TableService();
+            tableService.UpdateById(table.tableId, Convert.ToInt32(status));
+            return table;
         }
         //The timer will refresh the overview each 60 secondes
         private void timer1_Tick(object sender, EventArgs e)

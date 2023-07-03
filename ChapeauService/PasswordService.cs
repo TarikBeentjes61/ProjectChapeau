@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChapeauService
 {
-    public class PasswordService
+    public static class PasswordService
     {
-        public bool VerifyPassword(string password, string salt, string hash)
+        public static bool VerifyPassword(string password, string salt, string hash)
         {
             Password passwordEmployee = new Password();
             return (passwordEmployee.Verify(password, salt, hash));
