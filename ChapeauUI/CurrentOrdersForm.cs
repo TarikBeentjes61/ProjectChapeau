@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,12 +18,25 @@ namespace ChapeauUI
         private Employee loggedInEmployee;
         public CurrentOrdersForm(Employee employee)
         {
+            loggedInEmployee = employee;
             InitializeComponent();
             servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
-            DisplayOrders(GetAllOrderItems(employee), listViewOrders);
-            loggedInEmployee = employee;
+
+            List<OrderItem> orderItems;
+            try
+            {
+                orderItems = GetAllOrderItems(employee);
+            } 
+            catch (SqlException)
+            {
+                MessageBox.Show("Something went wrong while loading the data");
+                return;
+            }
+            
+            DisplayOrders(orderItems, listViewOrders);
+            
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -50,7 +64,16 @@ namespace ChapeauUI
             if(selectedItem is not null)
             {
                 int index = GetSelectedOrderItemIndex();
-                OrderItem item = GetOrderItemById(selectedItem.orderItemId);
+                OrderItem item;
+                try
+                {
+                    item = GetOrderItemById(selectedItem.orderItemId);
+                } 
+                catch (SqlException)
+                {
+                    MessageBox.Show("Something went wrong while loading the selected item");
+                    return;
+                }
 
                 listViewOrders.Items.RemoveAt(index);
                 if (item.status != OrderStatus.Served)
@@ -129,11 +152,25 @@ namespace ChapeauUI
         }
         public void DisplayServedOrders(bool show)
         {
-            DisplayOrders(GetAllServedOrderItems(loggedInEmployee), servedOrderListview);
             if (show)
+            {
+                List<OrderItem> orderItems;
+                try
+                {
+                    orderItems = GetAllServedOrderItems(loggedInEmployee);
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("Something went wrong while loading the data");
+                    return;
+                }
+                DisplayOrders(orderItems, servedOrderListview);
                 servedOrdersPanel.Show();
+            }
             else
+            {
                 servedOrdersPanel.Hide();
+            }
         }
         private void UpdateSelectedItem(OrderStatus status)
         {
@@ -166,7 +203,17 @@ namespace ChapeauUI
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            DisplayOrders(GetAllOrderItems(loggedInEmployee), listViewOrders);
+            List<OrderItem> orderItems;
+            try
+            {
+                orderItems = GetAllOrderItems(loggedInEmployee);
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Something went wrong while loading the data");
+                return;
+            }
+            DisplayOrders(orderItems, listViewOrders);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
