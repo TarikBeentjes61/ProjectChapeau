@@ -418,6 +418,7 @@ namespace ChapeauUI
             {
                 bill.billId = billService.CreateBill(table, employee, "", 0, 0, false, DateTime.Now, 0);
 
+
             }
             else
             {
