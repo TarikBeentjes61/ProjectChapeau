@@ -36,17 +36,14 @@ namespace ChapeauUI
             //TABLE
             TableLabels();
 
-            //Hide other panels
-            HidePanels();
+            //Show and Hide panels
+            ShowAndHidePanels(pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner, pnlOrderOverview);
 
             //Disable All Necessary Buttons
             DisableButtons();
 
             //Change Necessary Button Colors
             ButtonColors();
-
-            //Show this panel
-            pnlOrderOverview.Show();
 
             //LUNCH
             //Starters listview
@@ -190,112 +187,59 @@ namespace ChapeauUI
             CreateOrderForm_Load(sender, e);
         }
 
+        //BUTTONS
         //Lunch order overview
         private void btnLunchOrderOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDinner.Hide();
-            pnlCreateOrderDrinks.Hide();
-
-            //Show this panel
-            pnlCreateOrderLunch.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderDinner, pnlCreateOrderDrinks, pnlCreateOrderLunch);
         }
 
         //Dinner order overview
         private void btnDinnerOrderOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDrinks.Hide();
-
-            //Show this panel
-            pnlCreateOrderDinner.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner);
         }
 
         //Drinks order overview
         private void btnDrinksOrderOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
-
-            //Show this panel
-            pnlCreateOrderDrinks.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDinner, pnlCreateOrderDrinks);
         }
 
         //Dinner button from lunch overview
         private void btnDinner_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDrinks.Hide();
-
-            //Show this panel
-            pnlCreateOrderDinner.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner);
         }
 
         //Drinks button from lunch overview
         private void btnDrinksFromLunchOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
-
-            //Show this panel
-            pnlCreateOrderDrinks.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDinner, pnlCreateOrderDrinks);
         }
 
         //Lunch button from dinner overview
         private void btnLunchFromDinnerOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderDinner.Hide();
-
-            //Show this panel
-            pnlCreateOrderLunch.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderDinner, pnlCreateOrderDrinks, pnlCreateOrderLunch);
         }
 
         //Drinks button from dinner overview
         private void btnDrinksFromDinnerOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
-
-            //Show this panel
-            pnlCreateOrderDrinks.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDinner, pnlCreateOrderDrinks);
         }
 
         //Lunch button from drinks overview
         private void btnLunchFromDrinksOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderDinner.Hide();
-
-            //Show this panel
-            pnlCreateOrderLunch.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderDinner, pnlCreateOrderDrinks, pnlCreateOrderLunch);
         }
 
         //Dinner button from lunch overview
         private void btnDinnerFromDrinksOverview_Click(object sender, EventArgs e)
         {
-            //Hide other panels
-            pnlOrderOverview.Hide();
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
-
-            //Show this panel
-            pnlCreateOrderDinner.Show();
+            ShowAndHidePanels(pnlOrderOverview, pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner);
         }
 
         //Add and show order
@@ -342,33 +286,15 @@ namespace ChapeauUI
         //Go to overview buttons
         private void btnGoToOverviewLunch_Click(object sender, EventArgs e)
         {
-            //Show this panel
-            pnlOrderOverview.Show();
-
-            //Hide other panels
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
+            ShowAndHidePanels(pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner, pnlOrderOverview);
         }
         private void btnGoToOverviewDinner_Click(object sender, EventArgs e)
         {
-            //Show this panel
-            pnlOrderOverview.Show();
-
-            //Hide other panels
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
+            ShowAndHidePanels(pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner, pnlOrderOverview);
         }
         private void btnGoToOverviewDrinks_Click(object sender, EventArgs e)
         {
-            //Show this panel
-            pnlOrderOverview.Show();
-
-            //Hide other panels
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
-            pnlCreateOrderDinner.Hide();
+            ShowAndHidePanels(pnlCreateOrderLunch, pnlCreateOrderDrinks, pnlCreateOrderDinner, pnlOrderOverview);
         }
 
         //Pay button
@@ -478,18 +404,16 @@ namespace ChapeauUI
             BillService billService = new BillService();
             OrderItemService orderItemService = new OrderItemService();
 
-            //bill = billService.GetBillByTableId(tableId);
+            if (billService.CheckBill(table) == null)
+            {
+                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, true);
+            }
+            else
+            {
+                bill = billService.CheckBill(table);
+            }
 
-            //if (bill == null)
-            //{
-            billId = billService.CheckAndCreateBill(employee, table, /*orderItem.comment*/"comment", 0, 0, 1);
-            //}
-            //else
-            //{
-            //    billId = bill.billId;
-            //}
-
-            int orderId = orderService.AddOrder(tableId, employeeId, billId, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(tableId, employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -548,14 +472,6 @@ namespace ChapeauUI
             btnPay.Enabled = true;
         }
 
-        //Hide panels
-        private void HidePanels()
-        {
-            pnlCreateOrderDinner.Hide();
-            pnlCreateOrderDrinks.Hide();
-            pnlCreateOrderLunch.Hide();
-        }
-
         //Disable button
         private void DisableButtons()
         {
@@ -586,6 +502,17 @@ namespace ChapeauUI
             lblTableLunchOverview.Text = "Table " + tableId.ToString();
             lblTableDinnerOverview.Text = "Table " + tableId.ToString();
             lblTableDrinksOverview.Text = "Table " + tableId.ToString();
+        }
+
+        private void ShowAndHidePanels(System.Windows.Forms.Panel pnl1, System.Windows.Forms.Panel pnl2, System.Windows.Forms.Panel pnl3, System.Windows.Forms.Panel pnl4)
+        {
+            //Hide other panels
+            pnl1.Hide();
+            pnl2.Hide();
+            pnl3.Hide();
+
+            //Show this panel
+            pnl4.Show();
         }
     }
 }

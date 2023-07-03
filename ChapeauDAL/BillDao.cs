@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace ChapeauDAL
 {
@@ -10,7 +11,7 @@ namespace ChapeauDAL
     {
         public List<Bill> GetAll()
         {
-            string query = 
+            string query =
                 "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
@@ -21,7 +22,7 @@ namespace ChapeauDAL
         }
         public Bill GetById(int id)
         {
-            string query = 
+            string query =
                 $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
                 "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
@@ -35,34 +36,39 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        //public int CheckAndCreateBill(int billId, Employee employee, Table table, string comment, int paymentMethod, double tip, int payed)
-        //{
-        //    string checkQuery = "SELECT COUNT(*) FROM Bills WHERE BillID = @BillID";
-        //    string insertQuery = "INSERT INTO Bills (BillID, Employee_Id, Table_Id, comment, paymentMethod, tip, payed) OUTPUT INSERTED.id VALUES (@BillID, @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
-        //    //string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@billId @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
-
-        //    SqlParameter[] sqlParameters = new SqlParameter[]
-        //    {
-        //        new SqlParameter("@BillID", billId),
-        //    };
-
-        //    ExecuteInsertQuery(checkQuery, sqlParameters);
-        //}
-        public int CheckAndCreateBill(int id, Employee employee, Table table, string comment, int paymentMethod, double tip, int payed)
+        public Bill CheckBill(Table table)
         {
-            string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@billId @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
-
-            SqlParameter[] sqlParameters = new SqlParameter[]
-            {
-                new SqlParameter("@Employee_id", employee.employeeId),
+            string selectQuery = "SELECT id, employee, table_Id, comment, payementMethod, tip, payed FROM Bills table_Id = @Table_id";
+            SqlParameter[] sqlParametersSelect = new SqlParameter[]
+             {
                 new SqlParameter("@Table_id", table.tableId),
-                new SqlParameter("@comment", comment ),
-                new SqlParameter("@paymentMethod", paymentMethod ),
-                new SqlParameter("@tip", tip ),
-                new SqlParameter("@payed", payed ),
-            };
-            return ExecuteInsertQuery(query, sqlParameters);
+             };
+            Bill bill = ReadSingle(ExecuteSelectQuery(selectQuery, sqlParametersSelect));
+
+            if (bill == null)
+            {
+                return bill;
+            }
+            else
+            {
+                return null;
+            }
         }
+        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed)
+        {
+            string insertQuery = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
+            SqlParameter[] sqlParametersInsert = new SqlParameter[]
+             {
+                     new SqlParameter("@Employee_Id", employee.employeeId),
+                     new SqlParameter("@Table_Id", table.tableId),
+                     new SqlParameter("@comment", comment ),
+                     new SqlParameter("@paymentMethod", paymentMethod ),
+                     new SqlParameter("@tip", tip ),
+                     new SqlParameter("@payed", payed ),
+             };
+            return ExecuteInsertQuery(insertQuery, sqlParametersInsert);
+        }
+
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed)
         {
             string query = $"UPDATE BILL SET [comment] = @comment, [paymentMethod] = @paymentMethod, [tip] = @tip, [payed] = @payed WHERE id = @id";

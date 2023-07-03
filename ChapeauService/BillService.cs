@@ -28,9 +28,13 @@ namespace ChapeauService
         {
             return billDao.GetBillByTableId(tableId);
         }
-        public int CheckAndCreateBill(Employee employee, Table table, string comment, int paymentMethod, double tip, int payed)
+        public Bill CheckBill(Table table)
         {
-            return billDao.CheckAndCreateBill(employee, table,comment, paymentMethod, tip, payed);
+            return billDao.CheckBill(table);
+        }
+        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed)
+        {
+            return billDao.CreateBill(table, employee, comment, paymentMethod, tip, payed);
         }
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed)
         {
