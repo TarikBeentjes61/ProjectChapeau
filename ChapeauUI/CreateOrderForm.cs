@@ -443,22 +443,21 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            if(orderId != 0)
+            if(orderId != 0 && billId != 0)
             {
                 order = orderService.GetById(orderId);
-            }
-           
-            List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
+                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
 
-            foreach (OrderItem o in orderItems)
-            {
-                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
+                foreach (OrderItem o in orderItems)
+                {
+                    MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
-                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
+                    ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
 
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(o.amount.ToString());
-                listViewOrderOverview.Items.Add(item);
+                    item.SubItems.Add(menuItem.itemName);
+                    item.SubItems.Add(o.amount.ToString());
+                    listViewOrderOverview.Items.Add(item);
+                }
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();
