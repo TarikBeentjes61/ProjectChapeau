@@ -5,6 +5,7 @@ namespace ChapeauModel
     public class Bill
     {
         List<Order> orders;
+        public int billId;
         public Table table;
         public Employee employee;
         public string comment;
@@ -18,7 +19,7 @@ namespace ChapeauModel
 
         public void CalculateBill()
         {
-            
+
         }
 
         public double CalculateVAT(double vat, double price)
@@ -39,6 +40,11 @@ namespace ChapeauModel
         public void UpdateBill() 
         {
 
+        }
+
+        public string StringOverride(double value)
+        {
+            return "€ " + value.ToString("F");
         }
     }
 }

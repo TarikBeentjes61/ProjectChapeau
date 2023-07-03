@@ -17,103 +17,74 @@ namespace ChapeauUI
 {
     public partial class BillViewForm : Form
     {
+        private bool btnClickedPayMethod = false;
         private bool setChange = false;
         private bool setTip = false;
-        private bool goFurther = false;
-        private bool buttonClicked = false;
         private double changePrice = 0;
         private PaymentMethod paymentMethode;
-        private double doubleOrderPrice = 0;
         private double totalTip = 0;
         private string comment = "";
         private double orderTotalPrice = 0;
+        private double totalVat = 0;
         Employee employee;
         Table table;
         Bill bill = new Bill();
         Order order = new Order();
-        int tableId;
 
         public BillViewForm(Table table, Employee employee)
         {
             this.table = table;
-            //this.table.tableId = table.tableId;
-            //this.tableId = table.tableId;
             this.employee = employee;
+
             InitializeComponent();
             showPanel(pnlBillView, pnlBillSettled, pnlAddComment, pnlBillPayment, pnlSplitBill);
   
             OrderItemService orderItemService = new OrderItemService();
-            List<OrderItem> orderItems = orderItemService.GetAll();
-            //ShowBillListView(listViewBillOverview);
-            listViewBillOverview.Clear();
-            listViewBillOverview.View = View.Details; // Specify that each item appears on a separate line.
+            //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
 
-            listViewBillOverview.Columns.Add("Amount", 80);
-            listViewBillOverview.Columns.Add("Name", 200);
-            listViewBillOverview.Columns.Add("Price", 60);
+            ShowBillListView(listViewBillOverview, orderItemService);
+            //listViewBillOverview.Items.AddRange(DisplayTest(orderItemService, listViewBillOverview, bill).ToArray()); 
 
-            double totalVat = 0;
+        }
+
+        private void ShowBillListView(System.Windows.Forms.ListView listView, OrderItemService orderItemService)
+        {
+            List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(1);
+
+            listView.Clear();
+            listView.View = View.Details; // Specify that each item appears on a separate line.
+
+            listView.Columns.Add("Amount", 80);
+            listView.Columns.Add("Name", 200);
+            listView.Columns.Add("Price", 60);
+
             double calVat = 0;
             double calPrice = 0;
             double calTotalVat = 0;
 
-
-            MenuItemService menuItemService = new MenuItemService();
-
-            foreach (OrderItem order in orderItems)
+            foreach (OrderItem order in orderItemsTest)
             {
                 ListViewItem item = new ListViewItem(order.amount.ToString());
-
-                MenuItem menuItem = menuItemService.GetById(order.menuItem.menuItemId);
-                calVat = bill.CalculateVAT(menuItem.tax, menuItem.price);
-                calPrice = bill.CalculateTotalPrice(calVat, order.amount, menuItem.price);
-                calTotalVat = bill.CalculateTotalVAT(calPrice, menuItem.tax);
+                calVat = bill.CalculateVAT(order.menuItem.tax, order.menuItem.price);
+                calPrice = bill.CalculateTotalPrice(calVat, order.amount, order.menuItem.price);
+                calTotalVat = bill.CalculateTotalVAT(calPrice, order.menuItem.tax);
 
                 orderTotalPrice += calPrice;
                 totalVat += calTotalVat;
 
-                item.SubItems.Add(menuItem.itemName.ToString());
+                item.SubItems.Add(order.menuItem.itemName.ToString());
                 item.SubItems.Add("€" + calPrice.ToString("F"));
-                listViewBillOverview.Items.Add(item);
+                //item.SubItems.Add(bill.CalculateTotalPrice(bill.CalculateVAT(order.menuItem.tax, order.menuItem.price), order.amount, order.menuItem.price).ToString());
+                listView.Items.Add(item);
             }
 
-            labelOrderPrice.Text = "€" + orderTotalPrice.ToString("F");
-            labelOrderPricePayment.Text = "€" + orderTotalPrice.ToString("F");
-            labelFinalOrderPrice.Text = "€" + orderTotalPrice.ToString("F");
-
-            doubleOrderPrice = orderTotalPrice;
-            labelVAT.Text = "€" + totalVat.ToString("F");
-            labelFinalVAT.Text = "€" + totalVat.ToString("F");
-        }
-
-        public void ShowBillListView(System.Windows.Forms.ListView listView)
-        {
-            OrderItem orderItem = new OrderItem();
-            OrderService orderService = new OrderService();
-            OrderItemService orderItemService = new OrderItemService();
-            MenuItemService menuItemService = new MenuItemService();
-            //int orderId = orderService.AddOrder(tableId, employee.employeeId, 1, DateTime.Now, OrderStatus.Preparation);
-
-            listViewBillOverview.Clear();
-            listViewBillOverview.View = View.Details;
-
-            listViewBillOverview.Columns.Add("Amount", 80);
-            listViewBillOverview.Columns.Add("Name", 200);
-            listViewBillOverview.Columns.Add("Price", 60);
-
-            //foreach (OrderItem o in order.GetOrderItems())
-            //{
-            //    MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
-
-            //    orderTotalPrice += menuItem.price;
-            //    o.order.id = orderId;
-            //    orderItemService.AddOrderItems(orderId, o.menuItem.menuItemId, o.amount, o.comment, o.status);
-            //}
+            SetlabelsOrderPrice(labelOrderPrice, labelOrderPricePayment, labelFinalOrderPrice);
+            SetlabelsTotalVAT(labelVAT, labelFinalVAT);
         }
 
         private void btnProceedToPayment_Click(object sender, EventArgs e)
         {
-            if (!buttonClicked) //if none button has been clicked:
+            if (!btnClickedPayMethod) //if none button has been clicked:
             {
                 MessageBox.Show("No paymethod has been selected, please select one.");
             } else
@@ -124,7 +95,7 @@ namespace ChapeauUI
 
         private void btnSplit_Click(object sender, EventArgs e)
         {
-            if (!buttonClicked) //if none button has been clicked:
+            if (!btnClickedPayMethod) //if none button has been clicked:
             {
                 MessageBox.Show("No paymethod has been selected, please select one.");
             }
@@ -159,13 +130,13 @@ namespace ChapeauUI
             {
                 double input = double.Parse(txtBoxAmountPaid.Text);
 
-                if (input < doubleOrderPrice)
+                if (input < orderTotalPrice)
                 {
                     MessageBox.Show("Amount paid is lower than the order price. Please check again.");
                 }
                 else
                 {
-                    changePrice = input - doubleOrderPrice;
+                    changePrice = input - orderTotalPrice;
                     labelChange.Text = "€" + changePrice.ToString("F");
                     labelFinalAmountPaid.Text = "€" + input.ToString("F");
                     setChange = true;
@@ -237,6 +208,18 @@ namespace ChapeauUI
                 labelChangeFinal.Text = "€" + changePrice.ToString("F");
             }
         }
+        private void SetlabelsOrderPrice(Label label1, Label label2, Label label3)
+        {
+            label1.Text = bill.StringOverride(orderTotalPrice);
+            label2.Text = bill.StringOverride(orderTotalPrice);
+            label3.Text = bill.StringOverride(orderTotalPrice);
+        }
+
+        private void SetlabelsTotalVAT(Label label1, Label label2)
+        {
+            label1.Text = bill.StringOverride(totalVat);
+            label2.Text = bill.StringOverride(totalVat);
+        }
 
         private void btnBackComment_Click(object sender, EventArgs e)
         {
@@ -246,22 +229,19 @@ namespace ChapeauUI
         private void btnDebit_Click(object sender, EventArgs e)
         {
             btnChangeBackColor(btnDebit, btnCash, btnVisa);
-            buttonClicked = true;
-            paymentMethode = PaymentMethod.Pin;
+            btnProceedToPayment.Tag = PaymentMethod.Pin;
         }
 
         private void btnVisa_Click(object sender, EventArgs e)
         {
             btnChangeBackColor(btnVisa, btnCash, btnDebit);
-            buttonClicked = true;
-            paymentMethode = PaymentMethod.CreditCard;
+            btnProceedToPayment.Tag = PaymentMethod.CreditCard;
         }
 
         private void btnCash_Click(object sender, EventArgs e)
         {
             btnChangeBackColor(btnCash, btnVisa, btnDebit);
-            buttonClicked = true;
-            paymentMethode = PaymentMethod.Cash;
+            btnProceedToPayment.Tag = PaymentMethod.Cash;
         }
 
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
