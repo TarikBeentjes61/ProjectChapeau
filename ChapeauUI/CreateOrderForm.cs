@@ -407,7 +407,7 @@ namespace ChapeauUI
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, "t", 0, 0, true, DateTime.Now, 0);
+                bill.billId = billService.CreateBill(table, employee, "t", 0, 0, false, DateTime.Now, 0);
             }
             else
             {
@@ -443,10 +443,10 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            if(orderId != 0 && billId != 0)
+            if (orderId != 0 && billId != 0)
             {
                 order = orderService.GetById(orderId);
-                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
+                List<OrderItem> orderItems = orderItemService.GetByTableIdAndBIlId(table.tableId, billId);
 
                 foreach (OrderItem o in orderItems)
                 {
