@@ -49,7 +49,7 @@ namespace ChapeauUI
 
         private void ShowBillListView(System.Windows.Forms.ListView listView, OrderItemService orderItemService)
         {
-            List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(1);
+            List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
             //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
 
             listView.Clear();

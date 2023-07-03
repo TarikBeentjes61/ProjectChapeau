@@ -43,7 +43,7 @@ namespace ChapeauService
         }
         public List<OrderItem> GetAllByBillId(int billId)
         {
-            return orderItemDao.GetByOrderId(billId);
+            return orderItemDao.GetAllByBillId(billId);
         }
     }
 }
