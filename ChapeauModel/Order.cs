@@ -23,5 +23,9 @@ namespace ChapeauModel
         {
             return orderItems;
         }
+        public void EmptyOrderItems()
+        {
+            orderItems.Clear();
+        }
     }
 }
