@@ -27,6 +27,8 @@ namespace ChapeauUI
         {
             InitializeComponent();
 
+            ShowOrder();
+
             this.employee = employee;
             this.table = table;
             billId = bill.billId;
@@ -90,8 +92,6 @@ namespace ChapeauUI
         {
             try
             {
-                ShowOrder();
-
                 //ORDER LUNCH PANEL
                 FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
 
@@ -403,12 +403,11 @@ namespace ChapeauUI
         //Add order
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
-            OrderItem orderItem = new OrderItem();
             OrderItemService orderItemService = new OrderItemService();
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, true, DateTime.Now, 0);
+                bill.billId = billService.CreateBill(table, employee, "t", 0, 0, true, DateTime.Now, 0);
             }
             else
             {
@@ -444,23 +443,13 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            //order = orderService.GetById(orderId);
-
-            if (billId == order.bill.billId)
+            if(orderId != 0)
             {
-                foreach (OrderItem o in order.GetOrderItems())
-                {
-                    MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
-
-                    ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
-
-                    item.SubItems.Add(menuItem.itemName);
-                    item.SubItems.Add(o.amount.ToString());
-                    listViewOrderOverview.Items.Add(item);
-                }
+                order = orderService.GetById(orderId);
             }
-
+           
             List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
+
             foreach (OrderItem o in orderItems)
             {
                 MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
