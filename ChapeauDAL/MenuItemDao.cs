@@ -41,7 +41,7 @@ namespace ChapeauDAL
                 "WHERE MI.itemType = @itemType AND M.id = @menuId";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@itemType", Convert.ToInt32(itemType)),
+                new SqlParameter("@itemType", itemType),
                 new SqlParameter("@menuId", Convert.ToInt32(menuId)),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));

@@ -8,7 +8,7 @@ namespace ChapeauModel
         private List<OrderItem> orderItems;
         public Employee employee;
         public Table table;
-        public Bill bill;
+        public Bill bill = new Bill();
         public int id;
         public DateTime date;
         public OrderStatus status;
@@ -19,11 +19,6 @@ namespace ChapeauModel
         }
         
         public TimeSpan WaitingTime { get { return DateTime.Now.Subtract(date); } }
-
-        public void SetOrderItems(List<OrderItem> orderItems)
-        {
-            this.orderItems = orderItems;
-        }
         public List<OrderItem> GetOrderItems()
         {
             return orderItems;
