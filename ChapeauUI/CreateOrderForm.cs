@@ -442,7 +442,7 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            order = orderService.GetById(orderId);
+            //order = orderService.GetById(orderId);
 
             if (billId == order.bill.billId)
             {
