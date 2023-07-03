@@ -1,4 +1,4 @@
-﻿using ChapeauModel;
+using ChapeauModel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -39,7 +39,7 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetByTableId(int tableId, int billId)
+        public List<OrderItem> GetByTableIdAndBillId(int tableId, int billId)
         {
             string query = BaseQuery + "WHERE T.Id = @Table_Id AND B.Id = @Bill_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
@@ -51,7 +51,7 @@ namespace ChapeauDAL
         }
         public List<OrderItem> GetByOrderId(int orderId)
         {
-            string query = BaseQuery + "WHERE O.id = @id";
+            string query = BaseQuery + "WHERE O.id = @Order_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@id", orderId ),
@@ -81,6 +81,30 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+        private string UpdateQueryByRole(Role role)
+        {
+            if (role == Role.Chef)
+            {
+                return ("IN (1,2) ");
+            }
+            return ("= 3 ");
+        }
+        public List<OrderItem> GetOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] != 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
+        }
+        public List<OrderItem> GetServedOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] = 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
+        }
         public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
         {
             StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
@@ -88,7 +112,7 @@ namespace ChapeauDAL
             {
                 query.Append("IN (1,2) ");
             }
-            else if (role == Role.Barista) 
+            else if (role == Role.Barista)
             {
                 query.Append("= 3 ");
             }

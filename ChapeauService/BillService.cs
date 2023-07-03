@@ -37,6 +37,7 @@ namespace ChapeauService
             return billDao.CreateBill(table, employee, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
+
         {
             billDao.UpdateBill(id, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }

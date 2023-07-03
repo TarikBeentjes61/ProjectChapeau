@@ -21,13 +21,21 @@ namespace ChapeauService
         {
             return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
         }
-        public List<OrderItem> GetByTableId(int tableId, int billId)
+        public List<OrderItem> GetByTableIdAndBIlId(int tableId, int billId)
         {
-            return orderItemDao.GetByTableId(tableId, billId);
+            return orderItemDao.GetByTableIdAndBillId(tableId, billId);
         }
         public OrderItem GetById(int id)
         {
             return orderItemDao.GetById(id);
+        }
+        public List<OrderItem> GetOrderItemsByRole(Role role)
+        {
+            return orderItemDao.GetOrderItemsByRole(role);
+        }
+        public List<OrderItem> GetServedOrderItemsByRole(Role role)
+        {
+            return orderItemDao.GetServedOrderItemsByRole(role);
         }
         public List<OrderItem> GetByOrderId(int orderId)
         {

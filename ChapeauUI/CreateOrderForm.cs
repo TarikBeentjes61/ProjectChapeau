@@ -24,7 +24,6 @@ namespace ChapeauUI
         public CreateOrderForm(Table table, Employee employee)
         {
             InitializeComponent();
-
             ShowOrder();
 
             this.employee = employee;
@@ -418,6 +417,8 @@ namespace ChapeauUI
             if (billService.CheckBill(table) == null)
             {
                 bill.billId = billService.CreateBill(table, employee, "", 0, 0, false, DateTime.Now, 0);
+
+
             }
             else
             {
@@ -453,10 +454,12 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
+
             if(order.id != 0 && bill.billId != 0)
             {
                 //order = orderService.GetById(order.id);
                 List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, bill.billId);
+
 
                 foreach (OrderItem o in orderItems)
                 {

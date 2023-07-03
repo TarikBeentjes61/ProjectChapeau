@@ -13,8 +13,9 @@ namespace ChapeauModel
         public PaymentMethod paymentMethod;
         public bool payed;
         public double tip;
-        public double billPrice;
         public DateTime dateTime;
+        public double billPrice;
+
 
         public Bill()
         {

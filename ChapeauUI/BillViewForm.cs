@@ -129,10 +129,10 @@ namespace ChapeauUI
                 int inputSplit = int.Parse(txtBoxAmountPeopleSplitting.Text);
                 SetSplitLabels(inputSplit);
                 labelOrderPricePayment.Tag = inputSplit;
-                for (int i = 0; i < inputSplit; i++)
-                {
+                //for (int i = 0; i < inputSplit; i++) //split 2
+                //{
                     showPanel(pnlBillPayment);
-                }
+                //}
             } else
             {
                 MessageBox.Show("Please enter a amount of splits.");
@@ -221,6 +221,15 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
+            if ((int)btnPay.Tag > 1)
+            {
+                int payTag = (int)btnPay.Tag;
+                payTag--;
+                btnPay.Tag = payTag;
+                showPanel(pnlBillPayment);
+                return;
+            }
+
             double amountPaid = double.Parse(txtBoxAmountPaid.Text);
             if (amountPaid > 0)
             {
@@ -279,7 +288,9 @@ namespace ChapeauUI
             //database verander dbo.BILL van tip en payed.
             BillService billService = new BillService();
             //id, comment, paymentMethod, tip, payed.
+
             billService.UpdateBill(bill.billId, bill.comment, (int)bill.paymentMethod, 1, true, DateTime.Now, bill.billPrice);
+
 
             TableForm table = new TableForm(employee);
             this.Close();
