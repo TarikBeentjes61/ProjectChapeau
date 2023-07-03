@@ -15,7 +15,7 @@ namespace ChapeauUI
 {
     public partial class TableForm : Form
     {
-        Employee employee;
+        private Employee employee;
         private Button lastClickedTable;
         public TableForm(Employee employee)
         {
@@ -54,8 +54,8 @@ namespace ChapeauUI
                 case TableStatus.Reserved:
                     button.BackColor = Color.Gray;
                     break;
-                case TableStatus.Occupied: 
-                    button.BackColor = Color.Orange; 
+                case TableStatus.Occupied:
+                    button.BackColor = Color.Orange;
                     break;
                 case TableStatus.Ordered:
                     button.BackColor = Color.Salmon;
@@ -69,9 +69,9 @@ namespace ChapeauUI
         private void TableButton_Click(object sender, EventArgs e)
         {
             pnlTableView.Show();
-            Button clicked = (Button)sender;
-            lastClickedTable = clicked;
-            Table table = (Table)clicked.Tag;
+            Button clickedButton = (Button)sender;
+            lastClickedTable = clickedButton;
+            Table table = (Table)clickedButton.Tag;
             lblTableID.Text = table.tableId.ToString();
             btnTableOrder.Tag = table;
             switch (table.status)
@@ -91,7 +91,7 @@ namespace ChapeauUI
                     btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
                     btnTableControle(btnReserved, FlatStyle.Standard, false, table);
                     break;
-            }        
+            }
         }
         //To go back to the table overview
         private void btnBack_Click(object sender, EventArgs e)
@@ -101,8 +101,8 @@ namespace ChapeauUI
         //Button to see a table status to free
         private void btnFree_Click(object sender, EventArgs e)
         {
-            Button clicked = (Button)sender;
-            Table table = (Table)clicked.Tag;
+            Button clickedButton = (Button)sender;
+            Table table = (Table)clickedButton.Tag;
             TableService tableService = new TableService();
             tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Free));
             btnUpdate(TableStatus.Free);
@@ -113,8 +113,8 @@ namespace ChapeauUI
         //Button to see a table status to occupied
         private void btnOccupied_Click(object sender, EventArgs e)
         {
-            Button clicked = (Button)sender;
-            Table table = (Table)clicked.Tag;
+            Button clickedButton = (Button)sender;
+            Table table = (Table)clickedButton.Tag;
             TableService tableService = new TableService();
             tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Occupied));
             btnUpdate(TableStatus.Occupied);
@@ -125,8 +125,8 @@ namespace ChapeauUI
         //Button to see a table status to reserved
         private void btnReserved_Click(object sender, EventArgs e)
         {
-            Button clicked = (Button)sender;
-            Table table = (Table)clicked.Tag;
+            Button clickedButton = (Button)sender;
+            Table table = (Table)clickedButton.Tag;
             TableService tableService = new TableService();
             tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Reserved));
             btnUpdate(TableStatus.Reserved);
@@ -137,8 +137,8 @@ namespace ChapeauUI
         //Gives correct tableId and employee object to the next form
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
-            Button clicked = (Button)sender;
-            Table tableOrdering = (Table)clicked.Tag ;
+            Button clickedButton = (Button)sender;
+            Table tableOrdering = (Table)clickedButton.Tag;
             this.Close();
             CreateOrderForm createOrderForm = new CreateOrderForm(tableOrdering, employee);
             createOrderForm.Show();
@@ -161,6 +161,11 @@ namespace ChapeauUI
             Table table = (Table)lastClickedTable.Tag;
             table.status = status;
             btnStyle(lastClickedTable);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TableForm_Load(sender, e);
         }
     }
 }
