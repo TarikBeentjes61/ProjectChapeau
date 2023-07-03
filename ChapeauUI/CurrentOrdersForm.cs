@@ -1,37 +1,31 @@
 ﻿using ChapeauModel;
 using ChapeauService;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ChapeauUI
 {
     public partial class CurrentOrdersForm : Form
     {
-        private OrderItem? lastSelectedItem; //Keep track of the last selected item
-        private int lastSelectedIndex;
+        private Employee loggedInEmployee;
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
+            loggedInEmployee = employee;
             servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
-            CreateTimer(60); //Takes in seconds which are converted to milliseconds
-            RefreshData();
-        }
 
-        private void CreateTimer(int seconds)
-        {
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = seconds * 1000; //interval is in milliseconds so multiply by 1000
-            timer.Tick += new EventHandler(Timer_Tick); //Takes in the event that needs to be called when time expires
-            timer.Start();
+            List<OrderItem> orderItems;
+            try
+            {
+                orderItems = GetAllOrderItems(employee);
+            } 
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong while loading the data");
+                return;
+            }
+            
+            DisplayOrders(orderItems, listViewOrders);
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -45,87 +39,72 @@ namespace ChapeauUI
         {
             logoutButton.Text = employee.name;
         }
-        private void RefreshData()
-        {
-            try
-            {
-                //Refreshed all the loaded data from list and the selected item
-                DisplayOrders(GetAllOrderItems());
-                if (lastSelectedItem != null)
-                {
-                    lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
-                    DisplaySelectedItem(GetSelectedOrderItem());
-                }
-            }
-            catch (Exception e)
-            {
-                ShowErrorMessageBox(e);
-            }
-        }
         private OrderItem? GetSelectedOrderItem()
         {
-            if(listViewOrders.SelectedItems[0] != null)
-                return (OrderItem)listViewOrders.SelectedItems[0].Tag;
-            return null;
+            return listViewOrders.SelectedItems.Count > 0 ? (OrderItem)listViewOrders.SelectedItems[0].Tag : null;
         }
         private int GetSelectedOrderItemIndex()
         {
-            if (listViewOrders.SelectedItems[0] != null)
-                return listViewOrders.SelectedItems[0].Index;
-            return 0;
+            return listViewOrders.SelectedItems.Count > 0 ? listViewOrders.SelectedItems[0].Index : 0;
         }
         private void RefreshSingle()
         {
-            try
+            OrderItem? selectedItem = GetSelectedOrderItem();
+            if(selectedItem is not null)
             {
-                //Remove the changed item and fetch the new one
-                listViewOrders.Items.RemoveAt(lastSelectedIndex);
-                lastSelectedItem = GetOrderItemById(lastSelectedItem.orderItemId);
+                int index = GetSelectedOrderItemIndex();
+                OrderItem item;
+                try
+                {
+                    item = GetOrderItemById(selectedItem.orderItemId);
+                } 
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong while loading the data");
+                    return;
+                }
 
-                listViewOrders.Items.Add(CreateListViewItem(lastSelectedItem));
-                listViewOrders.Sort();
-            }
-            catch (Exception e)
-            {
-                ShowErrorMessageBox(e);
+                if (item.status != OrderStatus.Served)
+                    listViewOrders.Items[index] = CreateListViewItem(item);
             }
         }
-        private void ShowErrorMessageBox(Exception e)
+        private List<OrderItem> GetAllOrderItems(Employee employee)
         {
-            //Display a message box whenever something goes wrong like loading data
-            MessageBox.Show("Something went wrong while loading the data " + e.Message);
-        }
-        private List<OrderItem> GetAllOrderItems()
-        {
-            //Gets all the orders depending on the current role.
-            //Chef only gets items that are from menu 1 or 2
-            //Barista only gets items that are from menu 3
+            //Gets all the orderitems depending on the current role.
             OrderItemService orderItemService = new OrderItemService();
-            return orderItemService.GetOrderItemsByIdAndRole(1, Role.Barista);
+            return orderItemService.GetOrderItemsByRole(employee.role);
+        }
+        private List<OrderItem> GetAllServedOrderItems(Employee employee)
+        {
+            //Gets all the served orderitems depending on the current role.
+            OrderItemService orderItemService = new OrderItemService();
+            return orderItemService.GetServedOrderItemsByRole(employee.role);
         }
         private OrderItem GetOrderItemById(int id)
         {
+            //Get a specific orderItem by id
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
         }
-        private void DisplayOrders(List<OrderItem> orderItems)
+        private void DisplayOrders(List<OrderItem> orderItems, ListView listView)
         {
             //Loads the orders for the given list
-            listViewOrders.Items.Clear();
-            foreach (OrderItem item in orderItems) //Loop through all of the items from the order
+            listView.Items.Clear();
+            foreach (OrderItem item in orderItems)
             {
-                listViewOrders.Items.Add(CreateListViewItem(item));
+                listView.Items.Add(CreateListViewItem(item));
             }
         }
         private ListViewItem CreateListViewItem(OrderItem item)
         {
             //Creates the list item and fills it with orderitem data
-            ListViewItem li = new ListViewItem(item.orderItemId.ToString());
+            ListViewItem li = new ListViewItem(item.order.WaitingTime.ToString("hh\\:mm"));
             li.Tag = item;
-            li.SubItems.Add(item.order.id.ToString());
-            li.SubItems.Add(item.amount.ToString());
+            li.SubItems.Add(item.orderItemId.ToString());
+            li.SubItems.Add(item.amount.ToString() + 'x');
             li.SubItems.Add(item.menuItem.itemName);
-            li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
+            if (item.status != OrderStatus.Served)
+                li.BackColor = GetColourByState(item.status); //Changes the colour of the row on the given state
             return li;
         }
         private Color GetColourByState(OrderStatus status)
@@ -144,40 +123,85 @@ namespace ChapeauUI
         private void DisplaySelectedItem(OrderItem selectedItem)
         {
             //Fills all the labels with data from the last selected item
-            selectedOrderIdLabel.Text = selectedItem.orderItemId.ToString();
-            selectedOrderStatusLabel.Text = selectedItem.status.ToString();
-            commentLabel.Text = selectedItem.comment.ToString();
-            tableLabel.Text = selectedItem.order.table.tableId.ToString();
+            if (selectedItem.status == OrderStatus.Served)
+            {
+                selectedOrderIdLabel.Text = "";
+                selectedOrderStatusLabel.Text = "";
+                commentLabel.Text = "";
+                tableLabel.Text = "";
+            }
+            else
+            {
+                selectedOrderIdLabel.Text = selectedItem.orderItemId.ToString();
+                selectedOrderStatusLabel.Text = selectedItem.status.ToString();
+                commentLabel.Text = selectedItem.comment.ToString();
+                tableLabel.Text = selectedItem.order.table.tableId.ToString();
+            }
+        }
+        public void DisplayServedOrders(bool show)
+        {
+            if (show)
+            {
+                List<OrderItem> orderItems;
+                try
+                {
+                    orderItems = GetAllServedOrderItems(loggedInEmployee);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong while loading the data");
+                    return;
+                }
+                DisplayOrders(orderItems, servedOrderListview);
+                servedOrdersPanel.Show();
+            }
+            else
+            {
+                servedOrdersPanel.Hide();
+            }
         }
         private void UpdateSelectedItem(OrderStatus status)
         {
             //Gets called whenever a button click happens, updates the data and refreshes it.
             //The selected item changes it status depending on the button pressed.
-            if (lastSelectedItem != null)
+            OrderItem? selectedItem = GetSelectedOrderItem();
+            if (selectedItem is not null && selectedItem.status != OrderStatus.Served)
             {
                 OrderItemService orderItemService = new OrderItemService();
-                orderItemService.UpdateStatusById(lastSelectedItem.orderItemId, status);
+                orderItemService.UpdateStatusById(selectedItem.orderItemId, status);
+                DisplaySelectedItem(orderItemService.GetById(selectedItem.orderItemId));
                 RefreshSingle();
             }
+        }
+        private void ChangeStateBackgroundControls(bool state)
+        {
+            listViewOrders.Enabled = state;
+            ServedButton.Enabled = state;
+            preparedButton.Enabled = state;
+            logoutButton.Enabled = state;
+            showServedButton.Enabled = state;
+            preperationButton.Enabled = state;
         }
         private void listViewOrders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             //Gets called whenever u click on an item within the list
-            if (!e.IsSelected)
-                return;
-            try
-            {
+            if (e.IsSelected)
                 DisplaySelectedItem((OrderItem)e.Item.Tag);
-            }
-            catch (Exception ex)
-            {
-                ShowErrorMessageBox(ex);
-            }
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
             //The event that gets called whenever the timer runs out
-            RefreshData();
+            List<OrderItem> orderItems;
+            try
+            {
+                orderItems = GetAllOrderItems(loggedInEmployee);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong while loading the data");
+                return;
+            }
+            DisplayOrders(orderItems, listViewOrders);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
@@ -192,17 +216,6 @@ namespace ChapeauUI
         {
             UpdateSelectedItem(OrderStatus.Served);
         }
-        private void showServedButton_Click(object sender, EventArgs e)
-        {
-            DisplayServedOrders(true);
-        }
-        public void DisplayServedOrders(bool show)
-        {
-            if (show)
-                servedOrdersPanel.Show();
-            else
-                servedOrdersPanel.Hide();
-        }
         private void logoutButton_Click(object sender, EventArgs e)
         {
             //Close the current form and show the login form
@@ -210,10 +223,15 @@ namespace ChapeauUI
             this.Close();
             loginForm.Show();
         }
-
+        private void showServedButton_Click(object sender, EventArgs e)
+        {
+            DisplayServedOrders(true);
+            ChangeStateBackgroundControls(false);
+        }
         private void hideServedButton_Click(object sender, EventArgs e)
         {
             DisplayServedOrders(false);
+            ChangeStateBackgroundControls(true);
         }
     }
 }
