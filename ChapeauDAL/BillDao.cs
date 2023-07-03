@@ -87,7 +87,7 @@ namespace ChapeauDAL
         }
 
 
-        public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed, DateTime dateTime, double billPrice)
+        public void UpdateBill(int id, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
         {
             string query = $"UPDATE BILL SET [comment] = @comment, [paymentMethod] = @paymentMethod, [tip] = @tip, [payed] = @payed , [dateTime] = @dateTime, [billPrice] = @billPrice WHERE id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
