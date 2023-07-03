@@ -25,59 +25,15 @@ namespace ChapeauUI
         {
             string userID = txtBxUserID.Text;
             string password = txtBxPassword.Text;
-            EmployeeService employeeService = new EmployeeService();
-            Password passwordEmployee = new Password();
-            Employee employee = new Employee();
             try
             {
-                if (employee.CheckUserID(userID))
+                EmployeeService employeeService = new EmployeeService();
+                PasswordService passwordService = new PasswordService();
+                Employee employee = employeeService.GetById(int.Parse(userID));
+                if (employee != null && passwordService.VerifyPassword(password, employee.salt, employee.hash))
                 {
-                    lblError.Text = "";
-                    try
-                    {
-                        //Collects employee information from database
-                        employee = employeeService.GetById(int.Parse(userID));
-                        //Verifies if the password is correct 
-                        if (passwordEmployee.Verify(password, employee.salt, employee.hash, SHA256.Create()))
-                        {
-                            if (employee.role == Role.Manager)
-                            {
-                                //Load manager form
-                                this.Hide();
-                                StockForm stockForm = new StockForm();
-                                stockForm.Show();
-                            }
-                            else if (employee.role == Role.Barista)
-                            {
-                                //Load barista form
-                                this.Hide();
-                                CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
-                                currentOrdersForm.Show();
-                            }
-                            else if (employee.role == Role.Chef)
-                            {
-                                //Load chef form
-                                this.Hide();
-                                CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
-                                currentOrdersForm.Show();
-                            }
-                            else if (employee.role == Role.Waiter)
-                            {
-                                //Load waiter form
-                                this.Hide();
-                                TableForm tableform = new TableForm(employee);
-                                tableform.Show();
-                            }
-                        }
-                        else
-                        {
-                            lblError.Text = "Wrong User ID or Password";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        lblError.Text = "Wrong User ID or Password";
-                    }
+                    this.Hide();
+                    LoginEmployee(employee);
                 }
                 else
                 {
@@ -88,7 +44,25 @@ namespace ChapeauUI
             {
                 lblError.Text = "Wrong User ID or Password";
             }
-
+        }
+        private static void LoginEmployee(Employee employee)
+        {
+            switch (employee.role)
+            {
+                case (Role.Manager):
+                    StockForm stockForm = new StockForm();
+                    stockForm.Show();
+                    break;
+                case (Role.Barista):
+                case (Role.Chef):
+                    CurrentOrdersForm currentOrdersForm = new CurrentOrdersForm(employee);
+                    currentOrdersForm.Show();
+                    break;
+                case (Role.Waiter):
+                    TableForm tableform = new TableForm(employee);
+                    tableform.Show();
+                    break;
+            }
         }
     }
 }
