@@ -10,8 +10,9 @@ namespace ChapeauModel
         public Employee employee;
         public string comment;
         public PaymentMethod paymentMethod;
-        public int tip;
-        public int payed;
+        public bool payed;
+        public double tip;
+
 
         public Bill()
         {
@@ -20,7 +21,7 @@ namespace ChapeauModel
 
         public void CalculateBill()
         {
-            
+
         }
 
         public double CalculateVAT(double vat, double price)
@@ -41,6 +42,11 @@ namespace ChapeauModel
         public void UpdateBill() 
         {
 
+        }
+
+        public string StringOverride(double value)
+        {
+            return "€ " + value.ToString("F");
         }
     }
 }

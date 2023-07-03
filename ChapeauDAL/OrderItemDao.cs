@@ -54,7 +54,7 @@ namespace ChapeauDAL
             string query = BaseQuery + "WHERE O.id = @id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@Order_id", orderId ),
+                new SqlParameter("@id", orderId ),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -171,6 +171,16 @@ namespace ChapeauDAL
                 status = (OrderStatus)row["status"]
             };
             return orderItem;
+        }
+
+        public List<OrderItem> GetAllByBillId(int billId)
+        {
+            string query = BaseQuery + "WHERE O.Bill_id = @Bill_id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                    new SqlParameter("@Bill_id", billId ),
+            };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
     }
 }
