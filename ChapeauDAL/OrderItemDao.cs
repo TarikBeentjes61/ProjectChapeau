@@ -58,7 +58,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
@@ -132,7 +131,6 @@ namespace ChapeauDAL
              };
             ExecuteEditQuery(query, sqlParameters);
         }
-
         private List<OrderItem> ReadTables(DataTable dataTable)
         {
             List<OrderItem> orderItems = new List<OrderItem>();
@@ -197,7 +195,6 @@ namespace ChapeauDAL
             };
             return orderItem;
         }
-
         public List<OrderItem> GetAllByBillId(int billId)
         {
             string query = BaseQuery + "WHERE O.Bill_id = @Bill_id";

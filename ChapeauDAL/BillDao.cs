@@ -67,7 +67,6 @@ namespace ChapeauDAL
                 return bill;
             }
         }
-
         public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
 
         {
@@ -85,8 +84,6 @@ namespace ChapeauDAL
              };
             return ExecuteInsertQuery(query, sqlParameters);
         }
-
-
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
         {
             string query = $"UPDATE BILL SET [comment] = @comment, [paymentMethod] = @paymentMethod, [tip] = @tip, [payed] = @payed , [dateTime] = @dateTime, [billPrice] = @billPrice WHERE id = @id";
@@ -139,7 +136,6 @@ namespace ChapeauDAL
             Bill bill = CreateBillFromRow(row);
             return bill;
         }
-
         private Bill CreateBillFromRow(DataRow row)
         {
             Table table = new Table()

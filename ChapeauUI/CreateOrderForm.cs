@@ -43,84 +43,57 @@ namespace ChapeauUI
 
             //Change Necessary Button Colors
             ButtonColors();
+        }
+
+        private void CreateOrderForm_Load(object sender, EventArgs e)
+        {
+            ShowOrder();
 
             //LUNCH
             //Starters listview
             FillListviewMenuItems(listViewStartersLunch, ItemType.Starters, 1);
-
             //Mains listview
             FillListviewMenuItems(listViewMainsLunch, ItemType.Mains, 1);
-
             //Deserts listview
             FillListviewMenuItems(listViewDesertsLunch, ItemType.Deserts, 1);
 
             //DINNER
             //Starters listview
             FillListviewMenuItems(listViewStartersDinner, ItemType.Starters, 2);
-
             //Entres listview
             FillListviewMenuItems(listViewEntresDinner, ItemType.Entres, 2);
-
             //Mains listview
             FillListviewMenuItems(listViewMainsDinner, ItemType.Mains, 2);
-
             //Deserts listview
             FillListviewMenuItems(listViewDesertsDinner, ItemType.Deserts, 2);
 
             //DRINKS
             //Soft drinks listview
             FillListviewMenuItems(listViewSoftDrinks, ItemType.SoftDrinks, 3);
-
             //Beers listview
             FillListviewMenuItems(listViewBeers, ItemType.Beers, 3);
-
             //Wines listview
             FillListviewMenuItems(listViewWines, ItemType.Wines, 3);
-
             //Spirits listview
             FillListviewMenuItems(listViewSpirits, ItemType.Spirits, 3);
-
             //Hot drinks listview
             FillListviewMenuItems(listViewHotDrinks, ItemType.HotDrinks, 3);
-        }
-
-        private void CreateOrderForm_Load(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    //ORDER LUNCH PANEL
-            //    FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
-
-            //    //ORDER DINNER PANEL
-            //    FillListviewOrder(listViewOrderDinner, order.GetOrderItems());
-
-            //    //ORDER DRINKS PANEL
-            //    FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Something went wrong {ex.Message}");
-            //}
-            ShowOrder();
         }
 
         //Add lunch item to order
         private void listViewStartersLunch_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewStartersLunch, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
         }
         private void listViewMainsLunch_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewMainsLunch, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
         }
         private void listViewDesertsLunch_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewDesertsLunch, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
         }
 
@@ -128,25 +101,21 @@ namespace ChapeauUI
         private void listViewStartersDinner_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewStartersDinner, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDinner, order.GetOrderItems());
         }
         private void listViewEntresDinner_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewEntresDinner, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDinner, order.GetOrderItems());
         }
         private void listViewMainsDinner_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewMainsDinner, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDinner, order.GetOrderItems());
         }
         private void listViewDesertsDinner_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewDesertsDinner, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDinner, order.GetOrderItems());
         }
 
@@ -154,31 +123,26 @@ namespace ChapeauUI
         private void listViewSoftDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewSoftDrinks, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
         }
         private void listViewBeers_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewBeers, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
         }
         private void listViewWines_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewWines, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
         }
         private void listViewSpirits_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewSpirits, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
         }
         private void listViewHotDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
             AddItemsToOrderListview(listViewHotDrinks, order.GetOrderItems());
-            //CreateOrderForm_Load(sender, e);
             FillListviewOrder(listViewOrderDrinks, order.GetOrderItems());
         }
 
@@ -186,17 +150,14 @@ namespace ChapeauUI
         private void listViewOrderLunch_SelectedIndexChanged(object sender, EventArgs e)
         {
             RemoveItemsFromListview(listViewOrderLunch, order.GetOrderItems());
-            CreateOrderForm_Load(sender, e);
         }
         private void listViewOrderDinner_SelectedIndexChanged(object sender, EventArgs e)
         {
             RemoveItemsFromListview(listViewOrderDinner, order.GetOrderItems());
-            CreateOrderForm_Load(sender, e);
         }
         private void listViewOrderDrinks_SelectedIndexChanged(object sender, EventArgs e)
         {
             RemoveItemsFromListview(listViewOrderDrinks, order.GetOrderItems());
-            CreateOrderForm_Load(sender, e);
         }
 
         //BUTTONS
@@ -261,7 +222,6 @@ namespace ChapeauUI
             ShowOrder();
             pnlCreateOrderLunch.Hide();
             pnlOrderOverview.Show();
-            CreateOrderForm_Load(sender, e);
         }
         private void btnAddDinner_Click(object sender, EventArgs e)
         {
@@ -269,7 +229,6 @@ namespace ChapeauUI
             ShowOrder();
             pnlCreateOrderDinner.Hide();
             pnlOrderOverview.Show();
-            CreateOrderForm_Load(sender, e);
         }
 
         private void btnAddDrinks_Click(object sender, EventArgs e)
@@ -278,7 +237,6 @@ namespace ChapeauUI
             ShowOrder();
             pnlCreateOrderDrinks.Hide();
             pnlOrderOverview.Show();
-            CreateOrderForm_Load(sender, e);
         }
 
         //Remove buttons
@@ -348,7 +306,6 @@ namespace ChapeauUI
                 listView.Items.Add(item);
             }
         }
-
         //Method to fill listview with orders
         private void FillListviewOrder(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
@@ -372,7 +329,6 @@ namespace ChapeauUI
                 listView.Items.Add(item);
             }
         }
-
         //Method to add items to orderview
         private void AddItemsToOrderListview(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
@@ -391,7 +347,6 @@ namespace ChapeauUI
                 orderItems.Add(orderItem);
             }
         }
-
         //Method to remove items from orderview
         private void RemoveItemsFromListview(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
@@ -408,7 +363,6 @@ namespace ChapeauUI
                 listviewEditor.RemoveListviewItem(value, orderItems);
             }
         }
-
         //Add order
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
@@ -417,8 +371,6 @@ namespace ChapeauUI
             if (billService.CheckBill(table) == null)
             {
                 bill.billId = billService.CreateBill(table, employee, "", 0, 0, false, DateTime.Now, 0);
-
-
             }
             else
             {
@@ -454,7 +406,6 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-
             if(order.id != 0 && bill.billId != 0)
             {
                 //order = orderService.GetById(order.id);
@@ -479,7 +430,6 @@ namespace ChapeauUI
             totalPrice = 0;
         }
 
-        //Disable button
         private void DisableButtons()
         {
             btnLunchUnavailable.Enabled = false;
