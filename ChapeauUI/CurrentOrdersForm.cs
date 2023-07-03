@@ -9,23 +9,10 @@ namespace ChapeauUI
         public CurrentOrdersForm(Employee employee)
         {
             InitializeComponent();
-            loggedInEmployee = employee;
-            servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
-
-            List<OrderItem> orderItems;
-            try
-            {
-                orderItems = GetAllOrderItems(employee);
-            } 
-            catch (Exception)
-            {
-                MessageBox.Show("Something went wrong while loading the data");
-                return;
-            }
-            
-            DisplayOrders(orderItems, listViewOrders);
+            DisplayOrders(employee);
+            loggedInEmployee = employee;
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -50,14 +37,14 @@ namespace ChapeauUI
         private void RefreshSingle()
         {
             OrderItem? selectedItem = GetSelectedOrderItem();
-            if(selectedItem is not null)
+            if (selectedItem is not null)
             {
                 int index = GetSelectedOrderItemIndex();
                 OrderItem item;
                 try
                 {
                     item = GetOrderItemById(selectedItem.orderItemId);
-                } 
+                }
                 catch (Exception)
                 {
                     MessageBox.Show("Something went wrong while loading the data");
@@ -66,6 +53,8 @@ namespace ChapeauUI
 
                 if (item.status != OrderStatus.Served)
                     listViewOrders.Items[index] = CreateListViewItem(item);
+                else
+                    listViewOrders.Items.RemoveAt(index);
             }
         }
         private List<OrderItem> GetAllOrderItems(Employee employee)
@@ -86,7 +75,7 @@ namespace ChapeauUI
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetById(id);
         }
-        private void DisplayOrders(List<OrderItem> orderItems, ListView listView)
+        private void FillListView(List<OrderItem> orderItems, ListView listView)
         {
             //Loads the orders for the given list
             listView.Items.Clear();
@@ -94,6 +83,43 @@ namespace ChapeauUI
             {
                 listView.Items.Add(CreateListViewItem(item));
             }
+        }
+        public void DisplayServedOrders(bool show)
+        {
+            if (show)
+            {
+                List<OrderItem> orderItems;
+                try
+                {
+                    orderItems = GetAllServedOrderItems(loggedInEmployee);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong while loading the data");
+                    return;
+                }
+                FillListView(orderItems, servedOrderListview);
+                servedOrdersPanel.Show();
+            }
+            else
+            {
+                servedOrdersPanel.Hide();
+            }
+        }
+        public void DisplayOrders(Employee employee)
+        {
+            List<OrderItem> orderItems;
+            try
+            {
+                orderItems = GetAllOrderItems(employee);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong while loading the data");
+                return;
+            }
+
+            FillListView(orderItems, listViewOrders);
         }
         private ListViewItem CreateListViewItem(OrderItem item)
         {
@@ -120,45 +146,21 @@ namespace ChapeauUI
                     return Color.White;
             }
         }
-        private void DisplaySelectedItem(OrderItem selectedItem)
+        
+        private void FillSelectedItemLabels(OrderItem selectedItem)
         {
             //Fills all the labels with data from the last selected item
-            if (selectedItem.status == OrderStatus.Served)
-            {
-                selectedOrderIdLabel.Text = "";
-                selectedOrderStatusLabel.Text = "";
-                commentLabel.Text = "";
-                tableLabel.Text = "";
-            }
-            else
-            {
-                selectedOrderIdLabel.Text = selectedItem.orderItemId.ToString();
-                selectedOrderStatusLabel.Text = selectedItem.status.ToString();
-                commentLabel.Text = selectedItem.comment.ToString();
-                tableLabel.Text = selectedItem.order.table.tableId.ToString();
-            }
+            selectedOrderIdLabel.Text = selectedItem.orderItemId.ToString();
+            selectedOrderStatusLabel.Text = selectedItem.status.ToString();
+            commentLabel.Text = selectedItem.comment.ToString();
+            tableLabel.Text = selectedItem.order.table.tableId.ToString();
         }
-        public void DisplayServedOrders(bool show)
+        private void EmptySelectedItemLabels()
         {
-            if (show)
-            {
-                List<OrderItem> orderItems;
-                try
-                {
-                    orderItems = GetAllServedOrderItems(loggedInEmployee);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Something went wrong while loading the data");
-                    return;
-                }
-                DisplayOrders(orderItems, servedOrderListview);
-                servedOrdersPanel.Show();
-            }
-            else
-            {
-                servedOrdersPanel.Hide();
-            }
+            selectedOrderIdLabel.Text = "";
+            selectedOrderStatusLabel.Text = "";
+            commentLabel.Text = "";
+            tableLabel.Text = "";
         }
         private void UpdateSelectedItem(OrderStatus status)
         {
@@ -167,9 +169,18 @@ namespace ChapeauUI
             OrderItem? selectedItem = GetSelectedOrderItem();
             if (selectedItem is not null && selectedItem.status != OrderStatus.Served)
             {
-                OrderItemService orderItemService = new OrderItemService();
-                orderItemService.UpdateStatusById(selectedItem.orderItemId, status);
-                DisplaySelectedItem(orderItemService.GetById(selectedItem.orderItemId));
+                try
+                {
+                    OrderItemService orderItemService = new OrderItemService();
+                    orderItemService.UpdateStatusById(selectedItem.orderItemId, status);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong while changing the data");
+                    return;
+                }
+
+                EmptySelectedItemLabels();
                 RefreshSingle();
             }
         }
@@ -186,7 +197,7 @@ namespace ChapeauUI
         {
             //Gets called whenever u click on an item within the list
             if (e.IsSelected)
-                DisplaySelectedItem((OrderItem)e.Item.Tag);
+                FillSelectedItemLabels((OrderItem)e.Item.Tag);
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -201,7 +212,7 @@ namespace ChapeauUI
                 MessageBox.Show("Something went wrong while loading the data");
                 return;
             }
-            DisplayOrders(orderItems, listViewOrders);
+            FillListView(orderItems, listViewOrders);
         }
         //Button events
         private void preperationButton_Click(object sender, EventArgs e)
