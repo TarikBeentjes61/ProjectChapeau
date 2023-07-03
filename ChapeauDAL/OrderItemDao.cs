@@ -39,7 +39,7 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetByTableId(int tableId, int billId)
+        public List<OrderItem> GetByTableIdAndBillId(int tableId, int billId)
         {
             string query = BaseQuery + "WHERE T.Id = @Table_Id AND B.Id = @Bill_id";
             SqlParameter[] sqlParameters = new SqlParameter[]

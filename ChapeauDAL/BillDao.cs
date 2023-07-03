@@ -38,7 +38,6 @@ namespace ChapeauDAL
         }
         public Bill CheckBill(Table table)
         {
-
             //string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed FROM Bill WHERE table_Id = @Table_id  AND payed = 0";
             string query = "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
                 "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
