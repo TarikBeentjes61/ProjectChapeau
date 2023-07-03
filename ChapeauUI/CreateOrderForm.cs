@@ -365,7 +365,7 @@ namespace ChapeauUI
         //Pay button
         private void btnPay_Click(object sender, EventArgs e)
         {
-            BillViewForm paymentForm = new BillViewForm(table, employee);
+            BillViewForm paymentForm = new BillViewForm(new Bill(), employee);
             paymentForm.Size = new Size(414, 736);
             paymentForm.Show();
         }
