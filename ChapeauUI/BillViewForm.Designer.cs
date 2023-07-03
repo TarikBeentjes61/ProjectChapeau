@@ -558,6 +558,7 @@
             this.btnBackOrderOverview.TabIndex = 38;
             this.btnBackOrderOverview.Text = "BACK";
             this.btnBackOrderOverview.UseVisualStyleBackColor = false;
+            this.btnBackOrderOverview.Click += new System.EventHandler(this.btnBackOrderOverview_Click);
             // 
             // labelBill
             // 
@@ -643,7 +644,7 @@
             this.btnCash.TabIndex = 5;
             this.btnCash.Text = "CASH";
             this.btnCash.UseVisualStyleBackColor = true;
-            this.btnCash.Click += new System.EventHandler(this.btnVisa_Click);
+            this.btnCash.Click += new System.EventHandler(this.btnCash_Click);
             // 
             // labelOrderPrice
             // 
