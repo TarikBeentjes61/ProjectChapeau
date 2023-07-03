@@ -8,6 +8,7 @@ namespace ChapeauModel
     public class Employee
     {
         public int employeeId;
+        public string username;
         public string name;
         public string hash;
         public string salt;

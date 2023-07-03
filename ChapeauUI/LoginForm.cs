@@ -23,13 +23,15 @@ namespace ChapeauUI
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string userID = txtBxUserID.Text;
+            //Define input
+            string username = txtBxUserID.Text;
             string password = txtBxPassword.Text;
             try
             {
                 EmployeeService employeeService = new EmployeeService();
                 PasswordService passwordService = new PasswordService();
-                Employee employee = employeeService.GetById(int.Parse(userID));
+                Employee employee = employeeService.GetByUsername(username);
+                //Check if input is correct
                 if (employee != null && passwordService.VerifyPassword(password, employee.salt, employee.hash))
                 {
                     this.Hide();
@@ -45,6 +47,7 @@ namespace ChapeauUI
                 lblError.Text = "Wrong User ID or Password";
             }
         }
+        //Direct employee to the right form when login correct
         private static void LoginEmployee(Employee employee)
         {
             switch (employee.role)

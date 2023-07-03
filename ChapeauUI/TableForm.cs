@@ -33,15 +33,21 @@ namespace ChapeauUI
             //Creates dynamic table overview depending on count of tables in database
             foreach (Table table in tables)
             {
-                Button button = new Button();
-                button.Name = tableNumber.ToString();
-                button.Text = $"{tableNumber}";
-                button.Tag = table;
+                Button button = btnCreate(table, tableNumber);
                 btnStyle(button);
                 button.Click += TableButton_Click;
                 flpnlTables.Controls.Add(button);
                 tableNumber++;
             }
+        }
+        //Styles a button
+        private static Button btnCreate(Table table, int tableNumber)
+        {
+            Button button = new Button();
+            button.Name = $"btnTable{tableNumber}";
+            button.Text = $"{tableNumber}";
+            button.Tag = table;
+            return button;
         }
         private static void btnStyle(Button button)
         {
@@ -150,19 +156,21 @@ namespace ChapeauUI
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
         }
+        //This method will enable or disable a button
         private void btnTableControle(Button button, FlatStyle style, bool enable, Table table)
         {
             button.FlatStyle = style;
             button.Enabled = enable;
             button.Tag = table;
         }
+        //The table overview will only update the effected tablebutton
         private void btnUpdate(TableStatus status)
         {
             Table table = (Table)lastClickedTable.Tag;
             table.status = status;
             btnStyle(lastClickedTable);
         }
-
+        //The timer will refresh the overview each 60 secondes
         private void timer1_Tick(object sender, EventArgs e)
         {
             TableForm_Load(sender, e);
