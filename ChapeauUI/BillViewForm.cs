@@ -29,16 +29,13 @@ namespace ChapeauUI
             showPanel(pnlBillView);
 
             OrderItemService orderItemService = new OrderItemService();
-            //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
-
             ShowBillListView(listViewBillOverview, orderItemService);
-            //listViewBillOverview.Items.AddRange(DisplayTest(orderItemService, listViewBillOverview, bill).ToArray()); 
-
         }
 
         private void ShowBillListView(System.Windows.Forms.ListView listView, OrderItemService orderItemService)
         {
             List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(1);
+            //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
 
             listView.Clear();
             listView.View = View.Details; // Specify that each item appears on a separate line.
@@ -67,6 +64,15 @@ namespace ChapeauUI
             btnSetPrices.Tag = totalPrice;
         }
 
+        private void SetSplitLabels(int splits)
+        {
+            if (labelOrderPricePayment.Tag == null)
+            {
+                labelOrderPricePayment.Tag = 1;
+            }
+            labelOrderPricePayment.Text = (double.Parse(labelFinalOrderPrice.Text) / splits).ToString();
+        }
+
         private void btnProceedToPayment_Click(object sender, EventArgs e)
         {
             if (btnProceedToPayment.Tag is null) //if none button has been clicked:
@@ -81,7 +87,14 @@ namespace ChapeauUI
 
         private void btnSplit_Click(object sender, EventArgs e)
         {
-            showPanel(pnlSplitBill);
+            if (btnProceedToPayment.Tag is null) //if none button has been clicked:
+            {
+                MessageBox.Show("No paymethod has been selected, please select one.");
+            }
+            else
+            {
+                showPanel(pnlSplitBill);
+            }
         }
 
         private void btnBackPayment_Click(object sender, EventArgs e)
@@ -94,10 +107,21 @@ namespace ChapeauUI
             showPanel(pnlBillView);
         }
 
-        private void button2_Click(object sender, EventArgs e) //btnProceedSplitting
+        private void btnProceedSplitting_Click(object sender, EventArgs e)
         {
-            string inputSplit = txtBoxAmountPeopleSplitting.Text;
-
+            if(txtBoxAmountPeopleSplitting.Text != "")
+            {
+                int inputSplit = int.Parse(txtBoxAmountPeopleSplitting.Text);
+                SetSplitLabels(inputSplit);
+                labelOrderPricePayment.Tag = inputSplit;
+                for (int i = 0; i < inputSplit; i++)
+                {
+                    showPanel(pnlBillPayment);
+                }
+            } else
+            {
+                MessageBox.Show("Please enter a amount of splits.");
+            }
         }
 
         private void btnSetPrices_Click(object sender, EventArgs e)
@@ -109,7 +133,7 @@ namespace ChapeauUI
             else
             {
                 double input = double.Parse(txtBoxAmountPaid.Text);
-                double totalPrice = (double)btnSetPrices.Tag;
+                double totalPrice = ((double)btnSetPrices.Tag / (int)labelOrderPricePayment.Tag);
                 if (input < totalPrice)
                 {
                     MessageBox.Show("Amount paid is lower than the order price. Please check again.");
@@ -182,7 +206,7 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            double amountPaid = (double)btnPay.Tag;
+            double amountPaid = double.Parse(txtBoxAmountPaid.Text);
             if (amountPaid > 0)
             {
                 showPanel(pnlAddComment);
