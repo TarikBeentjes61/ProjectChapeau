@@ -34,25 +34,15 @@ namespace ChapeauUI
         {
             return listViewOrders.SelectedItems.Count > 0 ? listViewOrders.SelectedItems[0].Index : 0;
         }
-        private void RefreshSingle()
+        private void RefreshSingleListItem(OrderItem selectedItem)
         {
-            OrderItem? selectedItem = GetSelectedOrderItem();
             if (selectedItem is not null)
             {
                 int index = GetSelectedOrderItemIndex();
-                OrderItem item;
-                try
-                {
-                    item = GetOrderItemById(selectedItem.orderItemId);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Something went wrong while loading the data");
-                    return;
-                }
 
-                if (item.status != OrderStatus.Served)
-                    listViewOrders.Items[index] = CreateListViewItem(item);
+                //Check if the new status is served, if so remove it otherwise update it
+                if (selectedItem.status != OrderStatus.Served)
+                    listViewOrders.Items[index] = CreateListViewItem(selectedItem);
                 else
                     listViewOrders.Items.RemoveAt(index);
             }
@@ -68,21 +58,6 @@ namespace ChapeauUI
             //Gets all the served orderitems depending on the current role.
             OrderItemService orderItemService = new OrderItemService();
             return orderItemService.GetServedOrderItemsByRole(employee.role);
-        }
-        private OrderItem GetOrderItemById(int id)
-        {
-            //Get a specific orderItem by id
-            OrderItemService orderItemService = new OrderItemService();
-            return orderItemService.GetById(id);
-        }
-        private void FillListView(List<OrderItem> orderItems, ListView listView)
-        {
-            //Loads the orders for the given list
-            listView.Items.Clear();
-            foreach (OrderItem item in orderItems)
-            {
-                listView.Items.Add(CreateListViewItem(item));
-            }
         }
         public void DisplayServedOrders(bool show)
         {
@@ -118,8 +93,16 @@ namespace ChapeauUI
                 MessageBox.Show("Something went wrong while loading the data");
                 return;
             }
-
             FillListView(orderItems, listViewOrders);
+        }
+        private void FillListView(List<OrderItem> orderItems, ListView listView)
+        {
+            //Loads the orders for the given list
+            listView.Items.Clear();
+            foreach (OrderItem item in orderItems)
+            {
+                listView.Items.Add(CreateListViewItem(item));
+            }
         }
         private ListViewItem CreateListViewItem(OrderItem item)
         {
@@ -146,7 +129,6 @@ namespace ChapeauUI
                     return Color.White;
             }
         }
-        
         private void FillSelectedItemLabels(OrderItem selectedItem)
         {
             //Fills all the labels with data from the last selected item
@@ -176,12 +158,15 @@ namespace ChapeauUI
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Something went wrong while changing the data");
+                    MessageBox.Show("Something went wrong while updating the status");
                     return;
                 }
-
+                //Update tag with updated item
+                selectedItem.status = status;
+                listViewOrders.Items[GetSelectedOrderItemIndex()].Tag = selectedItem;
+                //Empty labels of the selected item
                 EmptySelectedItemLabels();
-                RefreshSingle();
+                RefreshSingleListItem(selectedItem);
             }
         }
         private void ChangeStateBackgroundControls(bool state)
