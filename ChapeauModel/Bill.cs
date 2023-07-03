@@ -11,6 +11,7 @@ namespace ChapeauModel
         public string comment;
         public PaymentMethod paymentMethod;
         public int tip;
+        public int payed;
 
         public Bill()
         {

@@ -101,11 +101,22 @@ namespace ChapeauDAL
                 salt = (string)row["salt"],
                 role = (Role)row["role"]
             };
+            Bill bill = new Bill()
+            {
+                billId = (int)row["B_id"],
+                table = table,
+                employee = employee,
+                comment = (string)row["comment"],
+                paymentMethod = (PaymentMethod)row["paymentMethod"],
+                tip = (int)row["tip"],
+                payed = (int)row["payed"],
+            };
             return new Order()
             {
                 id = (int)row["O_id"],
                 table = table,
                 employee = employee,
+                bill = bill,
                 date = (DateTime)row["dateTime"],
                 status = (OrderStatus)row["status"]
             };

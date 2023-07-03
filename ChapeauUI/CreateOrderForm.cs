@@ -9,11 +9,11 @@ namespace ChapeauUI
 {
     public partial class CreateOrderForm : Form
     {
+        ChapeauModel.Menu menu = new ChapeauModel.Menu();
         Order order = new Order();
         Employee employee = new Employee();
         Table table = new Table();
         Bill bill = new Bill();
-        ChapeauModel.Menu menu = new ChapeauModel.Menu();
         MenuItemService menuItemService = new MenuItemService();
         OrderItemService orderItemService = new OrderItemService();
         OrderService orderService = new OrderService();
@@ -21,6 +21,7 @@ namespace ChapeauUI
         bool btnRemoveWasClicked = false;
         double totalPrice = 0;
         int billId;
+        int orderId;
 
         public CreateOrderForm(Table table, Employee employee)
         {
@@ -76,7 +77,7 @@ namespace ChapeauUI
             //Beers listview
             FillListviewMenuItems(listViewBeers, ItemType.Beers, 3);
 
-            //wines listview
+            //Wines listview
             FillListviewMenuItems(listViewWines, ItemType.Wines, 3);
 
             //Spirits listview
@@ -412,7 +413,7 @@ namespace ChapeauUI
                 bill = billService.CheckBill(table);
             }
 
-            int orderId = orderService.AddOrder(table.tableId, employee.employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
+            orderId = orderService.AddOrder(table.tableId, employee.employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -441,6 +442,8 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
+            order = orderService.GetById(orderId);
+
             if (billId == order.bill.billId)
             {
                 foreach (OrderItem o in order.GetOrderItems())
@@ -455,7 +458,7 @@ namespace ChapeauUI
                 }
             }
 
-                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
+            List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
             foreach (OrderItem o in orderItems)
             {
                 MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
