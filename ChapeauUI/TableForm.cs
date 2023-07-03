@@ -16,7 +16,7 @@ namespace ChapeauUI
     public partial class TableForm : Form
     {
         Employee employee;
-        Table table = new Table();
+        private Button lastClickedTable;
         public TableForm(Employee employee)
         {
             InitializeComponent();
@@ -25,88 +25,73 @@ namespace ChapeauUI
         }
         private void TableForm_Load(object sender, EventArgs e)
         {
+            int tableNumber = 1;
             TableService tableService = new TableService();
             List<Table> tables = tableService.GetAll();
             lblName.Text = employee.name;
             flpnlTables.Controls.Clear();
             //Creates dynamic table overview depending on count of tables in database
-            foreach (Table t in tables)
+            foreach (Table table in tables)
             {
                 Button button = new Button();
-                button.Name = t.tableId.ToString();
-                button.Text = $"{t.tableId}";
-                button.Font = new Font("Segoe UI", 18);
-                button.AutoSize = true;
-                button.Margin = new Padding(25, 25, 25, 25);
-                button.Tag = t.status;
-                flpnlTables.Controls.Add(button);
+                button.Name = tableNumber.ToString();
+                button.Text = $"{tableNumber}";
+                button.Tag = table;
+                btnStyle(button);
                 button.Click += TableButton_Click;
-                if (t.status == TableStatus.Reserved)
-                {
-                    button.BackColor = Color.Gray;
-                }
-                else if (t.status == TableStatus.Occupied)
-                {
-                    button.BackColor = Color.Orange;
-                }
-                else if (t.status == TableStatus.Ordered)
-                {
-                    button.BackColor = Color.Salmon;
-                }
-                else
-                {
-                    button.BackColor = Color.LightGreen;
-                }
+                flpnlTables.Controls.Add(button);
+                tableNumber++;
             }
         }
-        //Reloads the table designs each 5 seconds from the database
-        private void timer1_Tick(object sender, EventArgs e)
+        private static void btnStyle(Button button)
         {
-            TableForm_Load(sender, e);
+            button.Font = new Font("Segoe UI", 18);
+            button.AutoSize = true;
+            button.Margin = new Padding(25, 25, 25, 25);
+            TableStatus tableStatus = ((Table)button.Tag).status;
+            switch (tableStatus)
+            {
+                case TableStatus.Reserved:
+                    button.BackColor = Color.Gray;
+                    break;
+                case TableStatus.Occupied: 
+                    button.BackColor = Color.Orange; 
+                    break;
+                case TableStatus.Ordered:
+                    button.BackColor = Color.Salmon;
+                    break;
+                default:
+                    button.BackColor = Color.LightGreen;
+                    break;
+            }
         }
         //Each button will have the following method to style and disables the current status button
         private void TableButton_Click(object sender, EventArgs e)
         {
             pnlTableView.Show();
             Button clicked = (Button)sender;
-            int id = int.Parse(clicked.Name);
-            lblTableID.Text = id.ToString();
-            if ((TableStatus)clicked.Tag == TableStatus.Free)
+            lastClickedTable = clicked;
+            Table table = (Table)clicked.Tag;
+            lblTableID.Text = table.tableId.ToString();
+            btnTableOrder.Tag = table;
+            switch (table.status)
             {
-                btnFree.FlatStyle = FlatStyle.Standard;
-                btnOccupied.FlatStyle = FlatStyle.Popup;
-                btnReserved.FlatStyle = FlatStyle.Popup;
-                btnFree.Enabled = false;
-                btnOccupied.Enabled = true;
-                btnReserved.Enabled = true;
-                btnOccupied.Tag = id;
-                btnReserved.Tag = id;
-                btnTableOrder.Tag = id;
-            }
-            else if ((TableStatus)clicked.Tag == TableStatus.Occupied)
-            {
-                btnOccupied.FlatStyle = FlatStyle.Standard;
-                btnFree.FlatStyle = FlatStyle.Popup;
-                btnReserved.FlatStyle = FlatStyle.Popup;
-                btnOccupied.Enabled = false;
-                btnFree.Enabled = true;
-                btnReserved.Enabled = true;
-                btnFree.Tag = id;
-                btnReserved.Tag = id;
-                btnTableOrder.Tag = id;
-            }
-            else if ((TableStatus)clicked.Tag == TableStatus.Reserved)
-            {
-                btnReserved.FlatStyle = FlatStyle.Standard;
-                btnFree.FlatStyle = FlatStyle.Popup;
-                btnOccupied.FlatStyle = FlatStyle.Popup;
-                btnReserved.Enabled = false;
-                btnFree.Enabled = true;
-                btnReserved.Enabled = true;
-                btnFree.Tag = id;
-                btnOccupied.Tag = id;
-                btnTableOrder.Tag = id;
-            }
+                case TableStatus.Free:
+                    btnTableControle(btnFree, FlatStyle.Standard, false, table);
+                    btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
+                    btnTableControle(btnReserved, FlatStyle.Popup, true, table);
+                    break;
+                case TableStatus.Occupied:
+                    btnTableControle(btnFree, FlatStyle.Popup, true, table);
+                    btnTableControle(btnOccupied, FlatStyle.Standard, false, table);
+                    btnTableControle(btnReserved, FlatStyle.Popup, true, table);
+                    break;
+                case TableStatus.Reserved:
+                    btnTableControle(btnFree, FlatStyle.Popup, true, table);
+                    btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
+                    btnTableControle(btnReserved, FlatStyle.Standard, false, table);
+                    break;
+            }        
         }
         //To go back to the table overview
         private void btnBack_Click(object sender, EventArgs e)
@@ -117,51 +102,45 @@ namespace ChapeauUI
         private void btnFree_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            int id = int.Parse(clicked.Tag.ToString());
+            Table table = (Table)clicked.Tag;
             TableService tableService = new TableService();
-            tableService.UpdateById(id, Convert.ToInt32(TableStatus.Free));
-            btnFree.FlatStyle = FlatStyle.Standard;
-            btnOccupied.FlatStyle = FlatStyle.Popup;
-            btnReserved.FlatStyle = FlatStyle.Popup;
-            btnFree.Enabled = false;
-            btnOccupied.Enabled = true;
-            btnReserved.Enabled = true;
+            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Free));
+            btnUpdate(TableStatus.Free);
+            btnTableControle(btnFree, FlatStyle.Standard, false, table);
+            btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
+            btnTableControle(btnReserved, FlatStyle.Popup, true, table);
         }
         //Button to see a table status to occupied
         private void btnOccupied_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            int id = int.Parse(clicked.Tag.ToString());
+            Table table = (Table)clicked.Tag;
             TableService tableService = new TableService();
-            tableService.UpdateById(id, Convert.ToInt32(TableStatus.Occupied));
-            btnOccupied.FlatStyle = FlatStyle.Standard;
-            btnFree.FlatStyle = FlatStyle.Popup;
-            btnReserved.FlatStyle = FlatStyle.Popup;
-            btnOccupied.Enabled = false;
-            btnFree.Enabled = true;
-            btnReserved.Enabled = true;
+            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Occupied));
+            btnUpdate(TableStatus.Occupied);
+            btnTableControle(btnFree, FlatStyle.Popup, true, table);
+            btnTableControle(btnOccupied, FlatStyle.Standard, false, table);
+            btnTableControle(btnReserved, FlatStyle.Popup, true, table);
         }
         //Button to see a table status to reserved
         private void btnReserved_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            int id = int.Parse(clicked.Tag.ToString());
+            Table table = (Table)clicked.Tag;
             TableService tableService = new TableService();
-            tableService.UpdateById(id, Convert.ToInt32(TableStatus.Reserved));
-            btnReserved.FlatStyle = FlatStyle.Standard;
-            btnFree.FlatStyle = FlatStyle.Popup;
-            btnOccupied.FlatStyle = FlatStyle.Popup;
-            btnReserved.Enabled = false;
-            btnFree.Enabled = true;
-            btnOccupied.Enabled = true;
+            tableService.UpdateById(table.tableId, Convert.ToInt32(TableStatus.Reserved));
+            btnUpdate(TableStatus.Reserved);
+            btnTableControle(btnFree, FlatStyle.Popup, true, table);
+            btnTableControle(btnOccupied, FlatStyle.Popup, true, table);
+            btnTableControle(btnReserved, FlatStyle.Standard, false, table);
         }
         //Gives correct tableId and employee object to the next form
         private void btnTableOrder_Click(object sender, EventArgs e)
         {
             Button clicked = (Button)sender;
-            table.tableId = int.Parse(clicked.Tag.ToString());
+            Table tableOrdering = (Table)clicked.Tag ;
             this.Close();
-            CreateOrderForm createOrderForm = new CreateOrderForm(table, employee);
+            CreateOrderForm createOrderForm = new CreateOrderForm(tableOrdering, employee);
             createOrderForm.Show();
         }
         //Clicking the picture will logout
@@ -170,6 +149,18 @@ namespace ChapeauUI
             this.Close();
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
+        }
+        private void btnTableControle(Button button, FlatStyle style, bool enable, Table table)
+        {
+            button.FlatStyle = style;
+            button.Enabled = enable;
+            button.Tag = table;
+        }
+        private void btnUpdate(TableStatus status)
+        {
+            Table table = (Table)lastClickedTable.Tag;
+            table.status = status;
+            btnStyle(lastClickedTable);
         }
     }
 }

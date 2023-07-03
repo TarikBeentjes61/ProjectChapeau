@@ -72,12 +72,6 @@
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
-            // timer1
-            // 
-            timer1.Enabled = true;
-            timer1.Interval = 5000;
-            timer1.Tick += timer1_Tick;
-            // 
             // lblName
             // 
             lblName.AutoSize = true;
