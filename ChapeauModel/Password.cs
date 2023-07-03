@@ -34,8 +34,9 @@ namespace ChapeauModel
             return new Password(Convert.ToBase64String(saltBytes), Convert.ToBase64String(digestBytes));
         }
         //Returns a bool if hash is equal to given password
-        public bool Verify(string password, string salt, string hash, HashAlgorithm hashAlgo)
+        public bool Verify(string password, string salt, string hash)
         {
+            HashAlgorithm hashAlgo = SHA256.Create();
             //encrypts the used password
             byte[] passwordAsBytes = Encoding.UTF8.GetBytes(password);
             List<byte> passwordWithSaltBytes = new List<byte>();

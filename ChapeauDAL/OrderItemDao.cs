@@ -137,6 +137,7 @@ namespace ChapeauDAL
             Employee employee = new Employee()
             {
                 employeeId = (int)row["E_id"],
+                username = (string)row["username"],
                 name = (string)row["name"],
                 hash = (string)row["hash"],
                 salt = (string)row["salt"],
