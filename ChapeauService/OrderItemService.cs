@@ -7,6 +7,7 @@ namespace ChapeauService
     public class OrderItemService
     {
         private OrderItemDao orderItemDao;
+        private double totalVAT;
 
         public OrderItemService()
         {
@@ -47,6 +48,10 @@ namespace ChapeauService
         public void UpdateStatusById(int id, OrderStatus status)
         {
             orderItemDao.UpdateStatusById(id, status);
+        }
+        public List<OrderItem> GetAllByBillId(int billId)
+        {
+            return orderItemDao.GetByOrderId(billId);
         }
     }
 }

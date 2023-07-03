@@ -27,9 +27,10 @@ namespace ChapeauUI
         {
             InitializeComponent();
 
+            ShowOrder();
+
             this.employee = employee;
             this.table = table;
-            //tableId = table.tableId;
             billId = bill.billId;
 
             //NAME EMPLOYEE
@@ -246,7 +247,7 @@ namespace ChapeauUI
 
         //Add and show order
         private void btnAddLunch_Click(object sender, EventArgs e)
-        {
+        { 
             AddOrder(listViewOrderLunch);
             ShowOrder();
             pnlCreateOrderLunch.Hide();
@@ -302,8 +303,9 @@ namespace ChapeauUI
         //Pay button
         private void btnPay_Click(object sender, EventArgs e)
         {
-            BillViewForm paymentForm = new BillViewForm(table, employee);
             listViewOrderOverview.Clear();
+            BillViewForm paymentForm = new BillViewForm(new Bill(), employee);
+            paymentForm.Size = new Size(414, 736);
             paymentForm.Show();
         }
 
@@ -401,12 +403,11 @@ namespace ChapeauUI
         //Add order
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
-            OrderItem orderItem = new OrderItem();
             OrderItemService orderItemService = new OrderItemService();
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, 1);
+                bill.billId = billService.CreateBill(table, employee, "t", 0, 0, true, DateTime.Now, 0);
             }
             else
             {
@@ -442,11 +443,12 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            //order = orderService.GetById(orderId);
-
-            if (billId == order.bill.billId)
+            if(orderId != 0 && billId != 0)
             {
-                foreach (OrderItem o in order.GetOrderItems())
+                order = orderService.GetById(orderId);
+                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
+
+                foreach (OrderItem o in orderItems)
                 {
                     MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
@@ -456,18 +458,6 @@ namespace ChapeauUI
                     item.SubItems.Add(o.amount.ToString());
                     listViewOrderOverview.Items.Add(item);
                 }
-            }
-
-            List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
-            foreach (OrderItem o in orderItems)
-            {
-                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
-
-                ListViewItem item = new ListViewItem(o.menuItem.menuItemId.ToString());
-
-                item.SubItems.Add(menuItem.itemName);
-                item.SubItems.Add(o.amount.ToString());
-                listViewOrderOverview.Items.Add(item);
             }
 
             lblTotal.Text = "Total: " + totalPrice.ToString();

@@ -17,7 +17,7 @@ namespace ChapeauDAL
             "O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status], " +
             "M.id AS M_id, M.[name], " +
             "T.id AS T_id, T.[status], " +
-            "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+            "E.id AS E_id, E.username E.[name], E.[hash], E.salt, E.[role], " +
             "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
             "FROM OrderItem AS OI " +
             "JOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id " +
@@ -54,7 +54,7 @@ namespace ChapeauDAL
             string query = BaseQuery + "WHERE O.id = @Order_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
-                new SqlParameter("@Order_id", orderId ),
+                new SqlParameter("@id", orderId ),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -195,6 +195,16 @@ namespace ChapeauDAL
                 status = (OrderStatus)row["status"]
             };
             return orderItem;
+        }
+
+        public List<OrderItem> GetAllByBillId(int billId)
+        {
+            string query = BaseQuery + "WHERE O.Bill_id = @Bill_id";
+            SqlParameter[] sqlParameters = new SqlParameter[]
+            {
+                    new SqlParameter("@Bill_id", billId ),
+            };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
     }
 }
