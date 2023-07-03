@@ -19,20 +19,6 @@ namespace ChapeauUI
 {
     public partial class BillViewForm : Form
     {
-
-        private bool setChange = false;
-        private bool setTip = false;
-        private bool goFurther = false;
-        private bool buttonClicked = false;
-        private double changePrice = 0;
-        private PaymentMethod paymentMethode;
-        private double doubleOrderPrice = 0;
-        private double totalTip = 0;
-        private string comment = "";
-        private double orderTotalPrice = 0;
-
-        int tableId;
-        Table table = new Table();
         private Employee employee;
         private Bill bill;
         public BillViewForm(Bill bill, Employee employee)
@@ -71,11 +57,12 @@ namespace ChapeauUI
         }
         private void SetTotalPriceLabels(double totalVat, double totalPrice)
         {
-            labelFinalVAT.Text = "€ " + totalVat.ToString();
-            labelVAT.Text = totalVat.ToString();
-            labelOrderPrice.Text = totalPrice.ToString();
-            labelFinalOrderPrice.Text = totalPrice.ToString();
-            labelOrderPricePayment.Text = totalPrice.ToString();
+            labelFinalVAT.Text = "€" + totalVat.ToString("F");
+            labelVAT.Text = "€" + totalVat.ToString("F");
+            labelOrderPrice.Text = "€" + totalPrice.ToString("F");
+            labelFinalOrderPrice.Text = "€" + totalPrice.ToString("F");
+            labelFinalOrderPrice.Tag = totalPrice;
+            labelOrderPricePayment.Text = "€" + totalPrice.ToString("F");
             btnSetPrices.Tag = totalPrice;
         }
 
@@ -85,7 +72,7 @@ namespace ChapeauUI
             {
                 labelOrderPricePayment.Tag = 1;
             }
-            labelOrderPricePayment.Text = (double.Parse(labelFinalOrderPrice.Text) / splits).ToString();
+            labelOrderPricePayment.Text = "€" + ((double)labelFinalOrderPrice.Tag / splits).ToString("F");
         }
 
         private void btnProceedToPayment_Click(object sender, EventArgs e)
@@ -124,16 +111,15 @@ namespace ChapeauUI
 
         private void btnProceedSplitting_Click(object sender, EventArgs e)
         {
-            if(txtBoxAmountPeopleSplitting.Text != "")
+            if (txtBoxAmountPeopleSplitting.Text != "")
             {
                 int inputSplit = int.Parse(txtBoxAmountPeopleSplitting.Text);
                 SetSplitLabels(inputSplit);
+                btnPay.Tag = inputSplit;
                 labelOrderPricePayment.Tag = inputSplit;
-                //for (int i = 0; i < inputSplit; i++) //split 2
-                //{
-                    showPanel(pnlBillPayment);
-                //}
-            } else
+                showPanel(pnlBillPayment);
+            }
+            else
             {
                 MessageBox.Show("Please enter a amount of splits.");
             }
@@ -148,7 +134,9 @@ namespace ChapeauUI
             else
             {
                 double input = double.Parse(txtBoxAmountPaid.Text);
-                double totalPrice = ((double)btnSetPrices.Tag / (int)labelOrderPricePayment.Tag);
+                double totalPrice = (double)btnSetPrices.Tag;
+                if (labelOrderPricePayment.Tag != null)
+                    totalPrice /= (int)labelOrderPricePayment.Tag;
                 if (input < totalPrice)
                 {
                     MessageBox.Show("Amount paid is lower than the order price. Please check again.");
@@ -168,7 +156,6 @@ namespace ChapeauUI
         {
             btnAddChangeToTip.Tag = changePrice;
             btnSetTip.Tag = changePrice;
-            btnPay.Tag = amountPaid;
         }
 
         private void btnAddChangeToTip_Click(object sender, EventArgs e)
@@ -221,11 +208,12 @@ namespace ChapeauUI
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            if ((int)btnPay.Tag > 1)
+            if (btnPay.Tag != null && (int)btnPay.Tag > 1)
             {
                 int payTag = (int)btnPay.Tag;
                 payTag--;
                 btnPay.Tag = payTag;
+                EmptyBillPaymentPanel();
                 showPanel(pnlBillPayment);
                 return;
             }
@@ -239,6 +227,13 @@ namespace ChapeauUI
             {
                 MessageBox.Show("There is not an amount paid. Please enter a amount.");
             }
+        }
+        private void EmptyBillPaymentPanel()
+        {
+            txtBoxAmountPaid.Text = "";
+            labelChange.Text = "";
+            txtBoxCustomTip.Text = "";
+            labelTotalTip.Text = "";
         }
 
         private void btnBackComment_Click(object sender, EventArgs e)
