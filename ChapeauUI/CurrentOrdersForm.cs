@@ -1,15 +1,5 @@
 ﻿using ChapeauModel;
 using ChapeauService;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ChapeauUI
 {
@@ -18,8 +8,8 @@ namespace ChapeauUI
         private Employee loggedInEmployee;
         public CurrentOrdersForm(Employee employee)
         {
-            loggedInEmployee = employee;
             InitializeComponent();
+            loggedInEmployee = employee;
             servedOrdersPanel.BringToFront();
             ChangeHeaderLabel(employee);
             DisplayLogoutButton(employee);
@@ -29,14 +19,13 @@ namespace ChapeauUI
             {
                 orderItems = GetAllOrderItems(employee);
             } 
-            catch (SqlException)
+            catch (Exception)
             {
                 MessageBox.Show("Something went wrong while loading the data");
                 return;
             }
             
             DisplayOrders(orderItems, listViewOrders);
-            
         }
         private void ChangeHeaderLabel(Employee employee)
         {
@@ -69,15 +58,14 @@ namespace ChapeauUI
                 {
                     item = GetOrderItemById(selectedItem.orderItemId);
                 } 
-                catch (SqlException)
+                catch (Exception)
                 {
-                    MessageBox.Show("Something went wrong while loading the selected item");
+                    MessageBox.Show("Something went wrong while loading the data");
                     return;
                 }
 
-                listViewOrders.Items.RemoveAt(index);
                 if (item.status != OrderStatus.Served)
-                    listViewOrders.Items.Insert(index, CreateListViewItem(item));
+                    listViewOrders.Items[index] = CreateListViewItem(item);
             }
         }
         private List<OrderItem> GetAllOrderItems(Employee employee)
@@ -159,7 +147,7 @@ namespace ChapeauUI
                 {
                     orderItems = GetAllServedOrderItems(loggedInEmployee);
                 }
-                catch (SqlException)
+                catch (Exception)
                 {
                     MessageBox.Show("Something went wrong while loading the data");
                     return;
@@ -208,7 +196,7 @@ namespace ChapeauUI
             {
                 orderItems = GetAllOrderItems(loggedInEmployee);
             }
-            catch (SqlException)
+            catch (Exception)
             {
                 MessageBox.Show("Something went wrong while loading the data");
                 return;
