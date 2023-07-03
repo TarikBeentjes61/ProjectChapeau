@@ -38,7 +38,14 @@ namespace ChapeauDAL
         }
         public Bill CheckBill(Table table)
         {
-            string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed FROM Bill WHERE table_Id = @Table_id  AND payed = 1";
+            //string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed FROM Bill WHERE table_Id = @Table_id  AND payed = 0";
+            string query = "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, " +
+                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Bill AS B " +
+                "JOIN Employee AS E ON B.Employee_id = E.id " +
+                "JOIN [Table] AS T ON B.Table_id = T.id " +
+                "WHERE B.Table_id = @Table_id  AND B.payed = 0";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Table_id", table.tableId),

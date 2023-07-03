@@ -110,7 +110,7 @@ namespace ChapeauDAL
                 comment = (string)row["comment"],
                 paymentMethod = (PaymentMethod)row["paymentMethod"],
                 tip = (int)row["tip"],
-                payed = (int)row["payed"],
+                payed = (bool)row["payed"],
             };
             return new Order()
             {
