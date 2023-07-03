@@ -29,7 +29,6 @@ namespace ChapeauUI
 
             this.employee = employee;
             this.table = table;
-            //tableId = table.tableId;
             billId = bill.billId;
 
             //NAME EMPLOYEE
@@ -91,6 +90,8 @@ namespace ChapeauUI
         {
             try
             {
+                ShowOrder();
+
                 //ORDER LUNCH PANEL
                 FillListviewOrder(listViewOrderLunch, order.GetOrderItems());
 
@@ -246,7 +247,7 @@ namespace ChapeauUI
 
         //Add and show order
         private void btnAddLunch_Click(object sender, EventArgs e)
-        {
+        { 
             AddOrder(listViewOrderLunch);
             ShowOrder();
             pnlCreateOrderLunch.Hide();
@@ -407,7 +408,7 @@ namespace ChapeauUI
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, 1);
+                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, true, DateTime.Now, 0);
             }
             else
             {
