@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             mainHeaderPanel = new Panel();
             mainLabel = new Label();
             logoutButton = new Button();
@@ -71,20 +72,21 @@
             showServedButton = new Button();
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
-            label2 = new Label();
+            servedDescription = new Label();
             panel3 = new Panel();
-            label3 = new Label();
+            servedCount = new Label();
             panel4 = new Panel();
-            label4 = new Label();
+            servedOrderNumber = new Label();
             panel5 = new Panel();
-            label5 = new Label();
-            listView1 = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
+            servedWaitingTime = new Label();
+            servedOrderListview = new ListView();
+            servedWaitingTimeHeader = new ColumnHeader();
+            servedOrderNumberHeader = new ColumnHeader();
+            servedCountHeader = new ColumnHeader();
+            servedDescriptionHeader = new ColumnHeader();
             servedOrdersPanel = new Panel();
             hideServedButton = new Button();
+            Timer = new System.Windows.Forms.Timer(components);
             mainHeaderPanel.SuspendLayout();
             subPanel.SuspendLayout();
             descriptionPanel.SuspendLayout();
@@ -154,7 +156,6 @@
             listViewOrders.Margin = new Padding(3, 2, 3, 2);
             listViewOrders.Name = "listViewOrders";
             listViewOrders.Size = new Size(686, 375);
-            listViewOrders.Sorting = SortOrder.Ascending;
             listViewOrders.TabIndex = 3;
             listViewOrders.TileSize = new Size(40, 40);
             listViewOrders.UseCompatibleStateImageBehavior = false;
@@ -285,11 +286,11 @@
             WaitingTimeLabel.FlatStyle = FlatStyle.Flat;
             WaitingTimeLabel.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             WaitingTimeLabel.ForeColor = SystemColors.ControlText;
-            WaitingTimeLabel.Location = new Point(7, 11);
+            WaitingTimeLabel.Location = new Point(5, 11);
             WaitingTimeLabel.Name = "WaitingTimeLabel";
-            WaitingTimeLabel.Size = new Size(118, 25);
+            WaitingTimeLabel.Size = new Size(123, 25);
             WaitingTimeLabel.TabIndex = 0;
-            WaitingTimeLabel.Text = "WaitingTime";
+            WaitingTimeLabel.Text = "Waiting Time";
             // 
             // viewOrderPanel
             // 
@@ -439,10 +440,10 @@
             panel1.Controls.Add(commentPanel);
             panel1.Controls.Add(OrderStatusHeaderPanel);
             panel1.Controls.Add(tableHeaderPanel);
-            panel1.Controls.Add(selectedStatusPanel);
             panel1.Controls.Add(tablePanel);
             panel1.Controls.Add(OrderIdHeaderPanel);
             panel1.Controls.Add(selectedIdPanel);
+            panel1.Controls.Add(selectedStatusPanel);
             panel1.Location = new Point(684, 371);
             panel1.Name = "panel1";
             panel1.Size = new Size(518, 203);
@@ -562,128 +563,128 @@
             // 
             panel2.BackColor = Color.FromArgb(255, 179, 71);
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label2);
-            panel2.Location = new Point(380, 59);
+            panel2.Controls.Add(servedDescription);
+            panel2.Location = new Point(379, 59);
             panel2.Name = "panel2";
-            panel2.Size = new Size(307, 47);
+            panel2.Size = new Size(324, 47);
             panel2.TabIndex = 12;
             // 
-            // label2
+            // servedDescription
             // 
-            label2.AutoSize = true;
-            label2.FlatStyle = FlatStyle.Flat;
-            label2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = SystemColors.ControlText;
-            label2.Location = new Point(101, 11);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 25);
-            label2.TabIndex = 0;
-            label2.Text = "Description";
+            servedDescription.AutoSize = true;
+            servedDescription.FlatStyle = FlatStyle.Flat;
+            servedDescription.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            servedDescription.ForeColor = SystemColors.ControlText;
+            servedDescription.Location = new Point(113, 11);
+            servedDescription.Name = "servedDescription";
+            servedDescription.Size = new Size(108, 25);
+            servedDescription.TabIndex = 0;
+            servedDescription.Text = "Description";
             // 
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(255, 179, 71);
             panel3.BorderStyle = BorderStyle.FixedSingle;
-            panel3.Controls.Add(label3);
-            panel3.Location = new Point(275, 59);
+            panel3.Controls.Add(servedCount);
+            panel3.Location = new Point(274, 59);
             panel3.Name = "panel3";
             panel3.Size = new Size(106, 47);
             panel3.TabIndex = 11;
             // 
-            // label3
+            // servedCount
             // 
-            label3.AutoSize = true;
-            label3.FlatStyle = FlatStyle.Flat;
-            label3.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = SystemColors.ControlText;
-            label3.Location = new Point(20, 11);
-            label3.Name = "label3";
-            label3.Size = new Size(63, 25);
-            label3.TabIndex = 0;
-            label3.Text = "Count";
+            servedCount.AutoSize = true;
+            servedCount.FlatStyle = FlatStyle.Flat;
+            servedCount.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            servedCount.ForeColor = SystemColors.ControlText;
+            servedCount.Location = new Point(20, 11);
+            servedCount.Name = "servedCount";
+            servedCount.Size = new Size(63, 25);
+            servedCount.TabIndex = 0;
+            servedCount.Text = "Count";
             // 
             // panel4
             // 
             panel4.BackColor = Color.FromArgb(255, 179, 71);
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(label4);
-            panel4.Location = new Point(129, 59);
+            panel4.Controls.Add(servedOrderNumber);
+            panel4.Location = new Point(128, 59);
             panel4.Name = "panel4";
             panel4.Size = new Size(148, 47);
             panel4.TabIndex = 10;
             // 
-            // label4
+            // servedOrderNumber
             // 
-            label4.AutoSize = true;
-            label4.FlatStyle = FlatStyle.Flat;
-            label4.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.ForeColor = SystemColors.ControlText;
-            label4.Location = new Point(4, 11);
-            label4.Name = "label4";
-            label4.Size = new Size(135, 25);
-            label4.TabIndex = 0;
-            label4.Text = "Order Number";
+            servedOrderNumber.AutoSize = true;
+            servedOrderNumber.FlatStyle = FlatStyle.Flat;
+            servedOrderNumber.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            servedOrderNumber.ForeColor = SystemColors.ControlText;
+            servedOrderNumber.Location = new Point(4, 11);
+            servedOrderNumber.Name = "servedOrderNumber";
+            servedOrderNumber.Size = new Size(135, 25);
+            servedOrderNumber.TabIndex = 0;
+            servedOrderNumber.Text = "Order Number";
             // 
             // panel5
             // 
             panel5.BackColor = Color.FromArgb(255, 179, 71);
             panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(label5);
-            panel5.Location = new Point(1, 59);
+            panel5.Controls.Add(servedWaitingTime);
+            panel5.Location = new Point(0, 59);
             panel5.Name = "panel5";
             panel5.Size = new Size(129, 47);
             panel5.TabIndex = 9;
             // 
-            // label5
+            // servedWaitingTime
             // 
-            label5.AutoSize = true;
-            label5.FlatStyle = FlatStyle.Flat;
-            label5.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.ForeColor = SystemColors.ControlText;
-            label5.Location = new Point(7, 11);
-            label5.Name = "label5";
-            label5.Size = new Size(118, 25);
-            label5.TabIndex = 0;
-            label5.Text = "WaitingTime";
+            servedWaitingTime.AutoSize = true;
+            servedWaitingTime.FlatStyle = FlatStyle.Flat;
+            servedWaitingTime.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            servedWaitingTime.ForeColor = SystemColors.ControlText;
+            servedWaitingTime.Location = new Point(4, 11);
+            servedWaitingTime.Name = "servedWaitingTime";
+            servedWaitingTime.Size = new Size(123, 25);
+            servedWaitingTime.TabIndex = 0;
+            servedWaitingTime.Text = "Waiting Time";
             // 
-            // listView1
+            // servedOrderListview
             // 
-            listView1.BackColor = Color.FromArgb(128, 210, 176);
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            listView1.Cursor = Cursors.Hand;
-            listView1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            listView1.ForeColor = SystemColors.ControlText;
-            listView1.FullRowSelect = true;
-            listView1.GridLines = true;
-            listView1.Location = new Point(0, 74);
-            listView1.Margin = new Padding(3, 2, 3, 2);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(687, 375);
-            listView1.Sorting = SortOrder.Ascending;
-            listView1.TabIndex = 8;
-            listView1.TileSize = new Size(40, 40);
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
+            servedOrderListview.BackColor = Color.FromArgb(128, 210, 176);
+            servedOrderListview.Columns.AddRange(new ColumnHeader[] { servedWaitingTimeHeader, servedOrderNumberHeader, servedCountHeader, servedDescriptionHeader });
+            servedOrderListview.Cursor = Cursors.Hand;
+            servedOrderListview.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            servedOrderListview.ForeColor = SystemColors.ControlText;
+            servedOrderListview.FullRowSelect = true;
+            servedOrderListview.GridLines = true;
+            servedOrderListview.Location = new Point(-1, 74);
+            servedOrderListview.Margin = new Padding(3, 2, 3, 2);
+            servedOrderListview.Name = "servedOrderListview";
+            servedOrderListview.Size = new Size(703, 375);
+            servedOrderListview.Sorting = SortOrder.Ascending;
+            servedOrderListview.TabIndex = 8;
+            servedOrderListview.TileSize = new Size(40, 40);
+            servedOrderListview.UseCompatibleStateImageBehavior = false;
+            servedOrderListview.View = View.Details;
             // 
-            // columnHeader1
+            // servedWaitingTimeHeader
             // 
-            columnHeader1.Text = "";
-            columnHeader1.Width = 127;
+            servedWaitingTimeHeader.Text = "";
+            servedWaitingTimeHeader.Width = 127;
             // 
-            // columnHeader2
+            // servedOrderNumberHeader
             // 
-            columnHeader2.Text = "";
-            columnHeader2.Width = 147;
+            servedOrderNumberHeader.Text = "";
+            servedOrderNumberHeader.Width = 147;
             // 
-            // columnHeader3
+            // servedCountHeader
             // 
-            columnHeader3.Text = "";
-            columnHeader3.Width = 105;
+            servedCountHeader.Text = "";
+            servedCountHeader.Width = 105;
             // 
-            // columnHeader4
+            // servedDescriptionHeader
             // 
-            columnHeader4.Text = "";
-            columnHeader4.Width = 303;
+            servedDescriptionHeader.Text = "";
+            servedDescriptionHeader.Width = 320;
             // 
             // servedOrdersPanel
             // 
@@ -693,29 +694,35 @@
             servedOrdersPanel.Controls.Add(panel4);
             servedOrdersPanel.Controls.Add(panel3);
             servedOrdersPanel.Controls.Add(panel2);
-            servedOrdersPanel.Controls.Add(listView1);
-            servedOrdersPanel.Location = new Point(275, 133);
+            servedOrdersPanel.Controls.Add(servedOrderListview);
+            servedOrdersPanel.Location = new Point(264, 133);
             servedOrdersPanel.Name = "servedOrdersPanel";
-            servedOrdersPanel.Size = new Size(687, 451);
+            servedOrdersPanel.Size = new Size(704, 451);
             servedOrdersPanel.TabIndex = 13;
             servedOrdersPanel.Visible = false;
             // 
             // hideServedButton
             // 
+            hideServedButton.BackColor = Color.FromArgb(255, 179, 71);
             hideServedButton.Location = new Point(5, 5);
             hideServedButton.Name = "hideServedButton";
             hideServedButton.Size = new Size(127, 50);
             hideServedButton.TabIndex = 13;
             hideServedButton.Text = "Back";
-            hideServedButton.UseVisualStyleBackColor = true;
+            hideServedButton.UseVisualStyleBackColor = false;
             hideServedButton.Click += hideServedButton_Click;
+            // 
+            // Timer
+            // 
+            Timer.Interval = 60000;
+            Timer.Tick += Timer_Tick;
             // 
             // CurrentOrdersForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
-            ClientSize = new Size(1201, 574);
+            ClientSize = new Size(1201, 573);
             Controls.Add(pictureBox1);
             Controls.Add(showServedButton);
             Controls.Add(descriptionPanel);
@@ -823,19 +830,20 @@
         private Button showServedButton;
         private PictureBox pictureBox1;
         private Panel panel2;
-        private Label label2;
+        private Label servedDescription;
         private Panel panel3;
-        private Label label3;
+        private Label servedCount;
         private Panel panel4;
-        private Label label4;
+        private Label servedOrderNumber;
         private Panel panel5;
-        private Label label5;
-        private ListView listView1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
+        private Label servedWaitingTime;
+        private ListView servedOrderListview;
+        private ColumnHeader servedWaitingTimeHeader;
+        private ColumnHeader servedOrderNumberHeader;
+        private ColumnHeader servedCountHeader;
+        private ColumnHeader servedDescriptionHeader;
         private Panel servedOrdersPanel;
         private Button hideServedButton;
+        private System.Windows.Forms.Timer Timer;
     }
 }
