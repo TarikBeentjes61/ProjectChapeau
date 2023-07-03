@@ -279,7 +279,7 @@ namespace ChapeauUI
             //database verander dbo.BILL van tip en payed.
             BillService billService = new BillService();
             //id, comment, paymentMethod, tip, payed.
-            billService.UpdateBill(bill.billId, bill.comment, (int)bill.paymentMethod, 1, 1);
+            billService.UpdateBill(bill.billId, bill.comment, (int)bill.paymentMethod, 1, true, DateTime.Now, bill.billPrice);
 
             TableForm table = new TableForm(employee);
             this.Close();

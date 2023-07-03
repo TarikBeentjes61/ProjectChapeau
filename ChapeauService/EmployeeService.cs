@@ -18,7 +18,7 @@ namespace ChapeauService
         }
         public Employee GetByUsername(string username)
         {
-            return (employeeDao.GetByUsername(username));
+            return employeeDao.GetByUsername(username);
         }
     }
 }
