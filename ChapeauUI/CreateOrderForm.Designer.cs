@@ -420,9 +420,9 @@
             // lblTotal
             // 
             lblTotal.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTotal.Location = new Point(248, 467);
+            lblTotal.Location = new Point(232, 467);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(87, 35);
+            lblTotal.Size = new Size(152, 35);
             lblTotal.TabIndex = 15;
             lblTotal.Text = "Total: ";
             // 

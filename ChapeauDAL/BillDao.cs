@@ -35,12 +35,27 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        public int CreateBill(string comment, int paymentMethod, double tip, int payed)
+        //public int CheckAndCreateBill(int billId, Employee employee, Table table, string comment, int paymentMethod, double tip, int payed)
+        //{
+        //    string checkQuery = "SELECT COUNT(*) FROM Bills WHERE BillID = @BillID";
+        //    string insertQuery = "INSERT INTO Bills (BillID, Employee_Id, Table_Id, comment, paymentMethod, tip, payed) OUTPUT INSERTED.id VALUES (@BillID, @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
+        //    //string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@billId @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
+
+        //    SqlParameter[] sqlParameters = new SqlParameter[]
+        //    {
+        //        new SqlParameter("@BillID", billId),
+        //    };
+
+        //    ExecuteInsertQuery(checkQuery, sqlParameters);
+        //}
+        public int CheckAndCreateBill(int id, Employee employee, Table table, string comment, int paymentMethod, double tip, int payed)
         {
-            string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@comment, @paymentMethod, @tip, @payed)";
+            string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@billId @Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
 
             SqlParameter[] sqlParameters = new SqlParameter[]
             {
+                new SqlParameter("@Employee_id", employee.employeeId),
+                new SqlParameter("@Table_id", table.tableId),
                 new SqlParameter("@comment", comment ),
                 new SqlParameter("@paymentMethod", paymentMethod ),
                 new SqlParameter("@tip", tip ),
