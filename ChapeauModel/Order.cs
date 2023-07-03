@@ -8,7 +8,7 @@ namespace ChapeauModel
         private List<OrderItem> orderItems;
         public Employee employee;
         public Table table;
-        public Bill bill = new Bill();
+        public Bill bill;
         public int id;
         public DateTime date;
         public OrderStatus status;
@@ -22,6 +22,10 @@ namespace ChapeauModel
         public List<OrderItem> GetOrderItems()
         {
             return orderItems;
+        }
+        public void EmptyOrderItems()
+        {
+            orderItems.Clear();
         }
     }
 }

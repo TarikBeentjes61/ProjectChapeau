@@ -12,7 +12,9 @@ namespace ChapeauDAL
         public List<Bill> GetAll()
         {
             string query =
-                "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice," +
+
+                "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
+
                 "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
                 "FROM Bill AS B " +
@@ -23,7 +25,9 @@ namespace ChapeauDAL
         public Bill GetById(int id)
         {
             string query =
-                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice," +
+
+                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
+
                 "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
                 "T.id AS T_id, T.[status] " +
                 "FROM Bill AS B " +
@@ -38,7 +42,16 @@ namespace ChapeauDAL
         }
         public Bill CheckBill(Table table)
         {
-            string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed, dateTime, billPrice FROM Bill WHERE table_Id = @Table_id  AND payed = 1";
+
+            //string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed FROM Bill WHERE table_Id = @Table_id  AND payed = 0";
+            string query = "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
+                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
+                "T.id AS T_id, T.[status] " +
+                "FROM Bill AS B " +
+                "JOIN Employee AS E ON B.Employee_id = E.id " +
+                "JOIN [Table] AS T ON B.Table_id = T.id " +
+                "WHERE B.Table_id = @Table_id  AND B.payed = 0";
+
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Table_id", table.tableId),
@@ -47,14 +60,16 @@ namespace ChapeauDAL
 
             if (bill == null)
             {
-                return bill;
+                return null;
             }
             else
             {
-                return null;
+                return bill;
             }
         }
-        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, int payed, DateTime dateTime, double billPrice)
+
+        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
+
         {
             string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed, @dateTime, @billPrice)";
             SqlParameter[] sqlParameters = new SqlParameter[]
@@ -65,11 +80,12 @@ namespace ChapeauDAL
                      new SqlParameter("@paymentMethod", paymentMethod ),
                      new SqlParameter("@tip", tip ),
                      new SqlParameter("@payed", payed ),
-                     new SqlParameter("@dateTime", dateTime ),
+                     new SqlParameter("@dateTime", dateTime),
                      new SqlParameter("@billPrice", billPrice ),
              };
             return ExecuteInsertQuery(query, sqlParameters);
         }
+
 
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed, DateTime dateTime, double billPrice)
         {
@@ -148,8 +164,10 @@ namespace ChapeauDAL
                 comment = (string)row["comment"],
                 paymentMethod = (PaymentMethod)row["paymentMethod"],
                 tip = (int)row["tip"],
+                payed = (bool)row["payed"],
                 dateTime = (DateTime)row["dateTime"],
-                billPrice = (double)row["billPrice"],
+                billPrice = Convert.ToDouble(row["billPrice"]),
+
             };
         }
     }

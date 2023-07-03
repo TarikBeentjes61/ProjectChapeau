@@ -32,11 +32,12 @@ namespace ChapeauService
         {
             return billDao.CheckBill(table);
         }
-        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, int payed, DateTime dateTime, double billPrice)
+        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
         {
             return billDao.CreateBill(table, employee, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }
-        public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed, DateTime dateTime, double billPrice)
+        public void UpdateBill(int id, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
+
         {
             billDao.UpdateBill(id, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }

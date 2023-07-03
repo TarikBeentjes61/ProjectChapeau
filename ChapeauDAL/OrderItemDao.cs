@@ -17,8 +17,8 @@ namespace ChapeauDAL
             "O.id AS O_id, O.Table_id, O.Employee_id, O.Bill_id, O.[dateTime], O.[status], " +
             "M.id AS M_id, M.[name], " +
             "T.id AS T_id, T.[status], " +
-            "E.id AS E_id E.username E.[name], E.[hash], E.salt, E.[role], " +
-            "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
+            "E.id AS E_id, E.username, E.[name], E.[hash], E.salt, E.[role], " +
+
             "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
             "FROM OrderItem AS OI " +
             "JOIN [MenuItem] AS MI ON OI.menuItem_id = MI.id " +
@@ -40,13 +40,13 @@ namespace ChapeauDAL
              };
             return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetByTableId(int tableId, int billId)
+        public List<OrderItem> GetByTableIdAndBillId(int tableId, int billId)
         {
-            string query = BaseQuery + "WHERE T.Id = @Table_Id";
+            string query = BaseQuery + "WHERE T.Id = @Table_Id AND B.Id = @Bill_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Table_Id", tableId),
-                new SqlParameter("Bill_id",billId),
+                new SqlParameter("@Bill_id",billId),
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -59,6 +59,7 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";

@@ -49,7 +49,7 @@ namespace ChapeauUI
 
         private void ShowBillListView(System.Windows.Forms.ListView listView, OrderItemService orderItemService)
         {
-            List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(1);
+            List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
             //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
 
             listView.Clear();
@@ -288,7 +288,9 @@ namespace ChapeauUI
             //database verander dbo.BILL van tip en payed.
             BillService billService = new BillService();
             //id, comment, paymentMethod, tip, payed.
-            billService.UpdateBill(bill.billId, bill.comment, (int)bill.paymentMethod, 1, 1, DateTime.Now, 0);
+
+            billService.UpdateBill(bill.billId, bill.comment, (int)bill.paymentMethod, 1, true, DateTime.Now, bill.billPrice);
+
 
             TableForm table = new TableForm(employee);
             this.Close();
