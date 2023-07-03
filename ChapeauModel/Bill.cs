@@ -10,7 +10,9 @@ namespace ChapeauModel
         public Employee employee;
         public string comment;
         public PaymentMethod paymentMethod;
+        public bool payed;
         public double tip;
+
 
         public Bill()
         {

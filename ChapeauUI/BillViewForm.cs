@@ -19,9 +19,24 @@ namespace ChapeauUI
 {
     public partial class BillViewForm : Form
     {
+
+        private bool setChange = false;
+        private bool setTip = false;
+        private bool goFurther = false;
+        private bool buttonClicked = false;
+        private double changePrice = 0;
+        private PaymentMethod paymentMethode;
+        private double doubleOrderPrice = 0;
+        private double totalTip = 0;
+        private string comment = "";
+        private double orderTotalPrice = 0;
+
+        int tableId;
+        Table table = new Table();
         private Employee employee;
         private Bill bill;
         public BillViewForm(Bill bill, Employee employee)
+
         {
             this.employee = employee;
             this.bill = bill;
