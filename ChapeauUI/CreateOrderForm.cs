@@ -458,7 +458,7 @@ namespace ChapeauUI
             if(order.id != 0 && bill.billId != 0)
             {
                 //order = orderService.GetById(order.id);
-                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, bill.billId);
+                List<OrderItem> orderItems = orderItemService.GetByTableIdAndBillId(table.tableId, bill.billId);
 
 
                 foreach (OrderItem o in orderItems)
