@@ -10,24 +10,25 @@ namespace ChapeauUI
     public partial class CreateOrderForm : Form
     {
         Order order = new Order();
-        ChapeauModel.Menu menu = new ChapeauModel.Menu();
-        MenuItemService menuItemService = new MenuItemService();
-        OrderItemService orderItemService = new OrderItemService();
-        bool btnRemoveWasClicked = false;
-        double totalPrice = 0;
         Employee employee = new Employee();
         Table table = new Table();
         Bill bill = new Bill();
-        int tableId;
+        ChapeauModel.Menu menu = new ChapeauModel.Menu();
+        MenuItemService menuItemService = new MenuItemService();
+        OrderItemService orderItemService = new OrderItemService();
+        OrderService orderService = new OrderService();
+        BillService billService = new BillService();
+        bool btnRemoveWasClicked = false;
+        double totalPrice = 0;
         int billId;
-        int employeeId;
 
         public CreateOrderForm(Table table, Employee employee)
         {
             InitializeComponent();
 
-            employeeId = employee.employeeId;
-            tableId = table.tableId;
+            this.employee = employee;
+            this.table = table;
+            //tableId = table.tableId;
             billId = bill.billId;
 
             //NAME EMPLOYEE
@@ -400,20 +401,18 @@ namespace ChapeauUI
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
             OrderItem orderItem = new OrderItem();
-            OrderService orderService = new OrderService();
-            BillService billService = new BillService();
             OrderItemService orderItemService = new OrderItemService();
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, true);
+                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, 1);
             }
             else
             {
                 bill = billService.CheckBill(table);
             }
 
-            int orderId = orderService.AddOrder(tableId, employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
+            int orderId = orderService.AddOrder(table.tableId, employee.employeeId, bill.billId, DateTime.Now, OrderStatus.Preparation);
 
             listViewOrderOverview.Clear();
             listViewOrderOverview.View = View.Details;
@@ -442,9 +441,9 @@ namespace ChapeauUI
             listViewOrderOverview.Columns.Add("Name", 350);
             listViewOrderOverview.Columns.Add("Amount", 65);
 
-            foreach (OrderItem o in order.GetOrderItems())
+            if (billId == order.bill.billId)
             {
-                while (billId == order.bill.billId)
+                foreach (OrderItem o in order.GetOrderItems())
                 {
                     MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
 
@@ -456,7 +455,7 @@ namespace ChapeauUI
                 }
             }
 
-            List<OrderItem> orderItems = orderItemService.GetByTableId(tableId, billId);
+                List<OrderItem> orderItems = orderItemService.GetByTableId(table.tableId, billId);
             foreach (OrderItem o in orderItems)
             {
                 MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
@@ -498,13 +497,13 @@ namespace ChapeauUI
 
         private void TableLabels()
         {
-            lblTableOrderOverview.Text = "Table " + tableId.ToString();
-            lblTableLunchOverview.Text = "Table " + tableId.ToString();
-            lblTableDinnerOverview.Text = "Table " + tableId.ToString();
-            lblTableDrinksOverview.Text = "Table " + tableId.ToString();
+            lblTableOrderOverview.Text = "Table " + table.tableId.ToString();
+            lblTableLunchOverview.Text = "Table " + table.tableId.ToString();
+            lblTableDinnerOverview.Text = "Table " + table.tableId.ToString();
+            lblTableDrinksOverview.Text = "Table " + table.tableId.ToString();
         }
 
-        private void ShowAndHidePanels(System.Windows.Forms.Panel pnl1, System.Windows.Forms.Panel pnl2, System.Windows.Forms.Panel pnl3, System.Windows.Forms.Panel pnl4)
+        private void ShowAndHidePanels(Panel pnl1, Panel pnl2, Panel pnl3,Panel pnl4)
         {
             //Hide other panels
             pnl1.Hide();

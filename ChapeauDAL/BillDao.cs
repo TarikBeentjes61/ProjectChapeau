@@ -38,12 +38,12 @@ namespace ChapeauDAL
         }
         public Bill CheckBill(Table table)
         {
-            string selectQuery = "SELECT id, employee, table_Id, comment, payementMethod, tip, payed FROM Bills table_Id = @Table_id";
-            SqlParameter[] sqlParametersSelect = new SqlParameter[]
+            string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed FROM Bill WHERE table_Id = @Table_id  AND payed = 1";
+            SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Table_id", table.tableId),
              };
-            Bill bill = ReadSingle(ExecuteSelectQuery(selectQuery, sqlParametersSelect));
+            Bill bill = ReadSingle(ExecuteSelectQuery(query, sqlParameters));
 
             if (bill == null)
             {
@@ -54,10 +54,10 @@ namespace ChapeauDAL
                 return null;
             }
         }
-        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, bool payed)
+        public int CreateBill(Table table, Employee employee, string comment, int paymentMethod, double tip, int payed)
         {
-            string insertQuery = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
-            SqlParameter[] sqlParametersInsert = new SqlParameter[]
+            string query = "INSERT INTO Bill OUTPUT INSERTED.id VALUES (@Employee_Id, @Table_Id, @comment, @paymentMethod, @tip, @payed)";
+            SqlParameter[] sqlParameters = new SqlParameter[]
              {
                      new SqlParameter("@Employee_Id", employee.employeeId),
                      new SqlParameter("@Table_Id", table.tableId),
@@ -66,7 +66,7 @@ namespace ChapeauDAL
                      new SqlParameter("@tip", tip ),
                      new SqlParameter("@payed", payed ),
              };
-            return ExecuteInsertQuery(insertQuery, sqlParametersInsert);
+            return ExecuteInsertQuery(query, sqlParameters);
         }
 
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, int payed)
