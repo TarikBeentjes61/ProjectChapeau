@@ -58,6 +58,7 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
@@ -80,13 +81,46 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        private string UpdateQueryByRole(Role role)
         {
             if (role == Role.Chef)
             {
                 return ("IN (1,2) ");
             }
             return ("= 3 ");
+        }
+        public List<OrderItem> GetOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] != 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
+        }
+        public List<OrderItem> GetServedOrderItemsByRole(Role role)
+        {
+            string query = BaseQuery + "WHERE M.id " + UpdateQueryByRole(role);
+            query +=
+                "AND OI.[status] = 2 AND DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) < 1440 " +
+                "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
+            return ReadTables(ExecuteSelectQuery(query.ToString()));
+        }
+        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        {
+            StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
+            if (role == Role.Chef)
+            {
+                query.Append("IN (1,2) ");
+            }
+            else if (role == Role.Barista)
+            {
+                query.Append("= 3 ");
+            }
+            SqlParameter[] sqlParameters = new SqlParameter[]
+             {
+                new SqlParameter("@orderId", orderId),
+             };
+            return ReadTables(ExecuteSelectQuery(query.ToString(), sqlParameters));
         }
         public void UpdateStatusById (int id, OrderStatus status)
         {
@@ -128,7 +162,6 @@ namespace ChapeauDAL
             Employee employee = new Employee()
             {
                 employeeId = (int)row["E_id"],
-                username = (string)row["username"],
                 name = (string)row["name"],
                 hash = (string)row["hash"],
                 salt = (string)row["salt"],
