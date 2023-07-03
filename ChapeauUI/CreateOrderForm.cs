@@ -407,7 +407,7 @@ namespace ChapeauUI
 
             if (billService.CheckBill(table) == null)
             {
-                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, 1);
+                bill.billId = billService.CreateBill(table, employee, /*orderItem.comment*/"comment", 0, 0, 1, DateTime.Now, 0);
             }
             else
             {

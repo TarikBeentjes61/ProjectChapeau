@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ChapeauModel
 {
@@ -12,6 +13,8 @@ namespace ChapeauModel
         public PaymentMethod paymentMethod;
         public bool payed;
         public double tip;
+        public DateTime dateTime;
+        public double billPrice;
 
 
         public Bill()
