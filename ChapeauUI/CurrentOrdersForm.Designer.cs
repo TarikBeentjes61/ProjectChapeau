@@ -660,7 +660,6 @@
             servedOrderListview.Margin = new Padding(3, 2, 3, 2);
             servedOrderListview.Name = "servedOrderListview";
             servedOrderListview.Size = new Size(703, 375);
-            servedOrderListview.Sorting = SortOrder.Ascending;
             servedOrderListview.TabIndex = 8;
             servedOrderListview.TileSize = new Size(40, 40);
             servedOrderListview.UseCompatibleStateImageBehavior = false;
@@ -723,6 +722,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1201, 573);
+            Controls.Add(servedOrdersPanel);
             Controls.Add(pictureBox1);
             Controls.Add(showServedButton);
             Controls.Add(descriptionPanel);
@@ -738,7 +738,6 @@
             Controls.Add(logoutButton);
             Controls.Add(mainHeaderPanel);
             Controls.Add(panel1);
-            Controls.Add(servedOrdersPanel);
             Name = "CurrentOrdersForm";
             Text = "Current Orders";
             mainHeaderPanel.ResumeLayout(false);
