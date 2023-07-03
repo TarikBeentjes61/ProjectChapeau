@@ -26,7 +26,6 @@ namespace ChapeauUI
         public CreateOrderForm(Table table, Employee employee)
         {
             InitializeComponent();
-
             ShowOrder();
 
             this.employee = employee;

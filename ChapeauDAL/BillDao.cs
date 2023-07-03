@@ -38,7 +38,7 @@ namespace ChapeauDAL
         }
         public Bill CheckBill(Table table)
         {
-            string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed, dateTime, billPrice FROM Bill WHERE table_Id = @Table_id  AND payed = 1";
+            string query = "SELECT id, Employee_Id, table_Id, comment, paymentMethod, tip, payed, dateTime, billPrice FROM Bill WHERE table_Id = @Table_id AND payed = 1";
             SqlParameter[] sqlParameters = new SqlParameter[]
              {
                 new SqlParameter("@Table_id", table.tableId),
