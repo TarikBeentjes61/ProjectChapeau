@@ -29,10 +29,9 @@ namespace ChapeauUI
             try
             {
                 EmployeeService employeeService = new EmployeeService();
-                PasswordService passwordService = new PasswordService();
                 Employee employee = employeeService.GetByUsername(username);
                 //Check if input is correct
-                if (employee != null && passwordService.VerifyPassword(password, employee.salt, employee.hash))
+                if (employee != null && PasswordService.VerifyPassword(password, employee.salt, employee.hash))
                 {
                     this.Hide();
                     LoginEmployee(employee);
