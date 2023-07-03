@@ -1,15 +1,11 @@
 using ChapeauModel;
 using ChapeauService;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Xml;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChapeauUI
 {
     public partial class CreateOrderForm : Form
     {
-        ChapeauModel.Menu menu = new ChapeauModel.Menu();
+        Menu menu = new Menu();
         Order order = new Order();
         Employee employee = new Employee();
         Table table = new Table();
