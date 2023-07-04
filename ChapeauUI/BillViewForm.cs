@@ -36,7 +36,6 @@ namespace ChapeauUI
         private void ShowBillListView(System.Windows.Forms.ListView listView, OrderItemService orderItemService)
         {
             List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
-            //List<OrderItem> orderItemsTest = orderItemService.GetAllByBillId(bill.billId);
 
             listView.Clear();
             listView.View = View.Details; // Specify that each item appears on a separate line.
@@ -262,8 +261,8 @@ namespace ChapeauUI
         private void btnBackOrderOverview_Click(object sender, EventArgs e)
         {
             Hide();
-            //CreateOrderForm orderForm = new CreateOrderForm(table, employee);
-            //orderForm.Show();
+            CreateOrderForm orderForm = new CreateOrderForm(bill.table, employee);
+            orderForm.Show();
         }
         private void btnConfirmComment_Click(object sender, EventArgs e)
         {
@@ -302,7 +301,6 @@ namespace ChapeauUI
             showPanel(pnlAddComment);
         }
 
-        //Methodes verkorten
         private void btnChangeBackColor(System.Windows.Forms.Button btn1, System.Windows.Forms.Button btn2, System.Windows.Forms.Button btn3) //Knoppen Cash, Debit, Visa Backcolor veranderen
         {
             btn1.BackColor = Color.FromArgb(255, 179, 71);

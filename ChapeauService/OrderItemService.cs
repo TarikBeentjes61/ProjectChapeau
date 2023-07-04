@@ -13,21 +13,9 @@ namespace ChapeauService
         {
             orderItemDao = new OrderItemDao();  
         }
-        public List<OrderItem> GetAll()
-        {
-            return orderItemDao.GetAll();
-        }
-        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
-        {
-            return orderItemDao.GetOrderItemsByIdAndRole(orderId, role);
-        }
         public List<OrderItem> GetByTableIdAndBillId(int tableId, int billId)
         {
             return orderItemDao.GetByTableIdAndBillId(tableId, billId);
-        }
-        public OrderItem GetById(int id)
-        {
-            return orderItemDao.GetById(id);
         }
         public List<OrderItem> GetOrderItemsByRole(Role role)
         {
@@ -36,10 +24,6 @@ namespace ChapeauService
         public List<OrderItem> GetServedOrderItemsByRole(Role role)
         {
             return orderItemDao.GetServedOrderItemsByRole(role);
-        }
-        public List<OrderItem> GetByOrderId(int orderId)
-        {
-            return orderItemDao.GetByOrderId(orderId);
         }
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {

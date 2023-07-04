@@ -16,18 +16,6 @@ namespace ChapeauService
         {
             billDao = new BillDao();
         }
-        public List<Bill> GetAll()
-        {
-            return billDao.GetAll();
-        }
-        public Bill GetById(int id)
-        {
-            return billDao.GetById(id);
-        }
-        public Bill GetBillByTableId(int tableId)
-        {
-            return billDao.GetBillByTableId(tableId);
-        }
         public Bill CheckBill(Table table)
         {
             return billDao.CheckBill(table);
@@ -37,7 +25,6 @@ namespace ChapeauService
             return billDao.CreateBill(table, employee, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }
         public void UpdateBill(int id, string comment, int paymentMethod, double tip, bool payed, DateTime dateTime, double billPrice)
-
         {
             billDao.UpdateBill(id, comment, paymentMethod, tip, payed, dateTime, billPrice);
         }

@@ -26,19 +26,6 @@ namespace ChapeauDAL
             "JOIN [Table] AS T ON O.Table_id = T.id " +
             "JOIN [Employee] AS E ON O.Employee_id = E.id " +
             "JOIN [Bill] AS B ON O.Bill_id = B.id ";
-        public List<OrderItem> GetAll()
-        {
-             return ReadTables(ExecuteSelectQuery(BaseQuery));
-        }
-        public OrderItem GetById(int id)
-        {
-            string query = BaseQuery + "WHERE OI.id = @id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", id ),
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
-        }
         public List<OrderItem> GetByTableIdAndBillId(int tableId, int billId)
         {
             string query = BaseQuery + "WHERE T.Id = @Table_Id AND B.Id = @Bill_id";
@@ -49,16 +36,6 @@ namespace ChapeauDAL
              };
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
-        public List<OrderItem> GetByOrderId(int orderId)
-        {
-            string query = BaseQuery + "WHERE O.id = @Order_id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", orderId ),
-             };
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-
         public void AddOrderItems(int orderId, int menuitemId, int amount, string comment, OrderStatus status)
         {
             string query = "INSERT INTO OrderItem VALUES (@Order_id, @MenuItem_id, @amount, @comment, @status) ";
@@ -71,15 +48,6 @@ namespace ChapeauDAL
                 new SqlParameter("@status", (int)status),
             };
             ExecuteEditQuery(query, sqlParameters);
-        }
-        public List<OrderItem> GetOrderItemsById(int orderId)
-        {
-            string query = $"SELECT id, Order_id, MenuItem_id, amount, comment, status FROM [OrderItem] WHERE Order_id = @orderId";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@orderId", orderId),
-             };
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         private string UpdateQueryByRole(Role role)
         {
@@ -105,22 +73,14 @@ namespace ChapeauDAL
                 "ORDER BY DATEDIFF(MINUTE, O.[dateTime], DATEADD(HOUR, 2, GETDATE())) DESC";
             return ReadTables(ExecuteSelectQuery(query.ToString()));
         }
-        public List<OrderItem> GetOrderItemsByIdAndRole(int orderId, Role role)
+        public List<OrderItem> GetAllByBillId(int billId)
         {
-            StringBuilder query = new StringBuilder(BaseQuery + "WHERE M.id ");
-            if (role == Role.Chef)
-            {
-                query.Append("IN (1,2) ");
-            }
-            else if (role == Role.Barista)
-            {
-                query.Append("= 3 ");
-            }
+            string query = BaseQuery + "WHERE O.Bill_id = @Bill_id";
             SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@orderId", orderId),
-             };
-            return ReadTables(ExecuteSelectQuery(query.ToString(), sqlParameters));
+            {
+                    new SqlParameter("@Bill_id", billId ),
+            };
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         public void UpdateStatusById (int id, OrderStatus status)
         {
@@ -141,11 +101,6 @@ namespace ChapeauDAL
                 orderItems.Add(CreateOrderItemFromRow(row));
             }
             return orderItems;
-        }
-        private OrderItem ReadSingle(DataTable dataTable)
-        {
-            DataRow row = dataTable.Rows[0];
-            return CreateOrderItemFromRow(row);
         }
         private OrderItem CreateOrderItemFromRow(DataRow row)
         {
@@ -196,16 +151,6 @@ namespace ChapeauDAL
                 status = (OrderStatus)row["status"]
             };
             return orderItem;
-        }
-
-        public List<OrderItem> GetAllByBillId(int billId)
-        {
-            string query = BaseQuery + "WHERE O.Bill_id = @Bill_id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-            {
-                    new SqlParameter("@Bill_id", billId ),
-            };
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
     }
 }

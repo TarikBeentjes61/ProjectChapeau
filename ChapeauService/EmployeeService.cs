@@ -12,10 +12,6 @@ namespace ChapeauService
         {
             employeeDao = new EmployeeDao();
         }
-        public Employee GetById(int id) 
-        {
-            return employeeDao.GetById(id);
-        }
         public Employee GetByUsername(string username)
         {
             return employeeDao.GetByUsername(username);

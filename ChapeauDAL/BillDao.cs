@@ -9,37 +9,6 @@ namespace ChapeauDAL
 {
     public class BillDao : BaseDao
     {
-        public List<Bill> GetAll()
-        {
-            string query =
-
-                "SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
-
-                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
-                "T.id AS T_id, T.[status] " +
-                "FROM Bill AS B " +
-                "JOIN Employee AS E ON B.Employee_id = E.id " +
-                "JOIN [Table] AS T ON B.Table_id = T.id";
-            return ReadTables(ExecuteSelectQuery(query));
-        }
-        public Bill GetById(int id)
-        {
-            string query =
-
-                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice, " +
-
-                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
-                "T.id AS T_id, T.[status] " +
-                "FROM Bill AS B " +
-                "JOIN Employee AS E ON B.Employee_id = E.id " +
-                "JOIN [Table] AS T ON B.Table_id = T.id " +
-                "WHERE B.id = @id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", id ),
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
-        }
         public Bill CheckBill(Table table)
         {
 
@@ -101,32 +70,6 @@ namespace ChapeauDAL
                 new SqlParameter("@billPrice", billPrice ),
              };
             ExecuteEditQuery(query, sqlParameters);
-        }
-        public Bill GetBillByTableId(int tableId)
-        {
-            string query =
-                $"SELECT B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed, B.dateTime, B.billPrice," +
-                "E.id AS E_id, E.[name], E.[hash], E.salt, E.[role], " +
-                "T.id AS T_id, T.[status] " +
-                "FROM Bill AS B " +
-                "JOIN Employee AS E ON B.Employee_id = E.id " +
-                "JOIN [Table] AS T ON B.Table_id = T.id " +
-                "WHERE T.id = @Table_id AND payed = 0";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@Table_id", tableId),
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
-        }
-        private List<Bill> ReadTables(DataTable dataTable)
-        {
-            List<Bill> bills = new List<Bill>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                Bill bill = CreateBillFromRow(row);
-                bills.Add(bill);
-            }
-            return bills;
         }
         private Bill ReadSingle(DataTable dataTable)
         {

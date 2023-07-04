@@ -13,14 +13,6 @@ namespace ChapeauService
         {
             orderDao = new OrderDao();
         }
-        public List<Order> GetAll()
-        {
-            return orderDao.GetAll();  
-        }
-        public Order GetById(int id)
-        {
-            return orderDao.GetById(id);
-        }
         public int AddOrder(int tableId, int employeeId, int billId, DateTime dateTime, OrderStatus status)
         {
             return orderDao.AddOrder(tableId, employeeId, billId, dateTime, status);

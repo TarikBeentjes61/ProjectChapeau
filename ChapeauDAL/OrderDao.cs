@@ -9,54 +9,6 @@ namespace ChapeauDAL
 {
     public class OrderDao : BaseDao
     {
-        public List<Order> GetAll()
-        {
-            string query = 
-                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
-                "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
-                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
-                "FROM [Order] AS O " +
-                "JOIN [Table] AS T ON O.Table_id = T.id " +
-                "JOIN Employee AS E ON O.Employee_id = E.id " +
-                "JOIN Bill AS B ON O.Bill_id = B.id";
-            return ReadTables(ExecuteSelectQuery(query));
-        }
-        public List<Order> GetAllByState(OrderStatus status)
-        {
-            string query = 
-                "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
-                "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
-                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
-                "FROM [Order] AS O " +
-                "JOIN [Table] AS T ON O.Table_id = T.id " +
-                "JOIN Employee AS E ON O.Employee_id = E.id " +
-                "JOIN Bill AS B ON O.Bill_id = B.id " +
-                "WHERE O.[status] = @status";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@status", (int)status),
-             };
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        public Order GetById(int id)
-        {
-            string query = "SELECT O.id AS O_id, O.[dateTime], O.[status], " +
-                "T.id AS T_id, T.[status], " +
-                "E.id AS E_id, E.[username], E.[name], E.[hash], E.salt, E.[role], " +
-                "B.id AS B_id, B.comment, B.paymentMethod, B.tip, B.payed " +
-                "FROM [Order] AS O " +
-                "JOIN [Table] AS T ON O.Table_id = T.id " +
-                "JOIN Employee AS E ON O.Employee_id = E.id " +
-                "JOIN Bill AS B ON O.Bill_id = B.id " +
-                "WHERE O.id = @id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", id ),
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
-        }
         public int AddOrder(int tableId, int employeeId, int billId, DateTime dateTime, OrderStatus status)
         {
             string query = "INSERT INTO [Order] OUTPUT INSERTED.id VALUES (@Table_id, @Employee_id, @Bill_id, @dateTime, @status)";
@@ -80,11 +32,6 @@ namespace ChapeauDAL
                 orders.Add(order);
             }
             return orders;
-        }
-        private Order ReadSingle(DataTable dataTable)
-        {
-            DataRow row = dataTable.Rows[0];
-            return CreateOrderFromRow(row);
         }
         private static Order CreateOrderFromRow(DataRow row)
         {

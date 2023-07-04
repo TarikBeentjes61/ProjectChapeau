@@ -8,15 +8,6 @@ namespace ChapeauDAL
 {
     public class EmployeeDao : BaseDao
     {
-        public Employee GetById(int id)
-        {
-            string query = $"SELECT id, name, hash, salt, role FROM Employee WHERE id = @id";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-             {
-                new SqlParameter("@id", id ),
-             };
-            return ReadSingle(ExecuteSelectQuery(query, sqlParameters));
-        }
         public Employee GetByUsername(string username)
         {
             string query = $"SELECT id, username, name, hash, salt, role FROM Employee WHERE username = @username";
