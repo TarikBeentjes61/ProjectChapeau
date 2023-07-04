@@ -352,8 +352,6 @@ namespace ChapeauUI
         //Method to fill listview with orders
         private void FillListviewOrder(System.Windows.Forms.ListView listView, List<OrderItem> orderItems)
         {
-            MenuItemService menuItemService = new MenuItemService();
-
             listView.Clear();
             listView.View = View.Details;
 
@@ -412,8 +410,6 @@ namespace ChapeauUI
         //Add order
         private void AddOrder(System.Windows.Forms.ListView listView)
         {
-            OrderItemService orderItemService = new OrderItemService();
-
             if (billService.CheckBill(table) == null)
             {
                 bill.billId = billService.CreateBill(table, employee, "", 0, 0, false, DateTime.Now, 0);
@@ -436,8 +432,6 @@ namespace ChapeauUI
 
             foreach (OrderItem o in order.GetOrderItems())
             {
-                MenuItem menuItem = menuItemService.GetById(o.menuItem.menuItemId);
-
                 o.order.id = order.id;
                 orderItemService.AddOrderItems(order.id, o.menuItem.menuItemId, o.amount, o.comment, o.status);
             }
